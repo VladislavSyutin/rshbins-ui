@@ -1,4 +1,5 @@
 .rshb-legacy-input-text {
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: stretch;
@@ -24,7 +25,8 @@
 }
 
 .rshb-legacy-input-text__start-icon,
-.rshb-legacy-input-text__clear {
+.rshb-legacy-input-text__clear,
+.rshb-legacy-input-text__calendar-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -141,11 +143,14 @@
 .rshb-legacy-input-text[data-mask='phone'] .rshb-legacy-input-text__mask,
 .rshb-legacy-input-text[data-mask='code'] .rshb-legacy-input-text__control,
 .rshb-legacy-input-text[data-mask='code'] .rshb-legacy-input-text__mask,
-.rshb-legacy-input-text[data-mask='inn'] .rshb-legacy-input-text__control {
+.rshb-legacy-input-text[data-mask='inn'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-mask='birthDate'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-mask='birthDate'] .rshb-legacy-input-text__mask {
   font-variant-numeric: tabular-nums;
 }
 
-.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control {
+.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-show-date-mask='true'] .rshb-legacy-input-text__control {
   color: transparent;
 }
 
@@ -153,7 +158,8 @@
   color: transparent;
 }
 
-.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control::selection {
+.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control::selection,
+.rshb-legacy-input-text[data-show-date-mask='true'] .rshb-legacy-input-text__control::selection {
   background: transparent;
 }
 
@@ -188,6 +194,14 @@
 
 .rshb-legacy-input-text__switch {
   align-self: flex-start;
+}
+
+.rshb-legacy-input-text__calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
 }
 
 /* Hover states */
@@ -312,6 +326,7 @@
 
 .rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__field,
 .rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__label,
-.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__start-icon {
+.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__start-icon,
+.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__calendar-toggle {
   cursor: not-allowed;
 }

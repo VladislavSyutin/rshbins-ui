@@ -31,7 +31,8 @@ export type LegacyInputTextMask =
   | 'login'
   | 'inn'
   | 'email'
-  | 'captcha';
+  | 'captcha'
+  | 'birthDate';
 
 export type LegacyInputTextVariant = 'standard' | 'switch';
 

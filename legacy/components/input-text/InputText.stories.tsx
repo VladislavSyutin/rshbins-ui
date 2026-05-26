@@ -108,6 +108,12 @@ const maskExamples: Array<{
     mask: 'captcha',
     value: 'a7K9',
     helperText: 'Любые символы без пробелов'
+  },
+  {
+    label: 'Дата рождения',
+    mask: 'birthDate',
+    value: '02.06.2001',
+    helperText: 'Маска дд.мм.гггг, календарь и проверка возраста 18-100 лет'
   }
 ];
 
@@ -150,7 +156,7 @@ const meta = {
     },
     mask: {
       control: 'select',
-      options: ['text', 'phone', 'surname', 'name', 'code', 'password', 'login', 'inn', 'email', 'captcha']
+      options: ['text', 'phone', 'surname', 'name', 'code', 'password', 'login', 'inn', 'email', 'captcha', 'birthDate']
     },
     startIcon: {
       control: false,

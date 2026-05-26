@@ -2,6 +2,7 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../button/index.js';
+import Calendar from '../calendar/index.js';
 import Switch from '../switch/index.js';
 import './styles.css';
 
@@ -33,7 +34,8 @@ const INPUT_MASKS = [
   'login',
   'inn',
   'email',
-  'captcha'
+  'captcha',
+  'birthDate'
 ];
 
 const INPUT_VARIANTS = {
@@ -52,6 +54,10 @@ const CODE_MAX_DIGITS = 4;
 const INN_MAX_DIGITS = 12;
 const EMAIL_MAX_LENGTH = 254;
 const EMAIL_LOCAL_MAX_LENGTH = 64;
+const DATE_MASK = 'дд.мм.гггг';
+const DATE_MAX_DIGITS = 8;
+const BIRTH_DATE_MIN_AGE_YEARS = 18;
+const BIRTH_DATE_MAX_AGE_YEARS = 100;
 
 const REQUIRED_ERROR = 'Обязательно для заполнения';
 const PHONE_LENGTH_ERROR = 'Номер телефона должен содержать 11 цифр';
@@ -63,6 +69,8 @@ const EMAIL_DOMAIN_ERROR =
   'Адрес электронной почты должен содержать доменную часть (например, example.ru)';
 const EMAIL_DOMAIN_DOT_ERROR =
   'Адрес электронной почты должен содержать “.” (например, example.ru)';
+const BIRTH_DATE_RANGE_ERROR =
+  'Возраст должен быть от ' + BIRTH_DATE_MIN_AGE_YEARS + ' до ' + BIRTH_DATE_MAX_AGE_YEARS + ' лет.';
 
 const NAME_ALLOWED_CHARACTER_PATTERN = /^[А-Яа-яЁё.\-’,()]$/;
 const SURNAME_ALLOWED_CHARACTER_PATTERN = /^[А-Яа-яЁё.\-’,() ]$/;
@@ -248,6 +256,190 @@ function getDigitsOnly(value, maxLength) {
   return value.replace(/\D/g, '').slice(0, maxLength);
 }
 
+function normalizeDate(value) {
+  return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+}
+
+function getDaysInMonth(year, month) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function shiftDateByYears(value, years) {
+  const normalizedValue = normalizeDate(value);
+  const nextYear = normalizedValue.getFullYear() + years;
+  const nextMonth = normalizedValue.getMonth();
+  const nextDay = Math.min(normalizedValue.getDate(), getDaysInMonth(nextYear, nextMonth));
+
+  return new Date(nextYear, nextMonth, nextDay);
+}
+
+function getBirthDateRange(today) {
+  return {
+    maxDate: shiftDateByYears(today, -BIRTH_DATE_MIN_AGE_YEARS),
+    minDate: shiftDateByYears(today, -BIRTH_DATE_MAX_AGE_YEARS)
+  };
+}
+
+function padDateSegment(value) {
+  return String(value).padStart(2, '0');
+}
+
+function formatDateFromDigits(value) {
+  const digits = getDigitsOnly(value, DATE_MAX_DIGITS);
+
+  if (digits.length <= 2) {
+    return digits;
+  }
+
+  if (digits.length <= 4) {
+    return digits.slice(0, 2) + '.' + digits.slice(2);
+  }
+
+  return digits.slice(0, 2) + '.' + digits.slice(2, 4) + '.' + digits.slice(4);
+}
+
+function formatDateValue(value) {
+  const normalizedValue = normalizeDate(value);
+
+  return (
+    padDateSegment(normalizedValue.getDate()) +
+    '.' +
+    padDateSegment(normalizedValue.getMonth() + 1) +
+    '.' +
+    normalizedValue.getFullYear()
+  );
+}
+
+function getDateDigits(value) {
+  return getDigitsOnly(value, DATE_MAX_DIGITS);
+}
+
+function parseDateDigits(value) {
+  const digits = getDateDigits(value);
+
+  if (digits.length !== DATE_MAX_DIGITS) {
+    return null;
+  }
+
+  const day = Number.parseInt(digits.slice(0, 2), 10);
+  const month = Number.parseInt(digits.slice(2, 4), 10);
+  const year = Number.parseInt(digits.slice(4, 8), 10);
+
+  if (Number.isNaN(day) || Number.isNaN(month) || Number.isNaN(year) || month < 1 || month > 12 || day < 1) {
+    return null;
+  }
+
+  const parsedDate = new Date(year, month - 1, day);
+
+  if (parsedDate.getFullYear() !== year || parsedDate.getMonth() !== month - 1 || parsedDate.getDate() !== day) {
+    return null;
+  }
+
+  return normalizeDate(parsedDate);
+}
+
+function isDateWithinRange(value, minDate, maxDate) {
+  const normalizedValue = normalizeDate(value);
+
+  return normalizedValue >= minDate && normalizedValue <= maxDate;
+}
+
+function isAllowedDayPrefix(prefix) {
+  if (prefix.length === 0) {
+    return true;
+  }
+
+  if (prefix.length === 1) {
+    return ['0', '1', '2', '3'].indexOf(prefix) !== -1;
+  }
+
+  const day = Number.parseInt(prefix, 10);
+
+  return day >= 1 && day <= 31;
+}
+
+function isAllowedMonthPrefix(prefix) {
+  if (prefix.length === 0) {
+    return true;
+  }
+
+  if (prefix.length === 1) {
+    return ['0', '1'].indexOf(prefix) !== -1;
+  }
+
+  const month = Number.parseInt(prefix, 10);
+
+  return month >= 1 && month <= 12;
+}
+
+function canYearPrefixBeCompleted(prefix, minYear, maxYear) {
+  if (prefix.length === 0) {
+    return true;
+  }
+
+  const rangeStart = Number.parseInt(prefix.padEnd(4, '0'), 10);
+  const rangeEnd = Number.parseInt(prefix.padEnd(4, '9'), 10);
+
+  return rangeEnd >= minYear && rangeStart <= maxYear;
+}
+
+function sanitizeBirthDateDigits(value, minDate, maxDate) {
+  const rawDigits = getDateDigits(value);
+  const minYear = minDate.getFullYear();
+  const maxYear = maxDate.getFullYear();
+  let nextDigits = '';
+
+  for (let index = 0; index < rawDigits.length; index += 1) {
+    const digit = rawDigits.charAt(index);
+    const candidateDigits = nextDigits + digit;
+    const dayPrefix = candidateDigits.slice(0, Math.min(2, candidateDigits.length));
+    const monthPrefix =
+      candidateDigits.length > 2
+        ? candidateDigits.slice(2, Math.min(4, candidateDigits.length))
+        : '';
+    const yearPrefix = candidateDigits.length > 4 ? candidateDigits.slice(4) : '';
+
+    if (!isAllowedDayPrefix(dayPrefix)) {
+      break;
+    }
+
+    if (!isAllowedMonthPrefix(monthPrefix)) {
+      break;
+    }
+
+    if (!canYearPrefixBeCompleted(yearPrefix, minYear, maxYear)) {
+      break;
+    }
+
+    if (candidateDigits.length === DATE_MAX_DIGITS) {
+      const parsedDate = parseDateDigits(candidateDigits);
+
+      if (!parsedDate || !isDateWithinRange(parsedDate, minDate, maxDate)) {
+        break;
+      }
+    }
+
+    nextDigits = candidateDigits;
+  }
+
+  return nextDigits;
+}
+
+function sanitizeBirthDateValue(value) {
+  const birthDateRange = getBirthDateRange(normalizeDate(new Date()));
+
+  return formatDateFromDigits(sanitizeBirthDateDigits(value, birthDateRange.minDate, birthDateRange.maxDate));
+}
+
+function buildBirthDateMaskParts(value) {
+  const formattedValue = formatDateFromDigits(value);
+
+  return {
+    filledValue: formattedValue,
+    placeholderValue: DATE_MASK.slice(formattedValue.length)
+  };
+}
+
 function sanitizeLoginValue(value) {
   let sanitizedValue = '';
 
@@ -384,6 +576,10 @@ function sanitizeValueForMask(mask, value) {
     return sanitizeCaptchaValue(stringValue);
   }
 
+  if (mask === 'birthDate') {
+    return sanitizeBirthDateValue(stringValue);
+  }
+
   return stringValue;
 }
 
@@ -462,6 +658,26 @@ function validateValueForMask(mask, value) {
     }
   }
 
+  if (mask === 'birthDate') {
+    const digits = getDateDigits(value);
+
+    if (digits.length === 0) {
+      return REQUIRED_ERROR;
+    }
+
+    const parsedDate = parseDateDigits(digits);
+
+    if (!parsedDate) {
+      return '';
+    }
+
+    const birthDateRange = getBirthDateRange(normalizeDate(new Date()));
+
+    return isDateWithinRange(parsedDate, birthDateRange.minDate, birthDateRange.maxDate)
+      ? undefined
+      : BIRTH_DATE_RANGE_ERROR;
+  }
+
   return undefined;
 }
 
@@ -502,11 +718,15 @@ function getDefaultLabelForMask(mask) {
     return 'Код с картинки';
   }
 
+  if (mask === 'birthDate') {
+    return 'Дата рождения';
+  }
+
   return 'Название';
 }
 
 function getDefaultInputModeForMask(mask) {
-  if (mask === 'phone' || mask === 'code' || mask === 'inn') {
+  if (mask === 'phone' || mask === 'code' || mask === 'inn' || mask === 'birthDate') {
     return 'numeric';
   }
 
@@ -534,6 +754,10 @@ function getMaxLengthForMask(mask) {
     return EMAIL_MAX_LENGTH;
   }
 
+  if (mask === 'birthDate') {
+    return DATE_MASK.length;
+  }
+
   return undefined;
 }
 
@@ -542,11 +766,22 @@ function getPatternForMask(mask) {
     return '[0-9]*';
   }
 
+  if (mask === 'birthDate') {
+    return '[0-9.]*';
+  }
+
   return undefined;
 }
 
 function getAutoCapitalizeForMask(mask) {
-  if (mask === 'phone' || mask === 'code' || mask === 'password' || mask === 'login' || mask === 'email') {
+  if (
+    mask === 'phone' ||
+    mask === 'code' ||
+    mask === 'password' ||
+    mask === 'login' ||
+    mask === 'email' ||
+    mask === 'birthDate'
+  ) {
     return 'off';
   }
 
@@ -554,7 +789,14 @@ function getAutoCapitalizeForMask(mask) {
 }
 
 function getAutoCorrectForMask(mask) {
-  if (mask === 'phone' || mask === 'code' || mask === 'password' || mask === 'login' || mask === 'email') {
+  if (
+    mask === 'phone' ||
+    mask === 'code' ||
+    mask === 'password' ||
+    mask === 'login' ||
+    mask === 'email' ||
+    mask === 'birthDate'
+  ) {
     return 'off';
   }
 
@@ -562,7 +804,14 @@ function getAutoCorrectForMask(mask) {
 }
 
 function getSpellCheckForMask(mask) {
-  if (mask === 'phone' || mask === 'code' || mask === 'password' || mask === 'login' || mask === 'email') {
+  if (
+    mask === 'phone' ||
+    mask === 'code' ||
+    mask === 'password' ||
+    mask === 'login' ||
+    mask === 'email' ||
+    mask === 'birthDate'
+  ) {
     return false;
   }
 
@@ -587,7 +836,7 @@ function isTextKeyAllowedForMask(mask, key) {
     return true;
   }
 
-  if (mask === 'phone' || mask === 'code' || mask === 'inn') {
+  if (mask === 'phone' || mask === 'code' || mask === 'inn' || mask === 'birthDate') {
     return /^\d$/.test(key);
   }
 
@@ -651,6 +900,19 @@ function XmarkIcon() {
       <path
         clipRule="evenodd"
         d="M3.46967 3.46967C3.76256 3.17678 4.23744 3.17678 4.53033 3.46967L8 6.93934L11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967C12.8232 3.76256 12.8232 4.23744 12.5303 4.53033L9.06066 8L12.5303 11.4697C12.8232 11.7626 12.8232 12.2374 12.5303 12.5303C12.2374 12.8232 11.7626 12.8232 11.4697 12.5303L8 9.06066L4.53033 12.5303C4.23744 12.8232 3.76256 12.8232 3.46967 12.5303C3.17678 12.2374 3.17678 11.7626 3.46967 11.4697L6.93934 8L3.46967 4.53033C3.17678 4.23744 3.17678 3.76256 3.46967 3.46967Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+      <path
+        clipRule="evenodd"
+        d="M5.25 5.49674C4.83579 5.49674 4.5 5.16095 4.5 4.74674V4.00001C3.67157 4.00001 3 4.67159 3 5.50001V6.50001H13V5.50001C13 4.67159 12.3284 4.00001 11.5 4.00001V4.75003C11.5 5.16425 11.1642 5.50003 10.75 5.50003C10.3358 5.50003 10 5.16425 10 4.75003V4.00001H6V4.74674C6 5.16095 5.66421 5.49674 5.25 5.49674ZM10 2.50001H6V1.74756C6 1.33334 5.66421 0.997559 5.25 0.997559C4.83579 0.997559 4.5 1.33334 4.5 1.74756V2.50001C2.84315 2.50001 1.5 3.84316 1.5 5.50001V11.5C1.5 13.1569 2.84315 14.5 4.5 14.5H11.5C13.1569 14.5 14.5 13.1569 14.5 11.5V5.50001C14.5 3.84316 13.1569 2.50001 11.5 2.50001V1.75001C11.5 1.3358 11.1642 1.00001 10.75 1.00001C10.3358 1.00001 10 1.3358 10 1.75001V2.50001ZM3 8.00001V11.5C3 12.3284 3.67157 13 4.5 13H11.5C12.3284 13 13 12.3284 13 11.5V8.00001H3Z"
         fill="currentColor"
         fillRule="evenodd"
       />
@@ -764,6 +1026,8 @@ const InputText = React.forwardRef(function InputText(props, ref) {
   const [hasKeyboardFocus, setHasKeyboardFocus] = useState(false);
   const [hasBeenValidated, setHasBeenValidated] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const rootRef = useRef(null);
   const inputRef = useRef(null);
   const keyboardFocusCandidateRef = useRef(false);
 
@@ -819,6 +1083,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
   const canTogglePasswordVisibility = !resolvedDisabled && isInteractive;
   const shouldShowPhoneMask = resolvedMask === 'phone' && (isEnteredState || isFocusedState);
   const shouldShowCodeMask = resolvedMask === 'code' && (isEnteredState || isFocusedState);
+  const shouldShowBirthDateMask = resolvedMask === 'birthDate' && (isEnteredState || isFocusedState);
   const phoneDigitsValue = resolvedMask === 'phone' ? getPhoneDigits(resolvedValue) : '';
   const resolvedControlValue =
     resolvedMask === 'phone' && shouldShowPhoneMask && phoneDigitsValue.length === 0
@@ -829,6 +1094,13 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     : { filledValue: '', placeholderValue: '' };
   const codeMaskFilledValue = resolvedMask === 'code' ? getDigitsOnly(resolvedValue, CODE_MAX_DIGITS) : '';
   const codeMaskRemainingValue = CODE_MASK.slice(codeMaskFilledValue.length);
+  const birthDateMaskParts = shouldShowBirthDateMask
+    ? buildBirthDateMaskParts(resolvedValue)
+    : { filledValue: '', placeholderValue: '' };
+  const selectedBirthDate = resolvedMask === 'birthDate' ? parseDateDigits(resolvedValue) : null;
+  const birthDateRange = resolvedMask === 'birthDate'
+    ? getBirthDateRange(normalizeDate(new Date()))
+    : null;
   const resolvedType =
     resolvedMask === 'password'
       ? isPasswordVisible ? 'text' : 'password'
@@ -856,6 +1128,8 @@ const InputText = React.forwardRef(function InputText(props, ref) {
   const inputDataId = dataId || rest['data-id'];
   const resolvedClearButtonDataId = clearButtonDataId || (dataId ? dataId + '-clear' : undefined);
   const resolvedSwitchDataId = switchDataId || (dataId ? dataId + '-switch' : undefined);
+  const resolvedCalendarButtonDataId = dataId ? dataId + '-calendar-button' : undefined;
+  const resolvedCalendarDataId = dataId ? dataId + '-calendar' : undefined;
 
   useEffect(function () {
     if (!isSwitchControlled) {
@@ -899,6 +1173,38 @@ const InputText = React.forwardRef(function InputText(props, ref) {
       }
     });
   }, [isFocused, phoneDigitsValue.length, resolvedMask]);
+
+  useEffect(function closeCalendarWhenMaskChanges() {
+    if (resolvedMask !== 'birthDate') {
+      setIsCalendarOpen(false);
+    }
+  }, [resolvedMask]);
+
+  useEffect(function bindCalendarDismiss() {
+    if (resolvedMask !== 'birthDate' || !isCalendarOpen) {
+      return undefined;
+    }
+
+    function handlePointerDown(event) {
+      if (rootRef.current && !rootRef.current.contains(event.target)) {
+        setIsCalendarOpen(false);
+      }
+    }
+
+    function handleEscape(event) {
+      if (event.key === 'Escape') {
+        setIsCalendarOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleEscape);
+
+    return function cleanupCalendarDismiss() {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isCalendarOpen, resolvedMask]);
 
   useImperativeHandle(ref, function () {
     return {
@@ -971,6 +1277,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
 
   function handleClear() {
     updateValue('');
+    setIsCalendarOpen(false);
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -1011,6 +1318,30 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     });
   }
 
+  function handleCalendarButtonClick() {
+    if (resolvedDisabled || resolvedReadOnly || !isInteractive) {
+      return;
+    }
+
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
+    setIsCalendarOpen(function toggleCalendar(currentValue) {
+      return !currentValue;
+    });
+  }
+
+  function handleCalendarChange(nextDate) {
+    updateValue(formatDateValue(nextDate));
+    setHasBeenValidated(true);
+    setIsCalendarOpen(false);
+
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }
+
   function handleSwitchChange(event) {
     const nextChecked = event.target.checked;
 
@@ -1036,13 +1367,16 @@ const InputText = React.forwardRef(function InputText(props, ref) {
       )}
       data-disabled={resolvedDisabled ? 'true' : 'false'}
       data-field-id={dataId}
+      data-calendar-open={isCalendarOpen ? 'true' : 'false'}
       data-has-helper={resolvedHelperText ? 'true' : 'false'}
       data-has-start-icon={startIcon ? 'true' : 'false'}
       data-mask={resolvedMask || 'text'}
       data-show-code-mask={shouldShowCodeMask ? 'true' : 'false'}
+      data-show-date-mask={shouldShowBirthDateMask ? 'true' : 'false'}
       data-show-mask-prefix={shouldShowPhoneMask ? 'true' : 'false'}
       data-state={visualState}
       data-variant={resolvedVariant}
+      ref={rootRef}
       style={wrapperStyle}
     >
       <div className="rshb-legacy-input-text__field">
@@ -1138,6 +1472,12 @@ const InputText = React.forwardRef(function InputText(props, ref) {
               <span className="rshb-legacy-input-text__mask-placeholder">{codeMaskRemainingValue}</span>
             </span>
           ) : null}
+          {shouldShowBirthDateMask ? (
+            <span aria-hidden="true" className="rshb-legacy-input-text__mask">
+              <span className="rshb-legacy-input-text__mask-filled">{birthDateMaskParts.filledValue}</span>
+              <span className="rshb-legacy-input-text__mask-placeholder">{birthDateMaskParts.placeholderValue}</span>
+            </span>
+          ) : null}
         </div>
         {showsClearControl ? (
           <Button
@@ -1174,6 +1514,26 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             type="button"
           />
         ) : null}
+        {resolvedMask === 'birthDate' ? (
+          <Button
+            aria-expanded={isCalendarOpen}
+            aria-haspopup="dialog"
+            aria-label="Открыть календарь"
+            buttonType={Button.buttonTypes.flatSecondary}
+            className="rshb-legacy-input-text__calendar-toggle"
+            dataId={resolvedCalendarButtonDataId}
+            disabled={resolvedDisabled || resolvedReadOnly || !isInteractive}
+            iconOnly
+            leadingIcon={<CalendarIcon />}
+            onClick={handleCalendarButtonClick}
+            onMouseDown={function (event) {
+              event.preventDefault();
+            }}
+            selected={isCalendarOpen}
+            size="s"
+            type="button"
+          />
+        ) : null}
       </div>
       {resolvedHelperText ? (
         <div className="rshb-legacy-input-text__helper" id={helperId}>
@@ -1189,6 +1549,17 @@ const InputText = React.forwardRef(function InputText(props, ref) {
           label={resolvedSwitchLabel}
           onChange={handleSwitchChange}
         />
+      ) : null}
+      {resolvedMask === 'birthDate' && isCalendarOpen && birthDateRange ? (
+        <div className="rshb-legacy-input-text__calendar">
+          <Calendar
+            dataId={resolvedCalendarDataId}
+            maxDate={birthDateRange.maxDate}
+            minDate={birthDateRange.minDate}
+            onChange={handleCalendarChange}
+            value={selectedBirthDate || birthDateRange.maxDate}
+          />
+        </div>
       ) : null}
     </div>
   );

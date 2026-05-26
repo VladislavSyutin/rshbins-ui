@@ -14,9 +14,10 @@ React 17-compatible delivery of the floating-label text input for FOS integratio
 - Keep CSS imports enabled in the target Webpack pipeline.
 - The component does not depend on Storybook, Sass, or React 18/19 APIs.
 - Runtime dependencies are explicit: `prop-types` and `classnames`.
-- Clear and password visibility icons are rendered as inline SVGs — no external icon files required.
+- The date-of-birth mask depends on the neighboring legacy `Calendar` component and does not import from `src/`.
+- Clear, calendar, and password visibility icons are rendered as inline SVGs — no external icon files required.
 - Clear action is rendered through the universal legacy `Button`, not a local native `button`.
-- `dataId` is mapped to `data-id` on the native input. The clear button receives `${dataId}-clear`.
+- `dataId` is mapped to `data-id` on the native input. The clear button receives `${dataId}-clear`; the birth-date calendar button and flyout receive derived ids.
 - `variant="switch"` renders the universal legacy `Switch` below the field. The switch receives `switchDataId` or `${dataId}-switch` and disables the input while checked.
 - `onChange` receives the native React change event; use `onValueChange(value)` when a value-only handler is needed.
 - Controlled mode uses `value` + `onValueChange`; uncontrolled mode uses `defaultValue` and can still observe native `onChange`.
@@ -28,8 +29,9 @@ React 17-compatible delivery of the floating-label text input for FOS integratio
 - Legacy `helperIcon` and `showHelperIcon` props are accepted for compatibility, but helper text renders text-only in this review slice.
 - `previewState` overrides the computed interactive state for Storybook/Figma matrix use.
 - Custom `aria-describedby` values are preserved and combined with the helper text id when helper text is rendered.
-- `mask` selects the field purpose without replacing the component: `phone`, `surname`, `name`, `code`, `password`, `login`, `inn`, `email`, `captcha`.
+- `mask` selects the field purpose without replacing the component: `phone`, `surname`, `name`, `code`, `password`, `login`, `inn`, `email`, `captcha`, `birthDate`.
 - `phone`, `code`, and `inn` keep numeric-only entry. Phone formatting follows the current UI legacy behavior: `+7` is visual prefix, value is formatted as `(999) 999-99-99`.
+- `birthDate` keeps the value as `дд.мм.гггг`, opens the shared legacy `Calendar`, and validates the built-in birth-date age range from 18 to 100 years.
 - `surname` and `name` use the current Cyrillic filtering and paired-brackets validation from the UI legacy inputs. Middle-name flows should use `variant="switch"` with `label="Отчество"` and `switchLabel="Нет отчества"` instead of a separate public component.
 - `password` uses the current allowed-character filtering and exposes an inline visibility toggle while preserving the same floating-label field.
 
