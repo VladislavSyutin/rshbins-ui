@@ -8,6 +8,13 @@ export type {
   LegacyButtonType
 } from '../legacy/components/button';
 
+export { default as Divider } from '../legacy/components/divider';
+export type {
+  LegacyDividerComponent,
+  LegacyDividerProps,
+  LegacyDividerView
+} from '../legacy/components/divider';
+
 export {
   default as Calendar,
   CalendarDayItem,

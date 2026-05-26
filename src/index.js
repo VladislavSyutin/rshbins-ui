@@ -1,4 +1,5 @@
 export { default as Button } from '../legacy/components/button/index.js';
+export { default as Divider } from '../legacy/components/divider/index.js';
 export { default as Calendar, CalendarDayItem, CalendarPeriodItem } from '../legacy/components/calendar/index.js';
 export { default as Cookies } from '../legacy/components/cookies/index.js';
 export { default as InputBirthDate } from '../legacy/components/input-birth-date/index.js';
