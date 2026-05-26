@@ -1,6 +1,8 @@
 # Legacy UI Delivery
 
-`legacy/` is the only source layer in this worktree. It contains copy-friendly React 17-compatible components for FOS integration.
+`legacy/` is the canonical delivery layer in this worktree. It contains copy-friendly React 17-compatible components for FOS integration.
+
+The repository may also expose a conventional `src/` package entrypoint for local imports and future packaging, but component implementations still live here.
 
 ## Structure
 

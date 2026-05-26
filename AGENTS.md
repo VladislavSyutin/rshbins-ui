@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This worktree is only for reusable legacy components that can be copied into the FOS legacy stack with minimal edits.
+This worktree is for reusable legacy components that can be copied into the FOS legacy stack with minimal edits.
 
 ## Stack
 
@@ -13,7 +13,8 @@ This worktree is only for reusable legacy components that can be copied into the
 
 ## Component Rules
 
-- Public components live in `legacy/components/`.
+- Public component implementations live in `legacy/components/`.
+- `src/` may exist as a thin package entrypoint that re-exports the legacy delivery layer. Do not place modern component implementations there.
 - Each public component should keep this shape:
 
 ```text
@@ -34,7 +35,7 @@ legacy/components/component-name/
 
 ## What To Avoid
 
-- Do not import from `src/`.
+- Legacy runtime components must not import from `src/`.
 - Do not add modern templates, prototypes, dialogs, or app shell code.
 - Do not bring back old one-off legacy components unless they are rewritten to this contract.
 - Do not use React 18/19-only APIs such as `useId`.

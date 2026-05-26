@@ -14,5 +14,5 @@
     "noEmit": true,
     "skipLibCheck": true
   },
-  "include": ["legacy", ".storybook"]
+  "include": ["src", "legacy", ".storybook"]
 }

@@ -2,6 +2,16 @@
   "name": "rshbins-legacy-foundations",
   "private": true,
   "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./legacy/*": "./legacy/*"
+  },
   "packageManager": "npm@11.5.1",
   "scripts": {
     "storybook": "storybook dev -p 6008",

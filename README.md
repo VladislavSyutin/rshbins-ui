@@ -5,13 +5,16 @@ It is intentionally separate from the main `RSHBINS UI` repository and from the
 current `RSHBINS UI Legacy` worktree.
 
 The goal is to show FOS developers a narrow, clean delivery slice without
-changing the current visual and interaction baseline.
+changing the current visual and interaction baseline. Runtime implementation
+files stay in `legacy/components/`; `src/` is only a conventional package
+entrypoint that re-exports the legacy layer.
 
 ## Scope
 
 - `legacy/components/button`
 - `legacy/components/input-text`
 - `legacy/components/spin`
+- `src/index.js` as the package-level barrel export
 
 No new library components are added here. Bootstrap and FOS sample archives are
 used only as compatibility checklists, not as source code.
@@ -42,7 +45,8 @@ Storybook runs on `http://localhost:6008/`.
 - `classnames` for class composition.
 - `dataId` mapped to `data-id` on the meaningful DOM node.
 - Local `index.js`, `Readme.md`, and Storybook story per public component.
-- No imports from `src/`, modern templates, prototypes, dialogs, or generated modern app layers.
+- Legacy runtime components do not import from `src/`.
+- No modern templates, prototypes, dialogs, or generated modern app layers.
 
 ## Compatibility Boundary
 
