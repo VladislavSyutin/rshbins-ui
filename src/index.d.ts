@@ -13,6 +13,14 @@ export {
   CalendarDayItem,
   CalendarPeriodItem
 } from '../legacy/components/calendar';
+
+export { default as Cookies } from '../legacy/components/cookies';
+export type {
+  LegacyCookiesPlacement,
+  LegacyCookiesPreviewState,
+  LegacyCookiesProps,
+  LegacyCookiesSize
+} from '../legacy/components/cookies';
 export type {
   LegacyCalendarDayItemProps,
   LegacyCalendarItemPreviewState,
