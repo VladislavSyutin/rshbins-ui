@@ -69,6 +69,7 @@ const EMAIL_DOMAIN_ERROR =
   'Адрес электронной почты должен содержать доменную часть (например, example.ru)';
 const EMAIL_DOMAIN_DOT_ERROR =
   'Адрес электронной почты должен содержать “.” (например, example.ru)';
+const BIRTH_DATE_FORMAT_ERROR = 'Введите дату в формате дд.мм.гггг.';
 const BIRTH_DATE_RANGE_ERROR =
   'Возраст должен быть от ' + BIRTH_DATE_MIN_AGE_YEARS + ' до ' + BIRTH_DATE_MAX_AGE_YEARS + ' лет.';
 
@@ -668,7 +669,7 @@ function validateValueForMask(mask, value) {
     const parsedDate = parseDateDigits(digits);
 
     if (!parsedDate) {
-      return '';
+      return BIRTH_DATE_FORMAT_ERROR;
     }
 
     const birthDateRange = getBirthDateRange(normalizeDate(new Date()));
@@ -1308,6 +1309,10 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     updateValue(nextDigits);
   }
 
+  function keepInputFocusOnMouseDown(event) {
+    event.preventDefault();
+  }
+
   function handleTogglePasswordVisibility() {
     if (!canTogglePasswordVisibility) {
       return;
@@ -1488,9 +1493,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             iconOnly
             leadingIcon={<XmarkIcon />}
             onClick={handleClear}
-            onMouseDown={function (event) {
-              event.preventDefault();
-            }}
+            onMouseDown={keepInputFocusOnMouseDown}
             size="s"
             tabIndex={-1}
             type="button"
@@ -1506,9 +1509,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             iconOnly
             leadingIcon={isPasswordVisible ? <EyeSlashIcon /> : <EyeIcon />}
             onClick={handleTogglePasswordVisibility}
-            onMouseDown={function (event) {
-              event.preventDefault();
-            }}
+            onMouseDown={keepInputFocusOnMouseDown}
             size="s"
             tabIndex={isInteractive ? 0 : -1}
             type="button"
@@ -1526,9 +1527,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             iconOnly
             leadingIcon={<CalendarIcon />}
             onClick={handleCalendarButtonClick}
-            onMouseDown={function (event) {
-              event.preventDefault();
-            }}
+            onMouseDown={keepInputFocusOnMouseDown}
             selected={isCalendarOpen}
             size="s"
             type="button"
@@ -1551,7 +1550,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
         />
       ) : null}
       {resolvedMask === 'birthDate' && isCalendarOpen && birthDateRange ? (
-        <div className="rshb-legacy-input-text__calendar">
+        <div className="rshb-legacy-input-text__calendar" onMouseDown={keepInputFocusOnMouseDown}>
           <Calendar
             dataId={resolvedCalendarDataId}
             maxDate={birthDateRange.maxDate}

@@ -5,8 +5,8 @@
   gap: 2px;
   padding: var(--space-paddings-inside-xs);
   border-radius: var(--radius-xs);
-  background: var(--color-background-default-on-secondary, var(--color-background-default-generic, #ffffff));
-  box-shadow: var(--shadow-flyout, 0 8px 20px 0 rgb(0 0 0 / 15%));
+  background: var(--color-background-default-on-secondary);
+  box-shadow: var(--shadow-flyout);
   color: var(--color-text-default-primary);
   font-family: var(--typography-body-regular-fontFamily);
   text-rendering: optimizeLegibility;
@@ -209,10 +209,7 @@
 
 .rshb-legacy-calendar-day-item,
 .rshb-legacy-calendar-period-item {
-  --calendar-item-background: var(
-    --color-background-default-on-secondary,
-    var(--color-background-default-generic, #ffffff)
-  );
+  --calendar-item-background: var(--color-background-default-on-secondary);
   --calendar-item-color: var(--color-text-default-primary);
   --calendar-item-ring: inset 0 0 0 0 transparent;
   position: relative;
@@ -276,10 +273,7 @@
 
 .rshb-legacy-calendar-day-item:disabled:hover,
 .rshb-legacy-calendar-period-item:disabled:hover {
-  --calendar-item-background: var(
-    --color-background-default-on-secondary,
-    var(--color-background-default-generic, #ffffff)
-  );
+  --calendar-item-background: var(--color-background-default-on-secondary);
   --calendar-item-color: var(--color-text-default-disabled);
 }
 
