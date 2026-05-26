@@ -1,62 +1,52 @@
-# RSHBINS UI
+# RSHBINS UI FOS Storybook
 
-RSHBINS UI is a React + TypeScript + Sass UI kit workspace with Storybook as the primary visual contract.
+This folder is a meeting-ready Storybook copy prepared from `RSHBINS UI Legacy`.
+It is intentionally separate from the main `RSHBINS UI` repository and from the
+current `RSHBINS UI Legacy` worktree.
 
-## What is in this repository
+The goal is to show FOS developers a narrow, clean delivery slice without
+changing the current visual and interaction baseline.
 
-- `src/` — reusable UI components, dialogs, templates, and stories
-- `design-tokens/` — raw Figma token exports and normalized token artifacts
-- `icons/` — shared SVG icon library
-- `.storybook/` — Storybook configuration
-- `scripts/design_tokens/` — token build scripts
+## Scope
 
-## Tech stack
+- `legacy/components/button`
+- `legacy/components/input-text`
+- `legacy/components/spin`
 
-- Vite
-- React 19
-- TypeScript
-- Sass
-- Storybook
+No new library components are added here. Bootstrap and FOS sample archives are
+used only as compatibility checklists, not as source code.
 
-## Getting started
+## Run Storybook
 
 ```bash
 npm install
 npm run storybook
 ```
 
-Storybook runs the token build before startup, so generated token artifacts stay in sync with the source token files.
+Storybook runs on `http://localhost:6008/`.
 
-## Available scripts
+## What To Show
 
-- `npm run dev` — start Vite dev server
-- `npm run build` — build the project
-- `npm run tokens:build` — rebuild normalized runtime tokens and CSS variables
-- `npm run storybook` — start Storybook on port `6006`
-- `npm run build-storybook` — build static Storybook output
-- `npm run typecheck` — run TypeScript type checking
+- `Legacy/Components/Button` - action primitive, visual states, icon-only,
+  and loading through shared `Spin`.
+- `Legacy/Components/InputText` - floating-label field mechanics, clear action,
+  13-state matrix, and one component API with FOS mask presets.
+- `Legacy/Components/Spin` - shared loading primitive, sizes, accessible status,
+  and usage inside Button loading.
 
-## Design token workflow
+## Legacy Contract
 
-- Source token files live in `design-tokens/*.tokens.json`
-- Generated files are committed intentionally and must not be edited by hand:
-  - `design-tokens/normalized/runtime.tokens.json`
-  - `design-tokens/normalized/validation-report.json`
-  - `src/styles/tokens.css`
-- After changing token sources, run `npm run tokens:build`
+- React 17-compatible component sources in plain `.jsx`.
+- Plain CSS, no Sass, CSS Modules, Tailwind, or styled-components.
+- `PropTypes` for runtime props.
+- `classnames` for class composition.
+- `dataId` mapped to `data-id` on the meaningful DOM node.
+- Local `index.js`, `Readme.md`, and Storybook story per public component.
+- No imports from `src/`, modern templates, prototypes, dialogs, or generated modern app layers.
 
-## Contribution rules
+## Compatibility Boundary
 
-- Keep reusable UI under `src/components/`
-- Use React + TypeScript + colocated `.scss` styles
-- Reuse existing components and tokens before adding new variants
-- Prefer semantic token variables over hardcoded design values
-- Add or update Storybook stories for reusable UI changes
-- Run `npm run typecheck` before opening a pull request
-
-Detailed repository conventions live in `AGENTS.md`.
-
-## Repository notes
-
-- Internal project memory and local assistant artifacts are intentionally not part of the public repository
-- `package.json` is currently marked with `"private": true`, which prevents accidental npm publication but does not affect GitHub publishing
+Storybook 10 + Vite is used as a review surface for this meeting. It proves that
+the copied component slice renders and typechecks locally, but it does not by
+itself prove compatibility with the FOS Webpack 3/Babel build. A separate smoke
+integration in the FOS stack is the next validation step.

@@ -1,0 +1,313 @@
+.rshb-legacy-input-text {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  width: 361px;
+  max-width: 100%;
+  color: var(--color-text-default-primary);
+}
+
+.rshb-legacy-input-text__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-margins-inside-xs);
+  min-height: 58px;
+  padding: 7px 8px 7px 16px;
+  border: 2px solid var(--color-border-default-default);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  transition:
+    border-color var(--motion-hover-duration) var(--motion-hover-curve),
+    background-color var(--motion-hover-duration) var(--motion-hover-curve),
+    color var(--motion-hover-duration) var(--motion-hover-curve);
+}
+
+.rshb-legacy-input-text__start-icon,
+.rshb-legacy-input-text__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rshb-legacy-input-text__start-icon {
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.rshb-legacy-input-text__start-icon > svg,
+.rshb-legacy-input-text__start-icon > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rshb-legacy-input-text__content {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 42px;
+}
+
+.rshb-legacy-input-text__label,
+.rshb-legacy-input-text__control,
+.rshb-legacy-input-text__mask,
+.rshb-legacy-input-text__prefix,
+.rshb-legacy-input-text__helper-text {
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+}
+
+.rshb-legacy-input-text__label {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 9px;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--color-text-default-secondary);
+  font-size: var(--typography-body-regular-fontSize);
+  line-height: var(--typography-body-regular-lineHeight);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transition:
+    inset-block-start var(--motion-hover-duration) var(--motion-hover-curve),
+    color var(--motion-hover-duration) var(--motion-hover-curve),
+    font-size var(--motion-hover-duration) var(--motion-hover-curve),
+    line-height var(--motion-hover-duration) var(--motion-hover-curve);
+}
+
+.rshb-legacy-input-text__control {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+  outline: none;
+  caret-color: var(--color-text-brand-default);
+}
+
+.rshb-legacy-input-text__prefix {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+  height: 24px;
+  color: var(--color-text-default-primary);
+  pointer-events: none;
+}
+
+.rshb-legacy-input-text__mask {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  display: block;
+  height: 24px;
+  overflow: hidden;
+  color: var(--color-text-default-disabled);
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.rshb-legacy-input-text__mask-filled {
+  color: var(--color-text-default-primary);
+}
+
+.rshb-legacy-input-text__mask-placeholder {
+  color: var(--color-text-default-disabled);
+}
+
+.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__mask {
+  inset-inline-start: 23px;
+  width: calc(100% - 23px);
+}
+
+.rshb-legacy-input-text[data-mask='phone'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-mask='phone'] .rshb-legacy-input-text__mask,
+.rshb-legacy-input-text[data-mask='code'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-mask='code'] .rshb-legacy-input-text__mask,
+.rshb-legacy-input-text[data-mask='inn'] .rshb-legacy-input-text__control {
+  font-variant-numeric: tabular-nums;
+}
+
+.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control {
+  color: transparent;
+}
+
+.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__control {
+  color: transparent;
+}
+
+.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control::selection {
+  background: transparent;
+}
+
+.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__control::selection {
+  background: transparent;
+}
+
+.rshb-legacy-input-text__control::placeholder {
+  color: var(--color-text-default-disabled);
+}
+
+.rshb-legacy-input-text__control:disabled {
+  cursor: not-allowed;
+}
+
+.rshb-legacy-input-text__helper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-margins-inside-2xs);
+  width: 100%;
+  color: var(--color-text-default-tertiary);
+}
+
+.rshb-legacy-input-text__helper-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--typography-footnote-regular-fontFamily);
+  font-size: var(--typography-footnote-regular-fontSize);
+  font-weight: var(--typography-footnote-regular-fontWeight);
+  line-height: var(--typography-footnote-regular-lineHeight);
+}
+
+/* Hover states */
+.rshb-legacy-input-text[data-state='default']:hover .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='entered']:hover .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='hover'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='entered-hover'] .rshb-legacy-input-text__field {
+  border-color: var(--color-border-default-default-hover);
+}
+
+.rshb-legacy-input-text[data-state='error-hover'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='error-entered-hover'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='error']:hover .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='error-entered']:hover .rshb-legacy-input-text__field {
+  border-color: var(--color-border-error-default-hover);
+}
+
+/* Focus states */
+.rshb-legacy-input-text[data-state='focused'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='typing'] .rshb-legacy-input-text__field {
+  border-color: var(--color-border-brand-default);
+}
+
+.rshb-legacy-input-text[data-state='keyboard-focused'] .rshb-legacy-input-text__field {
+  border-color: var(--color-border-default-default-focus);
+}
+
+/* Error states */
+.rshb-legacy-input-text[data-state='error'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='error-entered'] .rshb-legacy-input-text__field {
+  border-color: var(--color-border-error-default);
+}
+
+/* Disabled states */
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__field {
+  border-color: transparent;
+  background: var(--color-background-default-disabled);
+}
+
+/* Floating label — elevated */
+.rshb-legacy-input-text[data-state='focused'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='typing'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='entered'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='entered-hover'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='error-entered'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='error-entered-hover'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__label {
+  inset-block-start: 0;
+  font-family: var(--typography-footnote-regular-fontFamily);
+  font-size: var(--typography-footnote-regular-fontSize);
+  font-weight: var(--typography-footnote-regular-fontWeight);
+  line-height: var(--typography-footnote-regular-lineHeight);
+}
+
+/* Label color in error */
+.rshb-legacy-input-text[data-state='error'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='error-hover'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='error-entered'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='error-entered-hover'] .rshb-legacy-input-text__label {
+  color: var(--color-text-error-default);
+}
+
+/* Disabled text colors */
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__prefix,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__prefix,
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__mask,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__mask,
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__helper,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__helper {
+  color: var(--color-text-default-disabled);
+}
+
+/* Hide value text in empty/non-entered states */
+.rshb-legacy-input-text[data-state='default'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='hover'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='error'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='error-hover'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='keyboard-focused'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__control {
+  color: transparent;
+}
+
+.rshb-legacy-input-text[data-state='default'] .rshb-legacy-input-text__control::selection,
+.rshb-legacy-input-text[data-state='hover'] .rshb-legacy-input-text__control::selection,
+.rshb-legacy-input-text[data-state='error'] .rshb-legacy-input-text__control::selection,
+.rshb-legacy-input-text[data-state='error-hover'] .rshb-legacy-input-text__control::selection,
+.rshb-legacy-input-text[data-state='keyboard-focused'] .rshb-legacy-input-text__control::selection,
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__control::selection {
+  background: transparent;
+}
+
+.rshb-legacy-input-text[data-state='default'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='hover'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='error'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='error-hover'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-state='keyboard-focused'] .rshb-legacy-input-text__control {
+  caret-color: transparent;
+}
+
+.rshb-legacy-input-text[data-state='disabled'] .rshb-legacy-input-text__control::placeholder,
+.rshb-legacy-input-text[data-state='disabled-entered'] .rshb-legacy-input-text__control::placeholder {
+  color: var(--color-text-default-disabled);
+}
+
+/* Helper color in error */
+.rshb-legacy-input-text[data-state='error'] .rshb-legacy-input-text__helper,
+.rshb-legacy-input-text[data-state='error-hover'] .rshb-legacy-input-text__helper,
+.rshb-legacy-input-text[data-state='error-entered'] .rshb-legacy-input-text__helper,
+.rshb-legacy-input-text[data-state='error-entered-hover'] .rshb-legacy-input-text__helper {
+  color: var(--color-text-danger-tertiary);
+}
+
+/* Disabled cursor propagation */
+.rshb-legacy-input-text[data-disabled='true'] {
+  cursor: not-allowed;
+}
+
+.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__field,
+.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__label,
+.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__start-icon {
+  cursor: not-allowed;
+}

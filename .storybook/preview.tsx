@@ -7,14 +7,14 @@ import '@fontsource/ubuntu/500.css';
 import '@fontsource/ubuntu/500-italic.css';
 import '@fontsource/ubuntu/700.css';
 import '@fontsource/ubuntu/700-italic.css';
-import '../src/styles/global.scss';
+import '../legacy/styles/preview.css';
 
 const preview: Preview = {
   parameters: {
     layout: 'fullscreen',
     options: {
       storySort: {
-        order: ['Components', 'Dialogs', 'Templates', 'Prototypes', '*'],
+        order: ['Legacy', ['Components'], '*'],
         method: 'alphabetical'
       }
     },

@@ -1,33 +1,26 @@
 {
-  "name": "rshbins-ui",
+  "name": "rshbins-legacy-foundations",
   "private": true,
   "type": "module",
   "packageManager": "npm@11.5.1",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "tokens:build": "python3 scripts/design_tokens/build_runtime_tokens.py && python3 scripts/design_tokens/export_css_variables.py",
-    "storybook": "npm run tokens:build && storybook dev -p 6006",
-    "build-storybook": "npm run tokens:build && storybook build",
+    "storybook": "storybook dev -p 6008",
+    "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit"
-  },
-  "overrides": {
-    "estree-walker": "^3.0.3"
   },
   "dependencies": {
     "@fontsource/ubuntu": "^5.2.8",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "classnames": "^2.5.1",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.3.5",
     "@storybook/addon-docs": "^10.3.5",
     "@storybook/react-vite": "^10.3.5",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "picomatch": "^4.0.4",
-    "sass": "^1.99.0",
-    "storybook": "^10.3.5",
+    "@types/react": "^17.0.90",
+    "@types/react-dom": "^17.0.26",
     "typescript": "^6.0.3",
     "vite": "^7.3.2"
   }
