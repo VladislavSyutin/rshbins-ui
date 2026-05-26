@@ -21,21 +21,6 @@ export type LegacyInputTextPreviewState =
   | 'disabled-entered'
   | 'keyboard-focused';
 
-export type LegacyInputTextMask =
-  | 'text'
-  | 'phone'
-  | 'surname'
-  | 'name'
-  | 'code'
-  | 'password'
-  | 'login'
-  | 'inn'
-  | 'email'
-  | 'captcha'
-  | 'birthDate';
-
-export type LegacyInputTextVariant = 'standard' | 'switch';
-
 export interface LegacyInputTextProps
   extends Omit<
     InputHTMLAttributes<HTMLInputElement>,
@@ -45,31 +30,28 @@ export interface LegacyInputTextProps
   className?: string;
   clearButtonDataId?: string;
   clearable?: boolean;
+  contentClassName?: string;
   controlClassName?: string;
   customInputStyle?: string;
   dataId?: string;
   defaultValue?: string | number;
   error?: boolean;
+  endAdornment?: ReactNode;
   helperIcon?: ReactNode;
   helperText?: ReactNode;
+  hideControlValue?: boolean;
   inputClassName?: string;
   invalid?: boolean;
   label?: ReactNode;
-  mask?: LegacyInputTextMask;
+  maskOverlay?: ReactNode;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onFocusChange?: (focused: boolean) => void;
   onValueChange?: (value: string) => void;
+  prefix?: ReactNode;
   previewState?: LegacyInputTextPreviewState;
   showHelperIcon?: boolean;
   startIcon?: ReactNode;
-  switchChecked?: boolean;
-  switchDataId?: string;
-  switchDefaultChecked?: boolean;
-  switchLabel?: ReactNode;
-  switchOnChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSwitchChange?: (checked: boolean, event: ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
-  variant?: LegacyInputTextVariant;
   width?: string | number;
 }
 
@@ -82,7 +64,6 @@ declare const InputText: ForwardRefExoticComponent<
   LegacyInputTextProps & RefAttributes<LegacyInputTextHandle>
 > & {
   previewStates: Record<LegacyInputTextPreviewState, LegacyInputTextPreviewState>;
-  variants: Record<LegacyInputTextVariant, LegacyInputTextVariant>;
 };
 
 export default InputText;

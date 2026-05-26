@@ -8,6 +8,17 @@ const config: StorybookConfig = {
   stories: [
     '../legacy/components/button/Button.stories.tsx',
     '../legacy/components/calendar/Calendar.stories.tsx',
+    '../legacy/components/input-birth-date/InputBirthDate.stories.tsx',
+    '../legacy/components/input-captcha/InputCaptcha.stories.tsx',
+    '../legacy/components/input-code/InputCode.stories.tsx',
+    '../legacy/components/input-email/InputEmail.stories.tsx',
+    '../legacy/components/input-inn/InputInn.stories.tsx',
+    '../legacy/components/input-login/InputLogin.stories.tsx',
+    '../legacy/components/input-name/InputName.stories.tsx',
+    '../legacy/components/input-middle-name/InputMiddleName.stories.tsx',
+    '../legacy/components/input-password/InputPassword.stories.tsx',
+    '../legacy/components/input-phone/InputPhone.stories.tsx',
+    '../legacy/components/input-surname/InputSurname.stories.tsx',
     '../legacy/components/input-text/InputText.stories.tsx',
     '../legacy/components/spin/Spin.stories.tsx',
     '../legacy/components/switch/Switch.stories.tsx'

@@ -1,0 +1,11 @@
+.rshb-legacy-input-phone {
+  max-width: 100%;
+}
+
+.rshb-legacy-input-phone__mask-filled {
+  color: var(--color-text-default-primary);
+}
+
+.rshb-legacy-input-phone__mask-placeholder {
+  color: var(--color-text-default-disabled);
+}

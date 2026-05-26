@@ -25,3 +25,5 @@ Recommended conventions based on the sample FOS UI repository:
 - expose `dataId` and map it to `data-id` on the meaningful DOM node
 - use plain CSS selectors with stable class names
 - keep README examples close to the actual integration shape
+
+Input business variants should start with `Input` in the public component name so they are easy to find in consumers and Storybook, for example `InputPassword`, `InputBirthDate`, `InputSurname`, and `InputName`.

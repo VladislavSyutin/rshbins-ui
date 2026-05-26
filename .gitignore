@@ -2,8 +2,6 @@
 node_modules
 dist
 storybook-static
-memory
-scripts/project_memory
 .codex
 .env
 .env.*

@@ -1,0 +1,19 @@
+.rshb-legacy-input-password {
+  max-width: 100%;
+}
+
+.rshb-legacy-input-password__visibility-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rshb-legacy-input-password__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: var(--rshb-legacy-input-password-icon) center / contain no-repeat;
+  mask: var(--rshb-legacy-input-password-icon) center / contain no-repeat;
+}

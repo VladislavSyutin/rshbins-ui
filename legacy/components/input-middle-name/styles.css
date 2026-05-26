@@ -1,0 +1,15 @@
+.rshb-legacy-input-middle-name {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 361px;
+  max-width: 100%;
+}
+
+.rshb-legacy-input-middle-name__input {
+  width: 100%;
+}
+
+.rshb-legacy-input-middle-name__switch {
+  align-self: flex-start;
+}

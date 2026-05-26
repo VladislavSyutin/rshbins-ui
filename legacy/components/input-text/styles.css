@@ -25,8 +25,7 @@
 }
 
 .rshb-legacy-input-text__start-icon,
-.rshb-legacy-input-text__clear,
-.rshb-legacy-input-text__calendar-toggle {
+.rshb-legacy-input-text__clear {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -142,37 +141,22 @@
   color: var(--color-text-default-disabled);
 }
 
-.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__control,
-.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__mask {
+.rshb-legacy-input-text[data-has-prefix='true'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-has-prefix='true'] .rshb-legacy-input-text__mask {
   inset-inline-start: 23px;
   width: calc(100% - 23px);
 }
 
-.rshb-legacy-input-text[data-mask='phone'] .rshb-legacy-input-text__control,
-.rshb-legacy-input-text[data-mask='phone'] .rshb-legacy-input-text__mask,
-.rshb-legacy-input-text[data-mask='code'] .rshb-legacy-input-text__control,
-.rshb-legacy-input-text[data-mask='code'] .rshb-legacy-input-text__mask,
-.rshb-legacy-input-text[data-mask='inn'] .rshb-legacy-input-text__control,
-.rshb-legacy-input-text[data-mask='birthDate'] .rshb-legacy-input-text__control,
-.rshb-legacy-input-text[data-mask='birthDate'] .rshb-legacy-input-text__mask {
+.rshb-legacy-input-text[data-has-mask-overlay='true'] .rshb-legacy-input-text__control,
+.rshb-legacy-input-text[data-has-mask-overlay='true'] .rshb-legacy-input-text__mask {
   font-variant-numeric: tabular-nums;
 }
 
-.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control,
-.rshb-legacy-input-text[data-show-date-mask='true'] .rshb-legacy-input-text__control {
+.rshb-legacy-input-text[data-hide-control-value='true'] .rshb-legacy-input-text__control {
   color: transparent;
 }
 
-.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__control {
-  color: transparent;
-}
-
-.rshb-legacy-input-text[data-show-code-mask='true'] .rshb-legacy-input-text__control::selection,
-.rshb-legacy-input-text[data-show-date-mask='true'] .rshb-legacy-input-text__control::selection {
-  background: transparent;
-}
-
-.rshb-legacy-input-text[data-show-mask-prefix='true'] .rshb-legacy-input-text__control::selection {
+.rshb-legacy-input-text[data-hide-control-value='true'] .rshb-legacy-input-text__control::selection {
   background: transparent;
 }
 
@@ -199,18 +183,6 @@
   font-size: var(--typography-footnote-regular-fontSize);
   font-weight: var(--typography-footnote-regular-fontWeight);
   line-height: var(--typography-footnote-regular-lineHeight);
-}
-
-.rshb-legacy-input-text__switch {
-  align-self: flex-start;
-}
-
-.rshb-legacy-input-text__calendar {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 50%;
-  z-index: 10;
-  transform: translateX(-50%);
 }
 
 /* Hover states */
@@ -335,7 +307,6 @@
 
 .rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__field,
 .rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__label,
-.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__start-icon,
-.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__calendar-toggle {
+.rshb-legacy-input-text[data-disabled='true'] .rshb-legacy-input-text__start-icon {
   cursor: not-allowed;
 }

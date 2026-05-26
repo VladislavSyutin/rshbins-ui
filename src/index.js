@@ -1,5 +1,16 @@
 export { default as Button } from '../legacy/components/button/index.js';
 export { default as Calendar, CalendarDayItem, CalendarPeriodItem } from '../legacy/components/calendar/index.js';
+export { default as InputBirthDate } from '../legacy/components/input-birth-date/index.js';
+export { default as InputCaptcha } from '../legacy/components/input-captcha/index.js';
+export { default as InputCode } from '../legacy/components/input-code/index.js';
+export { default as InputEmail } from '../legacy/components/input-email/index.js';
+export { default as InputInn } from '../legacy/components/input-inn/index.js';
+export { default as InputLogin } from '../legacy/components/input-login/index.js';
+export { default as InputName } from '../legacy/components/input-name/index.js';
+export { default as InputMiddleName } from '../legacy/components/input-middle-name/index.js';
+export { default as InputPassword } from '../legacy/components/input-password/index.js';
+export { default as InputPhone } from '../legacy/components/input-phone/index.js';
+export { default as InputSurname } from '../legacy/components/input-surname/index.js';
 export { default as InputText } from '../legacy/components/input-text/index.js';
 export { default as Spin } from '../legacy/components/spin/index.js';
 export { default as Switch } from '../legacy/components/switch/index.js';

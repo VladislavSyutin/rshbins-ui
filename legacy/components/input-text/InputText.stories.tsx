@@ -1,6 +1,6 @@
-import { useState, type CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { LegacyInputTextMask, LegacyInputTextPreviewState, LegacyInputTextProps } from './index.js';
+import type { LegacyInputTextPreviewState, LegacyInputTextProps } from './index.js';
 import InputText from './index.js';
 
 type MatrixState = LegacyInputTextPreviewState;
@@ -49,74 +49,6 @@ const overviewStates: Array<{
   { label: 'Keyboard Focused', previewState: 'keyboard-focused' }
 ];
 
-const maskExamples: Array<{
-  helperText?: string;
-  label: string;
-  mask: Exclude<LegacyInputTextMask, 'text'>;
-  value: string;
-}> = [
-  {
-    label: 'Номер телефона',
-    mask: 'phone',
-    value: '9123456789',
-    helperText: 'Берет 8/+7 при вставке, хранит формат (999) 999-99-99'
-  },
-  {
-    label: 'Фамилия',
-    mask: 'surname',
-    value: 'иванов-петров',
-    helperText: 'Кириллица, пробелы, дефис, точки, скобки, парные скобки на blur'
-  },
-  {
-    label: 'Имя',
-    mask: 'name',
-    value: 'иван',
-    helperText: 'Кириллица без пробелов, первая буква приводится к верхнему регистру'
-  },
-  {
-    label: 'Проверочный код',
-    mask: 'code',
-    value: '1234',
-    helperText: 'Только 4 цифры, визуальная маска 0000'
-  },
-  {
-    label: 'Пароль',
-    mask: 'password',
-    value: 'Password-2026!',
-    helperText: 'Разрешенный ASCII-набор и переключение видимости'
-  },
-  {
-    label: 'Логин',
-    mask: 'login',
-    value: 'fos_user-01',
-    helperText: 'Латиница, цифры, точка, дефис, подчёркивание'
-  },
-  {
-    label: 'ИНН',
-    mask: 'inn',
-    value: '7707083893',
-    helperText: 'Только цифры, 10 или 12 символов'
-  },
-  {
-    label: 'Электронная почта',
-    mask: 'email',
-    value: 'FOS.User@example.ru',
-    helperText: 'Нижний регистр, один @, базовая доменная проверка'
-  },
-  {
-    label: 'Код с картинки',
-    mask: 'captcha',
-    value: 'a7K9',
-    helperText: 'Любые символы без пробелов'
-  },
-  {
-    label: 'Дата рождения',
-    mask: 'birthDate',
-    value: '02.06.2001',
-    helperText: 'Маска дд.мм.гггг, календарь и проверка возраста 18-100 лет'
-  }
-];
-
 const meta = {
   title: 'Legacy/Components/InputText',
   component: InputText,
@@ -126,8 +58,7 @@ const meta = {
     dataId: 'legacy-input-text',
     helperText: 'Вспомогательный текст',
     invalid: false,
-    label: 'Название',
-    variant: 'standard'
+    label: 'Название'
   },
   argTypes: {
     helperIcon: {
@@ -154,26 +85,19 @@ const meta = {
         disable: true
       }
     },
-    mask: {
-      control: 'select',
-      options: ['text', 'phone', 'surname', 'name', 'code', 'password', 'login', 'inn', 'email', 'captcha', 'birthDate']
-    },
     startIcon: {
       control: false,
       table: {
         disable: true
       }
     },
-    switchOnChange: {
+    endAdornment: {
       control: false,
       table: {
         disable: true
       }
     },
-    switchLabel: {
-      control: 'text'
-    },
-    onSwitchChange: {
+    maskOverlay: {
       control: false,
       table: {
         disable: true
@@ -222,8 +146,8 @@ export const Overview: Story = {
   )
 };
 
-export const MaskPresets: Story = {
-  name: 'FOS masks',
+export const NarrowContainer: Story = {
+  name: 'Narrow container',
   parameters: {
     controls: {
       disable: true
@@ -231,56 +155,17 @@ export const MaskPresets: Story = {
   },
   render: () => (
     <div style={surfaceStyle}>
-      <div style={matrixStyle}>
-        {maskExamples.map((example) => (
-          <section key={example.mask} style={cardStyle}>
-            <p style={metaStyle}>{example.mask}</p>
-            <InputText
-              clearable
-              dataId={`fos-mask-${example.mask}`}
-              defaultValue={example.value}
-              helperText={example.helperText}
-              label={example.label}
-              mask={example.mask}
-            />
-          </section>
-        ))}
+      <div style={{ width: 240 }}>
+        <InputText
+          clearable
+          dataId="legacy-input-text-narrow"
+          label="Очень длинное название поля"
+          value="Длинное значение"
+        />
       </div>
     </div>
   )
 };
-
-export const WithSwitch: Story = {
-  name: 'With switch',
-  parameters: {
-    controls: {
-      disable: true
-    }
-  },
-  render: () => <SwitchInputExample />
-};
-
-function SwitchInputExample() {
-  const [withoutMiddleName, setWithoutMiddleName] = useState(false);
-  const [value, setValue] = useState('Иванович');
-
-  return (
-    <div style={surfaceStyle}>
-      <InputText
-        clearable
-        dataId="legacy-input-text-middle-name"
-        label="Отчество"
-        mask="name"
-        onSwitchChange={setWithoutMiddleName}
-        onValueChange={setValue}
-        switchChecked={withoutMiddleName}
-        switchLabel="Нет отчества"
-        value={value}
-        variant="switch"
-      />
-    </div>
-  );
-}
 
 const surfaceStyle: CSSProperties = {
   display: 'grid',
