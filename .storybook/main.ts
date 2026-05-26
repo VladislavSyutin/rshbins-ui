@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const config: StorybookConfig = {
   stories: [
     '../legacy/components/button/Button.stories.tsx',
+    '../legacy/components/calendar/Calendar.stories.tsx',
     '../legacy/components/input-text/InputText.stories.tsx',
     '../legacy/components/spin/Spin.stories.tsx',
     '../legacy/components/switch/Switch.stories.tsx'
