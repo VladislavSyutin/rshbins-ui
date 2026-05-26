@@ -15,6 +15,13 @@ export type {
   LegacyDividerView
 } from '../legacy/components/divider';
 
+export { default as Gender } from '../legacy/components/gender';
+export type {
+  LegacyGenderComponent,
+  LegacyGenderProps,
+  LegacyGenderValue
+} from '../legacy/components/gender';
+
 export {
   default as Calendar,
   CalendarDayItem,
