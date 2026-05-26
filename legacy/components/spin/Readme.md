@@ -15,6 +15,7 @@ React 17-compatible loading indicator for FOS integration.
 - Keep CSS imports enabled in the target Webpack pipeline.
 - The component does not depend on Storybook, Sass, or React 18/19 APIs.
 - Runtime dependencies are explicit: `prop-types` and `classnames`.
+- The graphic imports `icons/spinner.svg` and renders it through a CSS mask so it keeps `currentColor`.
 - `dataId` is mapped to the native `data-id` attribute. Existing `data-id` passthrough is also supported, with `dataId` preferred for the public API.
 - `size` supports `2xs`, `xs`, `s`, `m`, `l`, and `xl`.
 - `Spin.sizes` exposes named public size constants:

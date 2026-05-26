@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../button/index.js';
 import './styles.css';
+import chevronDownIcon from '../../../icons/chevron-down.svg';
+import chevronLeftIcon from '../../../icons/chevron-left.svg';
+import chevronRightIcon from '../../../icons/chevron-right.svg';
 
 const NAVIGATION_ANIMATION_DURATION_MS = 150;
 
@@ -235,45 +238,18 @@ function getViewMinHeight(snapshot) {
 
 function CalendarIcon(props) {
   const direction = props.direction;
-
-  if (direction === 'left') {
-    return (
-      <svg aria-hidden="true" className="rshb-legacy-calendar__icon-svg" fill="none" viewBox="0 0 16 16">
-        <path
-          d="M10 12L6 8L10 4"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-      </svg>
-    );
-  }
-
-  if (direction === 'right') {
-    return (
-      <svg aria-hidden="true" className="rshb-legacy-calendar__icon-svg" fill="none" viewBox="0 0 16 16">
-        <path
-          d="M6 4L10 8L6 12"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-      </svg>
-    );
-  }
+  const icon = direction === 'left'
+    ? chevronLeftIcon
+    : direction === 'right'
+      ? chevronRightIcon
+      : chevronDownIcon;
 
   return (
-    <svg aria-hidden="true" className="rshb-legacy-calendar__icon-svg" fill="none" viewBox="0 0 16 16">
-      <path
-        d="M4 6L8 10L12 6"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-    </svg>
+    <span
+      aria-hidden="true"
+      className="rshb-legacy-calendar__icon-svg"
+      style={{ '--rshb-legacy-calendar-icon': 'url("' + icon + '")' }}
+    />
   );
 }
 

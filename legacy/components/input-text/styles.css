@@ -46,6 +46,15 @@
   height: 100%;
 }
 
+.rshb-legacy-input-text__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: var(--rshb-legacy-input-text-icon) center / contain no-repeat;
+  mask: var(--rshb-legacy-input-text-icon) center / contain no-repeat;
+}
+
 .rshb-legacy-input-text__content {
   position: relative;
   flex: 1 1 auto;

@@ -13,6 +13,7 @@ React 17-compatible delivery of the calendar component for FOS integration.
 
 - Keep CSS imports enabled in the target Webpack pipeline.
 - The component does not depend on Storybook, Sass, or React 18/19 APIs.
+- Header chevrons import SVG assets from the root `icons/` folder and render them through CSS masks for `currentColor` support.
 - `value`, `defaultValue`, `onChange`, `minDate`, `maxDate`, and `initialView` mirror the modern calendar behavior.
 - `dataId` maps to `data-id` on the calendar root; item primitives expose the same prop.
 - `CalendarDayItem` and `CalendarPeriodItem` are exported for focused previews and custom layouts.

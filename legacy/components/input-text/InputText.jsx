@@ -5,6 +5,10 @@ import Button from '../button/index.js';
 import Calendar from '../calendar/index.js';
 import Switch from '../switch/index.js';
 import './styles.css';
+import calendarIcon from '../../../icons/calendar.svg';
+import eyeIcon from '../../../icons/eye.svg';
+import eyeSlashIcon from '../../../icons/eye-slash.svg';
+import xmarkIcon from '../../../icons/xmark.svg';
 
 let idCounter = 0;
 
@@ -895,57 +899,21 @@ function resolveInteractiveState(_ref) {
   return hasValue ? 'entered' : 'default';
 }
 
-function XmarkIcon() {
+function InputTextIcon(props) {
+  const src = props.src;
+
   return (
-    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-      <path
-        clipRule="evenodd"
-        d="M3.46967 3.46967C3.76256 3.17678 4.23744 3.17678 4.53033 3.46967L8 6.93934L11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967C12.8232 3.76256 12.8232 4.23744 12.5303 4.53033L9.06066 8L12.5303 11.4697C12.8232 11.7626 12.8232 12.2374 12.5303 12.5303C12.2374 12.8232 11.7626 12.8232 11.4697 12.5303L8 9.06066L4.53033 12.5303C4.23744 12.8232 3.76256 12.8232 3.46967 12.5303C3.17678 12.2374 3.17678 11.7626 3.46967 11.4697L6.93934 8L3.46967 4.53033C3.17678 4.23744 3.17678 3.76256 3.46967 3.46967Z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
-    </svg>
+    <span
+      aria-hidden="true"
+      className="rshb-legacy-input-text__icon"
+      style={{ '--rshb-legacy-input-text-icon': 'url("' + src + '")' }}
+    />
   );
 }
 
-function CalendarIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-      <path
-        clipRule="evenodd"
-        d="M5.25 5.49674C4.83579 5.49674 4.5 5.16095 4.5 4.74674V4.00001C3.67157 4.00001 3 4.67159 3 5.50001V6.50001H13V5.50001C13 4.67159 12.3284 4.00001 11.5 4.00001V4.75003C11.5 5.16425 11.1642 5.50003 10.75 5.50003C10.3358 5.50003 10 5.16425 10 4.75003V4.00001H6V4.74674C6 5.16095 5.66421 5.49674 5.25 5.49674ZM10 2.50001H6V1.74756C6 1.33334 5.66421 0.997559 5.25 0.997559C4.83579 0.997559 4.5 1.33334 4.5 1.74756V2.50001C2.84315 2.50001 1.5 3.84316 1.5 5.50001V11.5C1.5 13.1569 2.84315 14.5 4.5 14.5H11.5C13.1569 14.5 14.5 13.1569 14.5 11.5V5.50001C14.5 3.84316 13.1569 2.50001 11.5 2.50001V1.75001C11.5 1.3358 11.1642 1.00001 10.75 1.00001C10.3358 1.00001 10 1.3358 10 1.75001V2.50001ZM3 8.00001V11.5C3 12.3284 3.67157 13 4.5 13H11.5C12.3284 13 13 12.3284 13 11.5V8.00001H3Z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
-    </svg>
-  );
-}
-
-function EyeIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8 3C4.9 3 2.32 4.86 1.25 8C2.32 11.14 4.9 13 8 13C11.1 13 13.68 11.14 14.75 8C13.68 4.86 11.1 3 8 3ZM8 11.5C5.65 11.5 3.68 10.2 2.88 8C3.68 5.8 5.65 4.5 8 4.5C10.35 4.5 12.32 5.8 13.12 8C12.32 10.2 10.35 11.5 8 11.5ZM8 5.75C6.76 5.75 5.75 6.76 5.75 8C5.75 9.24 6.76 10.25 8 10.25C9.24 10.25 10.25 9.24 10.25 8C10.25 6.76 9.24 5.75 8 5.75ZM8 8.75C7.59 8.75 7.25 8.41 7.25 8C7.25 7.59 7.59 7.25 8 7.25C8.41 7.25 8.75 7.59 8.75 8C8.75 8.41 8.41 8.75 8 8.75Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function EyeSlashIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8 3C4.9 3 2.32 4.86 1.25 8C2.32 11.14 4.9 13 8 13C11.1 13 13.68 11.14 14.75 8C13.68 4.86 11.1 3 8 3ZM8 11.5C5.65 11.5 3.68 10.2 2.88 8C3.68 5.8 5.65 4.5 8 4.5C10.35 4.5 12.32 5.8 13.12 8C12.32 10.2 10.35 11.5 8 11.5ZM8 5.75C6.76 5.75 5.75 6.76 5.75 8C5.75 9.24 6.76 10.25 8 10.25C9.24 10.25 10.25 9.24 10.25 8C10.25 6.76 9.24 5.75 8 5.75ZM8 8.75C7.59 8.75 7.25 8.41 7.25 8C7.25 7.59 7.59 7.25 8 7.25C8.41 7.25 8.75 7.59 8.75 8C8.75 8.41 8.41 8.75 8 8.75Z"
-        fill="currentColor"
-      />
-      <path
-        d="M2.28 1.22C1.99 0.93 1.51 0.93 1.22 1.22C0.93 1.51 0.93 1.99 1.22 2.28L13.72 14.78C14.01 15.07 14.49 15.07 14.78 14.78C15.07 14.49 15.07 14.01 14.78 13.72L2.28 1.22Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
+InputTextIcon.propTypes = {
+  src: PropTypes.string.isRequired
+};
 
 const InputText = React.forwardRef(function InputText(props, ref) {
   const {
@@ -1491,7 +1459,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             className="rshb-legacy-input-text__clear"
             dataId={resolvedClearButtonDataId}
             iconOnly
-            leadingIcon={<XmarkIcon />}
+            leadingIcon={<InputTextIcon src={xmarkIcon} />}
             onClick={handleClear}
             onMouseDown={keepInputFocusOnMouseDown}
             size="s"
@@ -1507,7 +1475,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             className="rshb-legacy-input-text__visibility-toggle"
             disabled={!canTogglePasswordVisibility}
             iconOnly
-            leadingIcon={isPasswordVisible ? <EyeSlashIcon /> : <EyeIcon />}
+            leadingIcon={<InputTextIcon src={isPasswordVisible ? eyeSlashIcon : eyeIcon} />}
             onClick={handleTogglePasswordVisibility}
             onMouseDown={keepInputFocusOnMouseDown}
             size="s"
@@ -1525,7 +1493,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
             dataId={resolvedCalendarButtonDataId}
             disabled={resolvedDisabled || resolvedReadOnly || !isInteractive}
             iconOnly
-            leadingIcon={<CalendarIcon />}
+            leadingIcon={<InputTextIcon src={calendarIcon} />}
             onClick={handleCalendarButtonClick}
             onMouseDown={keepInputFocusOnMouseDown}
             selected={isCalendarOpen}

@@ -15,7 +15,7 @@ React 17-compatible delivery of the floating-label text input for FOS integratio
 - The component does not depend on Storybook, Sass, or React 18/19 APIs.
 - Runtime dependencies are explicit: `prop-types` and `classnames`.
 - The date-of-birth mask depends on the neighboring legacy `Calendar` component and does not import from `src/`.
-- Clear, calendar, and password visibility icons are rendered as inline SVGs — no external icon files required.
+- Clear, calendar, and password visibility controls import SVG assets from the root `icons/` folder and render them through CSS masks for `currentColor` support.
 - Clear action is rendered through the universal legacy `Button`, not a local native `button`.
 - `dataId` is mapped to `data-id` on the native input. The clear button receives `${dataId}-clear`; the birth-date calendar button and flyout receive derived ids.
 - `variant="switch"` renders the universal legacy `Switch` below the field. The switch receives `switchDataId` or `${dataId}-switch` and disables the input while checked.
