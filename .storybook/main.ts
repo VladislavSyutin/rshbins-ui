@@ -8,7 +8,8 @@ const config: StorybookConfig = {
   stories: [
     '../legacy/components/button/Button.stories.tsx',
     '../legacy/components/input-text/InputText.stories.tsx',
-    '../legacy/components/spin/Spin.stories.tsx'
+    '../legacy/components/spin/Spin.stories.tsx',
+    '../legacy/components/switch/Switch.stories.tsx'
   ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: {

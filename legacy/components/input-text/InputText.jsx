@@ -2,6 +2,7 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../button/index.js';
+import Switch from '../switch/index.js';
 import './styles.css';
 
 let idCounter = 0;
@@ -34,6 +35,13 @@ const INPUT_MASKS = [
   'email',
   'captcha'
 ];
+
+const INPUT_VARIANTS = {
+  standard: 'standard',
+  switch: 'switch'
+};
+
+const INPUT_VARIANT_VALUES = [INPUT_VARIANTS.standard, INPUT_VARIANTS.switch];
 
 const PHONE_MASK = '(000) 000-00-00';
 const PHONE_MAX_DIGITS = 10;
@@ -561,6 +569,19 @@ function getSpellCheckForMask(mask) {
   return undefined;
 }
 
+function normalizeRenderableNode(node) {
+  if (
+    node == null ||
+    typeof node === 'string' ||
+    typeof node === 'number' ||
+    React.isValidElement(node)
+  ) {
+    return node;
+  }
+
+  return undefined;
+}
+
 function isTextKeyAllowedForMask(mask, key) {
   if (!mask || key.length !== 1) {
     return true;
@@ -694,16 +715,39 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     showHelperIcon,
     startIcon,
     style,
+    switchChecked,
+    switchDataId,
+    switchLabel,
+    switchOnChange,
+    switchDefaultChecked,
+    onSwitchChange,
     type,
     value,
+    variant,
     width,
     ...rest
   } = props;
 
   const resolvedClearable = clearable != null ? clearable : true;
-  const resolvedDisabled = Boolean(disabled);
+  const resolvedVariant = INPUT_VARIANT_VALUES.indexOf(variant) === -1
+    ? INPUT_VARIANTS.standard
+    : variant;
   const resolvedMask = normalizeMask(mask);
-  const resolvedLabel = label != null ? label : getDefaultLabelForMask(resolvedMask);
+  const resolvedLabel = normalizeRenderableNode(label) != null
+    ? label
+    : getDefaultLabelForMask(resolvedMask);
+  const hasSwitch = resolvedVariant === INPUT_VARIANTS.switch;
+  const isSwitchControlled = switchChecked !== undefined;
+  const [uncontrolledSwitchChecked, setUncontrolledSwitchChecked] = useState(
+    Boolean(switchDefaultChecked)
+  );
+  const resolvedSwitchChecked = hasSwitch
+    ? isSwitchControlled
+      ? Boolean(switchChecked)
+      : uncontrolledSwitchChecked
+    : false;
+  const resolvedDisabled = Boolean(disabled || resolvedSwitchChecked);
+  const resolvedSwitchLabel = normalizeRenderableNode(switchLabel);
 
   const [inputId] = useState(function () {
     return id || generateInputId();
@@ -811,6 +855,13 @@ const InputText = React.forwardRef(function InputText(props, ref) {
   const wrapperStyle = width !== undefined ? Object.assign({}, style, { width: width }) : style;
   const inputDataId = dataId || rest['data-id'];
   const resolvedClearButtonDataId = clearButtonDataId || (dataId ? dataId + '-clear' : undefined);
+  const resolvedSwitchDataId = switchDataId || (dataId ? dataId + '-switch' : undefined);
+
+  useEffect(function () {
+    if (!isSwitchControlled) {
+      setUncontrolledSwitchChecked(Boolean(switchDefaultChecked));
+    }
+  }, [isSwitchControlled, switchDefaultChecked]);
 
   useEffect(function () {
     if (!isControlled || value === undefined || !onValueChange) {
@@ -960,6 +1011,22 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     });
   }
 
+  function handleSwitchChange(event) {
+    const nextChecked = event.target.checked;
+
+    if (!isSwitchControlled) {
+      setUncontrolledSwitchChecked(nextChecked);
+    }
+
+    if (onSwitchChange) {
+      onSwitchChange(nextChecked, event);
+    }
+
+    if (switchOnChange) {
+      switchOnChange(event);
+    }
+  }
+
   return (
     <div
       className={classNames(
@@ -975,6 +1042,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
       data-show-code-mask={shouldShowCodeMask ? 'true' : 'false'}
       data-show-mask-prefix={shouldShowPhoneMask ? 'true' : 'false'}
       data-state={visualState}
+      data-variant={resolvedVariant}
       style={wrapperStyle}
     >
       <div className="rshb-legacy-input-text__field">
@@ -1112,11 +1180,23 @@ const InputText = React.forwardRef(function InputText(props, ref) {
           <span className="rshb-legacy-input-text__helper-text">{resolvedHelperText}</span>
         </div>
       ) : null}
+      {hasSwitch ? (
+        <Switch
+          checked={resolvedSwitchChecked}
+          className="rshb-legacy-input-text__switch"
+          dataId={resolvedSwitchDataId}
+          disabled={Boolean(disabled)}
+          label={resolvedSwitchLabel}
+          onChange={handleSwitchChange}
+        />
+      ) : null}
     </div>
   );
 });
 
 InputText.displayName = 'InputText';
+
+InputText.variants = INPUT_VARIANTS;
 
 InputText.previewStates = INPUT_PREVIEW_STATES.reduce(function (states, state) {
   states[state] = state;
@@ -1151,8 +1231,15 @@ InputText.propTypes = {
   showHelperIcon: PropTypes.bool,
   startIcon: PropTypes.node,
   style: PropTypes.object,
+  switchChecked: PropTypes.bool,
+  switchDataId: PropTypes.string,
+  switchDefaultChecked: PropTypes.bool,
+  switchLabel: PropTypes.node,
+  switchOnChange: PropTypes.func,
+  onSwitchChange: PropTypes.func,
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  variant: PropTypes.oneOf(INPUT_VARIANT_VALUES),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 

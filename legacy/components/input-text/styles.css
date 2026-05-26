@@ -186,6 +186,10 @@
   line-height: var(--typography-footnote-regular-lineHeight);
 }
 
+.rshb-legacy-input-text__switch {
+  align-self: flex-start;
+}
+
 /* Hover states */
 .rshb-legacy-input-text[data-state='default']:hover .rshb-legacy-input-text__field,
 .rshb-legacy-input-text[data-state='entered']:hover .rshb-legacy-input-text__field,

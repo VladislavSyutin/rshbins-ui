@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyInputTextMask, LegacyInputTextPreviewState, LegacyInputTextProps } from './index.js';
 import InputText from './index.js';
@@ -120,7 +120,8 @@ const meta = {
     dataId: 'legacy-input-text',
     helperText: 'Вспомогательный текст',
     invalid: false,
-    label: 'Название'
+    label: 'Название',
+    variant: 'standard'
   },
   argTypes: {
     helperIcon: {
@@ -128,6 +129,12 @@ const meta = {
       table: {
         disable: true
       }
+    },
+    helperText: {
+      control: 'text'
+    },
+    label: {
+      control: 'text'
     },
     showHelperIcon: {
       control: false,
@@ -146,6 +153,21 @@ const meta = {
       options: ['text', 'phone', 'surname', 'name', 'code', 'password', 'login', 'inn', 'email', 'captcha']
     },
     startIcon: {
+      control: false,
+      table: {
+        disable: true
+      }
+    },
+    switchOnChange: {
+      control: false,
+      table: {
+        disable: true
+      }
+    },
+    switchLabel: {
+      control: 'text'
+    },
+    onSwitchChange: {
       control: false,
       table: {
         disable: true
@@ -221,6 +243,38 @@ export const MaskPresets: Story = {
     </div>
   )
 };
+
+export const WithSwitch: Story = {
+  name: 'With switch',
+  parameters: {
+    controls: {
+      disable: true
+    }
+  },
+  render: () => <SwitchInputExample />
+};
+
+function SwitchInputExample() {
+  const [withoutMiddleName, setWithoutMiddleName] = useState(false);
+  const [value, setValue] = useState('Иванович');
+
+  return (
+    <div style={surfaceStyle}>
+      <InputText
+        clearable
+        dataId="legacy-input-text-middle-name"
+        label="Отчество"
+        mask="name"
+        onSwitchChange={setWithoutMiddleName}
+        onValueChange={setValue}
+        switchChecked={withoutMiddleName}
+        switchLabel="Нет отчества"
+        value={value}
+        variant="switch"
+      />
+    </div>
+  );
+}
 
 const surfaceStyle: CSSProperties = {
   display: 'grid',

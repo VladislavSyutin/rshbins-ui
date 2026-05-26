@@ -33,6 +33,8 @@ export type LegacyInputTextMask =
   | 'email'
   | 'captcha';
 
+export type LegacyInputTextVariant = 'standard' | 'switch';
+
 export interface LegacyInputTextProps
   extends Omit<
     InputHTMLAttributes<HTMLInputElement>,
@@ -59,7 +61,14 @@ export interface LegacyInputTextProps
   previewState?: LegacyInputTextPreviewState;
   showHelperIcon?: boolean;
   startIcon?: ReactNode;
+  switchChecked?: boolean;
+  switchDataId?: string;
+  switchDefaultChecked?: boolean;
+  switchLabel?: ReactNode;
+  switchOnChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSwitchChange?: (checked: boolean, event: ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
+  variant?: LegacyInputTextVariant;
   width?: string | number;
 }
 
@@ -72,6 +81,7 @@ declare const InputText: ForwardRefExoticComponent<
   LegacyInputTextProps & RefAttributes<LegacyInputTextHandle>
 > & {
   previewStates: Record<LegacyInputTextPreviewState, LegacyInputTextPreviewState>;
+  variants: Record<LegacyInputTextVariant, LegacyInputTextVariant>;
 };
 
 export default InputText;
