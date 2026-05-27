@@ -130,3 +130,12 @@ export type {
   LegacyToastProps,
   LegacyToastVariant
 } from '../legacy/components/toast';
+
+export { default as Modal } from '../legacy/components/modal';
+export type {
+  LegacyModalActionsRenderContext,
+  LegacyModalPlacement,
+  LegacyModalPreviewState,
+  LegacyModalProps,
+  LegacyModalVariant
+} from '../legacy/components/modal';

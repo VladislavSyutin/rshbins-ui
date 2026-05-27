@@ -21,3 +21,4 @@ export { default as RadioGroup } from '../legacy/components/radio-group/index.js
 export { default as SegmentedControl } from '../legacy/components/segmented-control/index.js';
 export { default as Tabs } from '../legacy/components/tabs/index.js';
 export { default as Toast } from '../legacy/components/toast/index.js';
+export { default as Modal } from '../legacy/components/modal/index.js';

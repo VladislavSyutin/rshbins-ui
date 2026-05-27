@@ -1,0 +1,215 @@
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { LegacyModalProps, LegacyModalVariant } from './index.js';
+import Modal from './index.js';
+import Button from '../button/index.js';
+
+const meta = {
+  title: 'Legacy/Components/Modal',
+  component: Modal,
+  tags: ['autodocs'],
+  args: {
+    captchaLabel: '',
+    closeOnPrimaryAction: true,
+    closeOnTertiaryAction: true,
+    dataId: 'legacy-modal',
+    description: 'Что-то пошло не так. Пожалуйста, повторите попытку позже.',
+    heading: 'Ошибка',
+    inputPlaceholder: 'Название',
+    placement: 'inline',
+    previewState: 'shown',
+    variant: 'default'
+  },
+  argTypes: {
+    actions: { control: false },
+    children: { control: false },
+    inputProps: { control: false },
+    onClose: { control: false, table: { disable: true } },
+    onPrimaryAction: { control: false, table: { disable: true } },
+    onRefreshCaptcha: { control: false, table: { disable: true } },
+    onSecondaryAction: { control: false, table: { disable: true } },
+    onTertiaryAction: { control: false, table: { disable: true } },
+    onVoiceCaptcha: { control: false, table: { disable: true } }
+  }
+} satisfies Meta<typeof Modal>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+const variants: Array<{ label: string; value: LegacyModalVariant }> = [
+  { label: 'Default', value: 'default' },
+  { label: 'Text input', value: 'text-input' },
+  { label: 'Captcha', value: 'captcha' }
+];
+
+function getPortalDocument(): Document {
+  try {
+    if (window.parent.document?.body && window.parent.document !== document) {
+      return window.parent.document;
+    }
+  } catch {
+    return document;
+  }
+
+  return document;
+}
+
+function syncPreviewStyles(targetDocument: Document) {
+  if (
+    targetDocument === document ||
+    targetDocument.head.querySelector('[data-rshb-legacy-modal-portal-style]')
+  ) {
+    return;
+  }
+
+  document.querySelectorAll('link[rel="stylesheet"], style').forEach((node) => {
+    const clone = node.cloneNode(true) as HTMLLinkElement | HTMLStyleElement;
+
+    clone.setAttribute('data-rshb-legacy-modal-portal-style', 'true');
+
+    if (node.tagName === 'LINK' && clone.tagName === 'LINK') {
+      (clone as HTMLLinkElement).href = (node as HTMLLinkElement).href;
+    }
+
+    targetDocument.head.appendChild(clone);
+  });
+}
+
+function ParentDocumentPortal({ children }: { children: ReactNode }) {
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const targetDocument = getPortalDocument();
+    syncPreviewStyles(targetDocument);
+
+    const root = targetDocument.createElement('div');
+
+    root.setAttribute('data-rshb-legacy-modal-portal-root', 'true');
+    targetDocument.body.appendChild(root);
+    setPortalRoot(root);
+
+    return () => {
+      root.remove();
+    };
+  }, []);
+
+  return portalRoot ? createPortal(children, portalRoot) : null;
+}
+
+function getStoryArgsForVariant(args: LegacyModalProps): LegacyModalProps {
+  if (args.variant === 'captcha') {
+    return {
+      ...args,
+      captchaLabel: args.captchaLabel || '8К7МН4',
+      closeOnPrimaryAction: false,
+      inputProps: {
+        dataId: 'modal-captcha-input',
+        defaultValue: ''
+      }
+    };
+  }
+
+  if (args.variant === 'text-input') {
+    return {
+      ...args,
+      closeOnPrimaryAction: false,
+      inputProps: {
+        dataId: 'modal-text-input',
+        defaultValue: ''
+      }
+    };
+  }
+
+  return args;
+}
+
+function InteractiveModalDemo(args: LegacyModalProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [modalKey, setModalKey] = useState(0);
+  const resolvedArgs = getStoryArgsForVariant(args);
+
+  function showModal() {
+    setModalKey((value) => value + 1);
+    setIsVisible(true);
+  }
+
+  return (
+    <div style={surfaceStyle}>
+      <div style={demoStyle}>
+        <Button buttonType="primary" onClick={showModal}>
+          Показать modal
+        </Button>
+        {isVisible ? (
+          <ParentDocumentPortal>
+            <Modal
+              {...resolvedArgs}
+              key={modalKey}
+              onClose={() => setIsVisible(false)}
+              placement="top-center"
+            />
+          </ParentDocumentPortal>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+export const Playground: Story = {
+  render: (args) => (
+    <div style={surfaceStyle}>
+      <Modal {...getStoryArgsForVariant(args)} />
+    </div>
+  )
+};
+
+export const Interactive: Story = {
+  args: {
+    variant: 'default'
+  },
+  render: (args) => <InteractiveModalDemo {...args} />
+};
+
+export const Overview: Story = {
+  parameters: {
+    controls: { disable: true }
+  },
+  render: (args) => (
+    <div style={surfaceStyle}>
+      <div style={overviewGridStyle}>
+        {variants.map((variant) => (
+          <Modal
+            {...getStoryArgsForVariant({ ...args, variant: variant.value })}
+            key={variant.value}
+          />
+        ))}
+      </div>
+    </div>
+  )
+};
+
+const surfaceStyle: CSSProperties = {
+  display: 'grid',
+  gap: '24px',
+  padding: '28px 36px 40px',
+  border: '1px dashed var(--color-border-default-default)',
+  borderRadius: '4px',
+  background: 'var(--color-background-default-primary)'
+};
+
+const overviewGridStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 360px))',
+  gap: '32px',
+  alignItems: 'start',
+  width: '100%'
+};
+
+const demoStyle: CSSProperties = {
+  display: 'grid',
+  alignItems: 'start',
+  gap: '16px',
+  justifyItems: 'start',
+  minHeight: '220px'
+};
