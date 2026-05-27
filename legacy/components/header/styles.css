@@ -1,4 +1,5 @@
 .rshb-legacy-header {
+  --rshb-legacy-header-fixed-padding: 62px;
   --rshb-legacy-header-inline-padding: var(--space-margins-outside-6xl);
   box-sizing: border-box;
   display: flex;
@@ -15,7 +16,7 @@
 
 .rshb-legacy-header[data-size='m'],
 .rshb-legacy-header[data-size='s'] {
-  --rshb-legacy-header-inline-padding: 62px;
+  --rshb-legacy-header-inline-padding: var(--rshb-legacy-header-fixed-padding);
 }
 
 .rshb-legacy-header[data-size='xs'] {
@@ -66,7 +67,7 @@
 
 @media (max-width: 1023px) {
   .rshb-legacy-header[data-size='responsive'] {
-    --rshb-legacy-header-inline-padding: 62px;
+    --rshb-legacy-header-inline-padding: var(--rshb-legacy-header-fixed-padding);
   }
 }
 

@@ -516,6 +516,7 @@
   --motion-move-up-direction: Up;
   --motion-move-up-curve: ease-out;
   --motion-move-up-duration: 150ms;
+  --z-index-overlay: 1000;
 }
 
 :root, .theme-light {

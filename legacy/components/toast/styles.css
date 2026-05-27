@@ -2,6 +2,9 @@
   --toast-background: var(--color-background-danger-default);
   --toast-color: var(--color-text-danger-on-danger);
   --toast-status-icon-size: 20px;
+  /* close-button interactive backgrounds; no exact primitive token for 12% white */
+  --toast-close-hover-bg: rgba(255, 255, 255, 0.12);
+  --toast-close-active-bg: var(--primitive-color-white-200);
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -30,7 +33,7 @@
 
 .rshb-legacy-toast[data-placement='top-center'] {
   position: fixed;
-  z-index: 1000;
+  z-index: var(--z-index-overlay);
   inset-block-start: var(--space-margins-inside-2xl);
   inset-inline-start: 50%;
   transform: translateX(-50%);
@@ -102,11 +105,11 @@
 }
 
 .rshb-legacy-toast__close:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--toast-close-hover-bg, rgba(255, 255, 255, 0.12));
 }
 
 .rshb-legacy-toast__close:active {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--toast-close-active-bg);
   transition-duration: var(--motion-pressed-duration);
   transition-timing-function: var(--motion-pressed-curve);
 }

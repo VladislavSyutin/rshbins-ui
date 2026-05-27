@@ -1,7 +1,7 @@
 .rshb-legacy-modal-layer {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--z-index-overlay);
   background: var(--color-background-default-overlay);
 }
 
@@ -31,7 +31,7 @@
 
 .rshb-legacy-modal[data-placement='top-center'] {
   position: fixed;
-  z-index: 1000;
+  z-index: var(--z-index-overlay);
   inset-block-start: var(--space-margins-inside-2xl);
   inset-inline-start: 50%;
   transform: translateX(-50%);

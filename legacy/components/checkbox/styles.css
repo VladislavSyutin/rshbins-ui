@@ -3,8 +3,8 @@
   --checkbox-border-color: var(--color-border-default-default);
   --checkbox-control-size: 24px;
   --checkbox-cursor: pointer;
-  --checkbox-icon-height: 11.6875px;
-  --checkbox-icon-width: 15.125px;
+  --checkbox-icon-height: 11.6875px; /* from Figma checkmark bbox */
+  --checkbox-icon-width: 15.125px; /* from Figma checkmark bbox */
   position: relative;
   display: inline-flex;
   align-items: flex-start;
@@ -19,8 +19,8 @@
 
 .rshb-legacy-checkbox[data-size='s'] {
   --checkbox-control-size: 20px;
-  --checkbox-icon-width: 12.375px;
-  --checkbox-icon-height: 9.5625px;
+  --checkbox-icon-width: 12.375px; /* from Figma checkmark bbox */
+  --checkbox-icon-height: 9.5625px; /* from Figma checkmark bbox */
 }
 
 .rshb-legacy-checkbox[data-disabled='true'] {
