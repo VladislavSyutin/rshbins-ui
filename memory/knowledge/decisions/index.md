@@ -11,4 +11,4 @@
 - [[memory/knowledge/decisions/adr-use-shared-spin-component-for-loading-states|ADR: Использовать shared Spin-компонент для loading states]]
 
 ## Последнее обновление
-- 2026-05-27 10:12 MSK
+- 2026-05-27 10:34 MSK

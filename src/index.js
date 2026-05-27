@@ -19,3 +19,4 @@ export { default as Spin } from '../legacy/components/spin/index.js';
 export { default as Switch } from '../legacy/components/switch/index.js';
 export { default as RadioGroup } from '../legacy/components/radio-group/index.js';
 export { default as SegmentedControl } from '../legacy/components/segmented-control/index.js';
+export { default as Tabs } from '../legacy/components/tabs/index.js';

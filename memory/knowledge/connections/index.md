@@ -6,4 +6,4 @@
 - [[memory/knowledge/connections/figma-artifacts-to-storybook|Figma-артефакты ↔ Storybook preview]]
 
 ## Последнее обновление
-- 2026-05-27 10:12 MSK
+- 2026-05-27 10:34 MSK

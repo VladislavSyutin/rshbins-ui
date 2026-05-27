@@ -28,6 +28,7 @@ const config: StorybookConfig = {
     '../legacy/components/gender/Gender.stories.tsx',
     '../legacy/components/radio-group/RadioGroup.stories.tsx',
     '../legacy/components/segmented-control/SegmentedControl.stories.tsx',
+    '../legacy/components/tabs/Tabs.stories.tsx',
     '../legacy/components/logo/Logo.stories.tsx',
     '../legacy/components/theme/Theme.stories.tsx',
     '../legacy/components/header/Header.stories.tsx'

@@ -112,3 +112,13 @@ export type {
   LegacySegmentedControlPreviewState,
   LegacySegmentedControlProps
 } from '../legacy/components/segmented-control';
+
+export { default as Tabs } from '../legacy/components/tabs';
+export type {
+  LegacyTabsChangeEvent,
+  LegacyTabsComponent,
+  LegacyTabsItemProps,
+  LegacyTabsOption,
+  LegacyTabsPreviewState,
+  LegacyTabsProps
+} from '../legacy/components/tabs';
