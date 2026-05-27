@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import './styles.css';
 import Button from '../button/index.js';
 import InputText from '../input-text/index.js';
-import arrowRotateLeftIcon from '../../../icons/arrow-rotate-left.svg';
-import volumeRegularIcon from '../../../icons/volume-regular.svg';
+import arrowRotateLeftIcon from '../../icons/arrow-rotate-left.js';
+import volumeRegularIcon from '../../icons/volume-regular.js';
 
 let idCounter = 0;
 

@@ -2,7 +2,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyButtonType, LegacyButtonProps } from './index.js';
 import Button from './index.js';
-import starIcon from '../../../icons/star-regular.svg';
+import starIcon from '../../icons/star-regular.js';
 
 /** Storybook-only: visual states for the preview matrix */
 type ButtonPreviewState =

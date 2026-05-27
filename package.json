@@ -16,7 +16,8 @@
   "scripts": {
     "storybook": "storybook dev -p 6008",
     "build-storybook": "storybook build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:icons": "node scripts/generate-legacy-icons.mjs"
   },
   "dependencies": {
     "@fontsource/ubuntu": "^5.2.8",

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacySegmentedControlOption, LegacySegmentedControlProps } from './index.js';
 import SegmentedControl from './index.js';
-import starIcon from '../../../icons/star-regular.svg';
+import starIcon from '../../icons/star-regular.js';
 
 /** Storybook-only: visual states for the preview matrix */
 type SegmentedControlPreviewState = 'default' | 'hover' | 'focused';

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../button/index.js';
 import './styles.css';
-import chevronDownIcon from '../../../icons/chevron-down.svg';
-import chevronLeftIcon from '../../../icons/chevron-left.svg';
-import chevronRightIcon from '../../../icons/chevron-right.svg';
+import chevronDownIcon from '../../icons/chevron-down.js';
+import chevronLeftIcon from '../../icons/chevron-left.js';
+import chevronRightIcon from '../../icons/chevron-right.js';
 
 const NAVIGATION_ANIMATION_DURATION_MS = 150;
 

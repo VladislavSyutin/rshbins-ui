@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyTabsProps } from './index.js';
 import Tabs from './index.js';
-import starIcon from '../../../icons/star-regular.svg';
+import starIcon from '../../icons/star-regular.js';
 
 /** Storybook-only: visual states for the preview matrix */
 type TabsPreviewState = 'default' | 'hover' | 'focused';

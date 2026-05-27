@@ -1,0 +1,8 @@
+// AUTO-GENERATED — do not edit by hand.
+// Source: icons/spinner.svg
+// Re-generate with: npm run build:icons
+
+var icon = 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGcgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDEyIDEyKSI+CiAgICA8Y2lyY2xlCiAgICAgIGN4PSIxMiIKICAgICAgY3k9IjEyIgogICAgICByPSIxMC45OCIKICAgICAgcGF0aExlbmd0aD0iMTAwIgogICAgICBzdHJva2U9ImN1cnJlbnRDb2xvciIKICAgICAgc3Ryb2tlLXdpZHRoPSIyLjA0IgogICAgICBzdHJva2UtZGFzaGFycmF5PSI4MCAyMCIKICAgIC8+CiAgPC9nPgo8L3N2Zz4K';
+
+module.exports = icon;
+module.exports.default = icon;

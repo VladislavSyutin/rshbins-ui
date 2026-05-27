@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.css';
 import Button from '../button/index.js';
-import moonIcon from '../../../icons/moon.svg';
-import sunIcon from '../../../icons/sun.svg';
+import moonIcon from '../../icons/moon.js';
+import sunIcon from '../../icons/sun.js';
 
 var DEFAULT_STORAGE_KEY = 'rshbins-ui-theme';
 

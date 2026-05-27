@@ -5,7 +5,7 @@ import Button from '../button/index.js';
 import Calendar from '../calendar/index.js';
 import InputText from '../input-text/index.js';
 import './styles.css';
-import calendarIcon from '../../../icons/calendar.svg';
+import calendarIcon from '../../icons/calendar.js';
 
 const DATE_MASK = 'дд.мм.гггг';
 const DATE_MAX_DIGITS = 8;

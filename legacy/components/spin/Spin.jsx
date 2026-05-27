@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.css';
-import spinnerIcon from '../../../icons/spinner.svg';
+import spinnerIcon from '../../icons/spinner.js';
 
 const SPIN_SIZES = {
   twoExtraSmall: '2xs',

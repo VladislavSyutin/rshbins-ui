@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import Button from '../button/index.js';
 import InputText from '../input-text/index.js';
 import './styles.css';
-import eyeIcon from '../../../icons/eye.svg';
-import eyeSlashIcon from '../../../icons/eye-slash.svg';
+import eyeIcon from '../../icons/eye.js';
+import eyeSlashIcon from '../../icons/eye-slash.js';
 
 const PASSWORD_ALLOWED_CHARACTER_PATTERN = /^[A-Za-z0-9()~!@#$%^&*_\-+='|"{}\[\]<>;:,.?\/]$/;
 const REQUIRED_ERROR = 'Обязательно для заполнения';

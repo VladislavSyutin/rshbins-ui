@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../button/index.js';
 import './styles.css';
-import xmarkIcon from '../../../icons/xmark.svg';
+import xmarkIcon from '../../icons/xmark.js';
 
 let idCounter = 0;
 
