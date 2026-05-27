@@ -10,21 +10,9 @@ const RADIO_GROUP_DIRECTIONS = {
   horizontal: 'horizontal'
 };
 
-const RADIO_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  focused: 'focused'
-};
-
 const RADIO_GROUP_DIRECTION_VALUES = [
   RADIO_GROUP_DIRECTIONS.vertical,
   RADIO_GROUP_DIRECTIONS.horizontal
-];
-
-const RADIO_PREVIEW_STATE_VALUES = [
-  RADIO_PREVIEW_STATES.default,
-  RADIO_PREVIEW_STATES.hover,
-  RADIO_PREVIEW_STATES.focused
 ];
 
 function generateGroupName() {
@@ -55,14 +43,12 @@ function RadioOption(props) {
     label,
     name,
     onChange,
-    previewState,
     readOnly,
     required,
     value
   } = props;
 
   const resolvedDisabled = Boolean(disabled);
-  const resolvedPreviewState = previewState || RADIO_PREVIEW_STATES.default;
   const previewStatus = resolvePreviewStatus({ checked: checked });
   const resolvedReadOnly = readOnly != null ? readOnly : checked && onChange == null;
 
@@ -71,7 +57,6 @@ function RadioOption(props) {
       className="rshb-legacy-radio-group__option"
       data-disabled={resolvedDisabled ? 'true' : 'false'}
       data-id={dataId}
-      data-preview-state={resolvedPreviewState}
       data-preview-status={previewStatus}
     >
       <input
@@ -106,7 +91,6 @@ function RadioGroup(props) {
     name,
     onChange,
     options,
-    previewState,
     required,
     role,
     value,
@@ -117,7 +101,6 @@ function RadioGroup(props) {
   const resolvedDirection = direction || RADIO_GROUP_DIRECTIONS.vertical;
   const resolvedDisabled = Boolean(disabled);
   const resolvedRequired = Boolean(required);
-  const resolvedPreviewState = previewState || RADIO_PREVIEW_STATES.default;
   const dataIdValue = dataId || rest['data-id'];
 
   const [generatedName] = useState(generateGroupName);
@@ -160,7 +143,6 @@ function RadioGroup(props) {
       className={classNames('rshb-legacy-radio-group', className)}
       data-direction={resolvedDirection}
       data-id={dataIdValue}
-      data-preview-state={resolvedPreviewState}
       role={role !== undefined ? role : 'radiogroup'}
     >
       {resolvedOptions.map(function (option, index) {
@@ -180,7 +162,6 @@ function RadioGroup(props) {
             onChange={function (event) {
               handleOptionChange(optionValue, event);
             }}
-            previewState={option.previewState || resolvedPreviewState}
             required={resolvedRequired}
             value={optionValue}
           />
@@ -193,7 +174,6 @@ function RadioGroup(props) {
 RadioGroup.displayName = 'RadioGroup';
 
 RadioGroup.directions = RADIO_GROUP_DIRECTIONS;
-RadioGroup.previewStates = RADIO_PREVIEW_STATES;
 
 RadioOption.propTypes = {
   checked: PropTypes.bool,
@@ -203,7 +183,6 @@ RadioOption.propTypes = {
   label: PropTypes.node,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  previewState: PropTypes.oneOf(RADIO_PREVIEW_STATE_VALUES),
   readOnly: PropTypes.bool,
   required: PropTypes.bool,
   value: PropTypes.string
@@ -222,10 +201,8 @@ RadioGroup.propTypes = {
     disabled: PropTypes.bool,
     id: PropTypes.string,
     label: PropTypes.node,
-    previewState: PropTypes.oneOf(RADIO_PREVIEW_STATE_VALUES),
     value: PropTypes.string.isRequired
   })).isRequired,
-  previewState: PropTypes.oneOf(RADIO_PREVIEW_STATE_VALUES),
   required: PropTypes.bool,
   role: PropTypes.string,
   value: PropTypes.string

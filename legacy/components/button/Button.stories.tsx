@@ -1,16 +1,20 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type {
-  LegacyButtonType,
-  LegacyButtonPreviewState,
-  LegacyButtonProps
-} from './index.js';
+import type { LegacyButtonType, LegacyButtonProps } from './index.js';
 import Button from './index.js';
 import starIcon from '../../../icons/star-regular.svg';
 
-type MatrixState = LegacyButtonPreviewState;
+/** Storybook-only: visual states for the preview matrix */
+type ButtonPreviewState =
+  | 'default'
+  | 'hover'
+  | 'focused'
+  | 'pressed'
+  | 'disabled'
+  | 'loading'
+  | 'selection';
 
-const overviewStates: MatrixState[] = [
+const overviewStates: ButtonPreviewState[] = [
   'default',
   'hover',
   'focused',
@@ -41,6 +45,38 @@ const starIconStyle: CSSProperties = {
   mask: `url("${starIcon}") center / contain no-repeat`
 };
 
+/**
+ * Storybook-only wrapper: injects data-state on the root button element so
+ * CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function ButtonWithPreviewState({
+  previewState,
+  children,
+  ...props
+}: LegacyButtonProps & { previewState?: ButtonPreviewState; children?: ReactNode }) {
+  const ref = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (ref.current && previewState && previewState !== 'default') {
+      ref.current.setAttribute('data-state', previewState);
+    }
+  }, [previewState]);
+
+  // For 'disabled' and 'loading' states, use the real props so the component
+  // renders correctly (disabled attribute, spinner, etc.)
+  if (previewState === 'disabled') {
+    return <Button {...props} disabled ref={ref}>{children}</Button>;
+  }
+  if (previewState === 'loading') {
+    return <Button {...props} loading ref={ref}>{children}</Button>;
+  }
+  if (previewState === 'selection') {
+    return <Button {...props} selected ref={ref}>{children}</Button>;
+  }
+
+  return <Button {...props} ref={ref}>{children}</Button>;
+}
+
 const meta = {
   title: 'Legacy/Components/Button',
   component: Button,
@@ -50,7 +86,6 @@ const meta = {
     dataId: 'legacy-button',
     iconOnly: false,
     name: 'Контент',
-    previewState: 'default',
     selected: false,
     size: 'm'
   },
@@ -73,16 +108,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-function storyStateProps(state: MatrixState): Partial<LegacyButtonProps> {
-  if (state === 'default') {
-    return {};
-  }
-
-  return {
-    previewState: state
-  };
-}
 
 export const Playground: Story = {
   render: (args: LegacyButtonProps) => (
@@ -111,42 +136,42 @@ export const Overview: Story = {
               <div key={`${variant.value}-${state}`} style={stackStyle}>
                 <p style={metaStyle}>{state}</p>
                 <div style={rowStyle}>
-                  <Button
-                    {...storyStateProps(state)}
+                  <ButtonWithPreviewState
                     buttonType={variant.value}
                     dataId={`legacy-button-${variant.value}-${state}-m`}
                     leadingIcon={<StarIcon />}
                     name="Контент"
+                    previewState={state}
                     size="m"
                     trailingIcon={<StarIcon />}
                   />
-                  <Button
-                    {...storyStateProps(state)}
+                  <ButtonWithPreviewState
                     aria-label={`${variant.label} ${state}`}
                     buttonType={variant.value}
                     dataId={`legacy-button-${variant.value}-${state}-m-icon`}
                     iconOnly
                     leadingIcon={<StarIcon />}
+                    previewState={state}
                     size="m"
                   />
                 </div>
                 <div style={rowStyle}>
-                  <Button
-                    {...storyStateProps(state)}
+                  <ButtonWithPreviewState
                     buttonType={variant.value}
                     dataId={`legacy-button-${variant.value}-${state}-s`}
                     leadingIcon={<StarIcon />}
                     name="Контент"
+                    previewState={state}
                     size="s"
                     trailingIcon={<StarIcon />}
                   />
-                  <Button
-                    {...storyStateProps(state)}
+                  <ButtonWithPreviewState
                     aria-label={`${variant.label} ${state} compact`}
                     buttonType={variant.value}
                     dataId={`legacy-button-${variant.value}-${state}-s-icon`}
                     iconOnly
                     leadingIcon={<StarIcon />}
+                    previewState={state}
                     size="s"
                   />
                 </div>

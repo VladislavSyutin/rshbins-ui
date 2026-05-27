@@ -8,14 +8,6 @@ export type LegacyButtonType =
 export type LegacyButtonNativeType = 'button' | 'submit' | 'reset';
 export type LegacyButtonCompatibleType = LegacyButtonNativeType | LegacyButtonType;
 export type LegacyButtonSize = 'm' | 's';
-export type LegacyButtonPreviewState =
-  | 'default'
-  | 'hover'
-  | 'focused'
-  | 'pressed'
-  | 'disabled'
-  | 'loading'
-  | 'selection';
 
 export interface LegacyButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
@@ -27,7 +19,6 @@ export interface LegacyButtonProps
   leadingIcon?: ReactNode;
   loading?: boolean;
   name?: string;
-  previewState?: LegacyButtonPreviewState;
   selected?: boolean;
   size?: LegacyButtonSize;
   trailingIcon?: ReactNode;
@@ -46,7 +37,6 @@ declare const Button: {
     medium: 'm';
     small: 's';
   };
-  previewStates: Record<LegacyButtonPreviewState, LegacyButtonPreviewState>;
 };
 
 export default Button;

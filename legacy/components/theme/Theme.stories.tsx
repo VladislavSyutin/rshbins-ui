@@ -1,15 +1,44 @@
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { LegacyThemeMode, LegacyThemePreviewState } from './index.js';
+import type { LegacyThemeMode, LegacyThemeProps } from './index.js';
 import Theme from './index.js';
+
+/** Storybook-only: visual states for the preview matrix */
+type ThemePreviewState = 'default' | 'hover' | 'pressed' | 'focused';
+
+const previewStates: ThemePreviewState[] = ['default', 'hover', 'pressed', 'focused'];
+
+/**
+ * Storybook-only wrapper: injects data-state on the underlying <button> element
+ * so CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function ThemeWithPreviewState({
+  previewState,
+  ...props
+}: LegacyThemeProps & { previewState?: ThemePreviewState }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !previewState || previewState === 'default') return;
+    const button = wrapperRef.current.firstElementChild as HTMLElement | null;
+    if (button) {
+      button.setAttribute('data-state', previewState);
+    }
+  }, [previewState]);
+
+  return (
+    <div ref={wrapperRef}>
+      <Theme {...props} />
+    </div>
+  );
+}
 
 const meta = {
   title: 'Legacy/Components/Theme',
   component: Theme,
   tags: ['autodocs'],
   args: {
-    applyToDocument: false,
-    previewState: 'default'
+    applyToDocument: false
   },
   argTypes: {
     onModeChange: {
@@ -26,8 +55,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-const previewStates: Array<LegacyThemePreviewState> = ['default', 'hover', 'pressed', 'focused'];
 
 export const Playground: Story = {
   render: (args) => {
@@ -57,7 +84,7 @@ export const Overview: Story = {
               {previewStates.map((state) => (
                 <div key={state} style={cellStyle}>
                   <p style={metaStyle}>{state}</p>
-                  <Theme applyToDocument={false} mode={mode} previewState={state} />
+                  <ThemeWithPreviewState applyToDocument={false} mode={mode} previewState={state} />
                 </div>
               ))}
             </div>

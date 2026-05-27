@@ -1,9 +1,12 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { LegacyCheckboxPreviewState, LegacyCheckboxProps, LegacyCheckboxSize } from './index.js';
+import type { LegacyCheckboxProps, LegacyCheckboxSize } from './index.js';
 import Checkbox from './index.js';
 
-const previewStates: LegacyCheckboxPreviewState[] = ['default', 'hover', 'focused'];
+/** Storybook-only: visual states for the preview matrix */
+type CheckboxPreviewState = 'default' | 'hover' | 'focused';
+
+const previewStates: CheckboxPreviewState[] = ['default', 'hover', 'focused'];
 const sizes: Array<{ label: string; value: LegacyCheckboxSize }> = [
   { label: 'Size M', value: 'm' },
   { label: 'Size S', value: 's' },
@@ -15,6 +18,38 @@ const variants: Array<{ label: string; value: MatrixVariant }> = [
   { label: 'Error', value: 'error' },
 ];
 
+/**
+ * Storybook-only wrapper: injects data-preview-state on the root label element
+ * so CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function CheckboxWithPreviewState({
+  previewState,
+  ...props
+}: LegacyCheckboxProps & { previewState?: CheckboxPreviewState }) {
+  const ref = useRef<HTMLLabelElement | null>(null);
+
+  useEffect(() => {
+    if (ref.current && previewState && previewState !== 'default') {
+      ref.current.setAttribute('data-preview-state', previewState);
+    }
+  }, [previewState]);
+
+  // Checkbox renders a <label> as root; use data-id prop to locate it via ref
+  // We pass a className with a unique marker and then find it via the ref trick
+  // Actually, Checkbox doesn't accept a ref — we attach it via a wrapper div
+  return (
+    <div
+      ref={(node) => {
+        ref.current = node ? (node.firstElementChild as HTMLLabelElement) : null;
+        if (ref.current && previewState && previewState !== 'default') {
+          ref.current.setAttribute('data-preview-state', previewState);
+        }
+      }}
+    >
+      <Checkbox {...props} />
+    </div>
+  );
+}
 
 const meta = {
   title: 'Legacy/Components/Checkbox',
@@ -23,7 +58,6 @@ const meta = {
   args: {
     invalid: false,
     label: 'Контент',
-    previewState: 'default',
     size: 'm',
   },
 } satisfies Meta<typeof Checkbox>;
@@ -34,8 +68,8 @@ type Story = StoryObj<typeof meta>;
 
 function matrixProps(
   variant: MatrixVariant,
-  previewState: LegacyCheckboxPreviewState,
-): Partial<LegacyCheckboxProps> {
+  previewState: CheckboxPreviewState,
+): LegacyCheckboxProps & { previewState?: CheckboxPreviewState } {
   if (variant === 'active') {
     return { checked: true, previewState, readOnly: true };
   }
@@ -72,7 +106,7 @@ export const Overview: Story = {
                 {variant.label}
               </p>,
               ...previewStates.map((state) => (
-                <Checkbox
+                <CheckboxWithPreviewState
                   {...matrixProps(variant.value, state)}
                   key={`${size.value}-${variant.value}-${state}`}
                   label="Контент"

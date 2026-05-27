@@ -19,15 +19,8 @@ const TOAST_PLACEMENTS = {
 
 const TOAST_PLACEMENT_VALUES = [TOAST_PLACEMENTS.inline, TOAST_PLACEMENTS.topCenter];
 
-const TOAST_PREVIEW_STATES = {
-  shown: 'shown',
-  closing: 'closing'
-};
-
-const TOAST_PREVIEW_STATE_VALUES = [
-  TOAST_PREVIEW_STATES.shown,
-  TOAST_PREVIEW_STATES.closing
-];
+const TOAST_CLOSING_STATE = 'closing';
+const TOAST_SHOWN_STATE = 'shown';
 
 function readMotionUpDuration() {
   try {
@@ -95,7 +88,6 @@ function Toast(props) {
     dataId,
     onClose,
     placement,
-    previewState,
     role,
     variant,
     ...rest
@@ -106,7 +98,6 @@ function Toast(props) {
   const resolvedCloseLabel = closeLabel !== undefined ? closeLabel : 'Закрыть уведомление';
   const resolvedClosable = closable !== undefined ? closable : true;
   const resolvedPlacement = placement || TOAST_PLACEMENTS.inline;
-  const resolvedPreviewState = previewState || TOAST_PREVIEW_STATES.shown;
   const resolvedVariant = variant || TOAST_VARIANTS.danger;
   const resolvedRole = role != null ? role : (resolvedVariant === TOAST_VARIANTS.danger ? 'alert' : 'status');
   const dataIdValue = dataId || rest['data-id'];
@@ -114,7 +105,7 @@ function Toast(props) {
   const [isVisible, setIsVisible] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
   const closeTimerRef = useRef(null);
-  const activePreviewState = isClosing ? TOAST_PREVIEW_STATES.closing : resolvedPreviewState;
+  const activePreviewState = isClosing ? TOAST_CLOSING_STATE : TOAST_SHOWN_STATE;
   const StatusIcon = resolvedVariant === TOAST_VARIANTS.success ? CheckIcon : TriangleExclamationIcon;
 
   function clearCloseTimer() {
@@ -127,7 +118,7 @@ function Toast(props) {
   }
 
   function requestClose() {
-    if (isClosing || resolvedPreviewState === TOAST_PREVIEW_STATES.closing || !isVisible) {
+    if (isClosing || !isVisible) {
       return;
     }
 
@@ -150,7 +141,7 @@ function Toast(props) {
   useEffect(function () {
     if (
       resolvedAutoCloseDuration === null ||
-      activePreviewState === TOAST_PREVIEW_STATES.closing ||
+      isClosing ||
       !isVisible
     ) {
       return undefined;
@@ -161,7 +152,7 @@ function Toast(props) {
     return function () {
       window.clearTimeout(timerId);
     };
-  }, [resolvedAutoCloseDuration, activePreviewState, isVisible]);
+  }, [resolvedAutoCloseDuration, isClosing, isVisible]);
 
   if (!isVisible) {
     return null;
@@ -201,7 +192,6 @@ Toast.displayName = 'Toast';
 
 Toast.variants = TOAST_VARIANTS;
 Toast.placements = TOAST_PLACEMENTS;
-Toast.previewStates = TOAST_PREVIEW_STATES;
 
 Toast.propTypes = {
   autoCloseDuration: PropTypes.number,
@@ -212,7 +202,6 @@ Toast.propTypes = {
   dataId: PropTypes.string,
   onClose: PropTypes.func,
   placement: PropTypes.oneOf(TOAST_PLACEMENT_VALUES),
-  previewState: PropTypes.oneOf(TOAST_PREVIEW_STATE_VALUES),
   role: PropTypes.string,
   variant: PropTypes.oneOf(TOAST_VARIANT_VALUES)
 };

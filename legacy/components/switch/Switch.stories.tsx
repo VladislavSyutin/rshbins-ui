@@ -1,9 +1,38 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { LegacySwitchPreviewState, LegacySwitchProps } from './index.js';
+import type { LegacySwitchProps } from './index.js';
 import Switch from './index.js';
 
-const previewStates: LegacySwitchPreviewState[] = ['default', 'hover', 'focused'];
+/** Storybook-only: visual states for the preview matrix */
+type SwitchPreviewState = 'default' | 'hover' | 'focused';
+
+const previewStates: SwitchPreviewState[] = ['default', 'hover', 'focused'];
+
+/**
+ * Storybook-only wrapper: injects data-preview-state on the root label element
+ * so CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function SwitchWithPreviewState({
+  previewState,
+  ...props
+}: LegacySwitchProps & { previewState?: SwitchPreviewState }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !previewState || previewState === 'default') return;
+    const label = wrapperRef.current.firstElementChild as HTMLElement | null;
+    if (label) {
+      label.setAttribute('data-preview-state', previewState);
+    }
+  }, [previewState]);
+
+  return (
+    <div ref={wrapperRef}>
+      <Switch {...props} />
+    </div>
+  );
+}
+
 const meta = {
   title: 'Legacy/Components/Switch',
   component: Switch,
@@ -11,8 +40,7 @@ const meta = {
   args: {
     dataId: 'legacy-switch',
     defaultChecked: true,
-    label: 'Контент',
-    previewState: 'default'
+    label: 'Контент'
   },
   argTypes: {
     checked: {
@@ -33,14 +61,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-function matrixProps(previewState: LegacySwitchPreviewState): Partial<LegacySwitchProps> {
-  return {
-    checked: true,
-    previewState: previewState,
-    readOnly: true
-  };
-}
 
 export const Playground: Story = {
   render: ({ defaultChecked = false, onChange, ...args }: LegacySwitchProps) => {
@@ -86,11 +106,13 @@ export const Overview: Story = {
           ))}
           <p style={metaStyle}>Active</p>
           {previewStates.map((state) => (
-            <Switch
-              {...matrixProps(state)}
+            <SwitchWithPreviewState
+              checked
               dataId={'legacy-switch-active-' + state}
               key={'active-' + state}
               label="Контент"
+              previewState={state}
+              readOnly
             />
           ))}
         </div>

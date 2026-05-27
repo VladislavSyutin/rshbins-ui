@@ -33,15 +33,6 @@ const MODAL_PLACEMENT_VALUES = [
   MODAL_PLACEMENTS.topCenter
 ];
 
-const MODAL_PREVIEW_STATES = {
-  shown: 'shown',
-  closing: 'closing'
-};
-
-const MODAL_PREVIEW_STATE_VALUES = [
-  MODAL_PREVIEW_STATES.shown,
-  MODAL_PREVIEW_STATES.closing
-];
 
 function generateId() {
   idCounter += 1;
@@ -85,6 +76,8 @@ function Modal(props) {
   const {
     actions,
     captchaLabel,
+    captchaRefreshLabel,
+    captchaVoiceLabel,
     children,
     className,
     closeOnPrimaryAction,
@@ -101,7 +94,6 @@ function Modal(props) {
     onTertiaryAction,
     onVoiceCaptcha,
     placement,
-    previewState,
     primaryActionLabel,
     role,
     secondaryActionLabel,
@@ -121,8 +113,11 @@ function Modal(props) {
   const resolvedHeading = heading !== undefined ? heading : 'Ошибка';
   const resolvedInputPlaceholder =
     inputPlaceholder !== undefined ? inputPlaceholder : 'Название';
+  const resolvedCaptchaRefreshLabel =
+    captchaRefreshLabel !== undefined ? captchaRefreshLabel : 'Обновить капчу';
+  const resolvedCaptchaVoiceLabel =
+    captchaVoiceLabel !== undefined ? captchaVoiceLabel : 'Озвучить капчу';
   const resolvedPlacement = placement || MODAL_PLACEMENTS.inline;
-  const resolvedPreviewState = previewState || MODAL_PREVIEW_STATES.shown;
   const resolvedVariant = variant || MODAL_VARIANTS.default;
   const dataIdValue = dataId || rest['data-id'];
 
@@ -135,9 +130,7 @@ function Modal(props) {
     return generateId() + '-description';
   });
 
-  const activePreviewState = isClosing
-    ? MODAL_PREVIEW_STATES.closing
-    : resolvedPreviewState;
+  const activePreviewState = isClosing ? 'closing' : 'shown';
   const resolvedPrimaryActionLabel =
     primaryActionLabel !== undefined
       ? primaryActionLabel
@@ -168,11 +161,7 @@ function Modal(props) {
   }
 
   function requestClose() {
-    if (
-      !onClose ||
-      isClosing ||
-      resolvedPreviewState === MODAL_PREVIEW_STATES.closing
-    ) {
+    if (!onClose || isClosing) {
       return;
     }
 
@@ -249,7 +238,7 @@ function Modal(props) {
                 ) : null}
               </div>
               <Button
-                aria-label="Обновить капчу"
+                aria-label={resolvedCaptchaRefreshLabel}
                 buttonType={Button.buttonTypes.flatPrimary}
                 className="rshb-legacy-modal__icon-action"
                 iconOnly
@@ -258,7 +247,7 @@ function Modal(props) {
                 type="button"
               />
               <Button
-                aria-label="Озвучить капчу"
+                aria-label={resolvedCaptchaVoiceLabel}
                 buttonType={Button.buttonTypes.flatPrimary}
                 className="rshb-legacy-modal__icon-action"
                 iconOnly
@@ -327,11 +316,12 @@ Modal.displayName = 'Modal';
 
 Modal.variants = MODAL_VARIANTS;
 Modal.placements = MODAL_PLACEMENTS;
-Modal.previewStates = MODAL_PREVIEW_STATES;
 
 Modal.propTypes = {
   actions: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   captchaLabel: PropTypes.node,
+  captchaRefreshLabel: PropTypes.string,
+  captchaVoiceLabel: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
   closeOnPrimaryAction: PropTypes.bool,
@@ -348,7 +338,6 @@ Modal.propTypes = {
   onTertiaryAction: PropTypes.func,
   onVoiceCaptcha: PropTypes.func,
   placement: PropTypes.oneOf(MODAL_PLACEMENT_VALUES),
-  previewState: PropTypes.oneOf(MODAL_PREVIEW_STATE_VALUES),
   primaryActionLabel: PropTypes.string,
   role: PropTypes.string,
   secondaryActionLabel: PropTypes.string,

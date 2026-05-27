@@ -2,7 +2,6 @@ import type { HTMLAttributes, ReactNode } from 'react';
 
 export type LegacyToastVariant = 'danger' | 'success';
 export type LegacyToastPlacement = 'inline' | 'top-center';
-export type LegacyToastPreviewState = 'shown' | 'closing';
 
 export interface LegacyToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   autoCloseDuration?: number | null;
@@ -13,7 +12,6 @@ export interface LegacyToastProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   dataId?: string;
   onClose?: () => void;
   placement?: LegacyToastPlacement;
-  previewState?: LegacyToastPreviewState;
   role?: string;
   variant?: LegacyToastVariant;
 }
@@ -24,6 +22,5 @@ export namespace Toast {
   const displayName: string;
   const variants: Record<LegacyToastVariant, LegacyToastVariant>;
   const placements: { inline: 'inline'; topCenter: 'top-center' };
-  const previewStates: Record<LegacyToastPreviewState, LegacyToastPreviewState>;
   const propTypes: object;
 }

@@ -7,21 +7,6 @@ import xmarkIcon from '../../../icons/xmark.svg';
 
 let idCounter = 0;
 
-const INPUT_PREVIEW_STATES = [
-  'default',
-  'hover',
-  'focused',
-  'typing',
-  'entered',
-  'entered-hover',
-  'error',
-  'error-hover',
-  'error-entered',
-  'error-entered-hover',
-  'disabled',
-  'disabled-entered',
-  'keyboard-focused'
-];
 
 function generateInputId() {
   idCounter += 1;
@@ -90,6 +75,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     className,
     clearButtonDataId,
     clearable,
+    clearLabel,
     contentClassName,
     controlClassName,
     customInputStyle,
@@ -98,7 +84,6 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     disabled,
     endAdornment,
     error,
-    helperIcon,
     helperText,
     hideControlValue,
     id,
@@ -114,9 +99,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     onPointerDown,
     onValueChange,
     prefix,
-    previewState,
     readOnly,
-    showHelperIcon,
     startIcon,
     style,
     type,
@@ -126,6 +109,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
   } = props;
 
   const resolvedClearable = clearable != null ? clearable : true;
+  const resolvedClearLabel = clearLabel !== undefined ? clearLabel : 'Очистить поле';
   const resolvedLabel = normalizeRenderableNode(label) != null ? label : 'Название';
   const resolvedPrefix = normalizeRenderableNode(prefix);
   const resolvedMaskOverlay = normalizeRenderableNode(maskOverlay);
@@ -156,17 +140,13 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     readOnly != null
       ? readOnly
       : isControlled && onChange == null && onValueChange == null;
-  const isInteractive = previewState == null;
-
-  const visualState = isInteractive
-    ? resolveInteractiveState({
-        disabled: resolvedDisabled,
-        hasKeyboardFocus: hasKeyboardFocus,
-        invalid: resolvedInvalid,
-        isFocused: isFocused,
-        value: resolvedValue
-      })
-    : previewState;
+  const visualState = resolveInteractiveState({
+    disabled: resolvedDisabled,
+    hasKeyboardFocus: hasKeyboardFocus,
+    invalid: resolvedInvalid,
+    isFocused: isFocused,
+    value: resolvedValue
+  });
 
   const isErrorState =
     visualState === 'error' ||
@@ -190,7 +170,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
     resolvedClearable &&
     !resolvedDisabled &&
     !resolvedReadOnly &&
-    (isInteractive ? isFocused && resolvedValue.length > 0 : visualState === 'typing');
+    isFocused && resolvedValue.length > 0;
   const shouldHideControlValue = Boolean(hideControlValue) && (isEnteredState || isFocusedState);
   const describedBy = [rest['aria-describedby'], resolvedHelperText ? helperId : undefined]
     .filter(Boolean)
@@ -324,7 +304,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
                 onPointerDown(event);
               }
             }}
-            readOnly={!isInteractive || resolvedReadOnly}
+            readOnly={resolvedReadOnly}
             ref={inputRef}
             type={type || 'text'}
             value={resolvedValue}
@@ -337,7 +317,7 @@ const InputText = React.forwardRef(function InputText(props, ref) {
         </div>
         {showsClearControl ? (
           <Button
-            aria-label="Очистить поле"
+            aria-label={resolvedClearLabel}
             buttonType={Button.buttonTypes.flatSecondary}
             className="rshb-legacy-input-text__clear"
             dataId={resolvedClearButtonDataId}
@@ -363,16 +343,12 @@ const InputText = React.forwardRef(function InputText(props, ref) {
 
 InputText.displayName = 'InputText';
 
-InputText.previewStates = INPUT_PREVIEW_STATES.reduce(function (states, state) {
-  states[state] = state;
-  return states;
-}, {});
-
 InputText.propTypes = {
   changeOnFocus: PropTypes.func,
   className: PropTypes.string,
   clearButtonDataId: PropTypes.string,
   clearable: PropTypes.bool,
+  clearLabel: PropTypes.string,
   contentClassName: PropTypes.string,
   controlClassName: PropTypes.string,
   customInputStyle: PropTypes.string,
@@ -381,7 +357,6 @@ InputText.propTypes = {
   disabled: PropTypes.bool,
   endAdornment: PropTypes.node,
   error: PropTypes.bool,
-  helperIcon: PropTypes.node,
   helperText: PropTypes.node,
   hideControlValue: PropTypes.bool,
   id: PropTypes.string,
@@ -397,9 +372,7 @@ InputText.propTypes = {
   onPointerDown: PropTypes.func,
   onValueChange: PropTypes.func,
   prefix: PropTypes.node,
-  previewState: PropTypes.oneOf(INPUT_PREVIEW_STATES),
   readOnly: PropTypes.bool,
-  showHelperIcon: PropTypes.bool,
   startIcon: PropTypes.node,
   style: PropTypes.object,
   type: PropTypes.string,

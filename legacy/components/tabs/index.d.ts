@@ -7,7 +7,6 @@ import type {
 } from 'react';
 
 export type LegacyTabsActivationMode = 'automatic' | 'manual';
-export type LegacyTabsPreviewState = 'default' | 'hover' | 'focused';
 export type LegacyTabsChangeEvent =
   | KeyboardEvent<HTMLButtonElement>
   | MouseEvent<HTMLButtonElement>;
@@ -19,7 +18,6 @@ export interface LegacyTabsOption {
   label: ReactNode;
   leadingIcon?: ReactNode;
   panelId?: string;
-  previewState?: LegacyTabsPreviewState;
   trailingIcon?: ReactNode;
   value: string;
 }
@@ -28,7 +26,6 @@ export interface LegacyTabsItemProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'disabled' | 'role'> {
   className?: string;
   dataId?: string;
-  previewState?: LegacyTabsPreviewState;
 }
 
 export interface LegacyTabsProps
@@ -45,7 +42,6 @@ export interface LegacyTabsProps
 
 export interface LegacyTabsComponent {
   (props: LegacyTabsProps): JSX.Element;
-  previewStates: Record<LegacyTabsPreviewState, LegacyTabsPreviewState>;
 }
 
 declare const Tabs: LegacyTabsComponent;

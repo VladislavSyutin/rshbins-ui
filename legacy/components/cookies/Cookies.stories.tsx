@@ -15,7 +15,6 @@ const meta = {
     description: 'Описание',
     heading: 'Заголовок',
     placement: 'inline',
-    previewState: 'shown',
     primaryActionLabel: 'Контент',
     secondaryActionLabel: 'Контент',
     size: 's'

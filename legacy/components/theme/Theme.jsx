@@ -15,20 +15,6 @@ const THEME_MODES = {
 
 const THEME_MODE_VALUES = [THEME_MODES.light, THEME_MODES.dark];
 
-const THEME_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  pressed: 'pressed',
-  focused: 'focused'
-};
-
-const THEME_PREVIEW_STATE_VALUES = [
-  THEME_PREVIEW_STATES.default,
-  THEME_PREVIEW_STATES.hover,
-  THEME_PREVIEW_STATES.pressed,
-  THEME_PREVIEW_STATES.focused
-];
-
 function getDocumentMode() {
   if (typeof document === 'undefined') {
     return undefined;
@@ -89,7 +75,6 @@ function Theme(props) {
     mode,
     onClick,
     onModeChange,
-    previewState,
     storageKey,
     type,
     ...rest
@@ -97,7 +82,6 @@ function Theme(props) {
 
   const resolvedApplyToDocument = applyToDocument !== undefined ? applyToDocument : true;
   const resolvedDisabled = Boolean(disabled);
-  const resolvedPreviewState = previewState || THEME_PREVIEW_STATES.default;
   const resolvedStorageKey = storageKey || DEFAULT_STORAGE_KEY;
   const resolvedType = type || 'button';
 
@@ -152,7 +136,6 @@ function Theme(props) {
       iconOnly
       leadingIcon={<ThemeIcon key={resolvedMode} src={resolvedMode === THEME_MODES.dark ? sunIcon : moonIcon} />}
       onClick={handleClick}
-      previewState={resolvedPreviewState}
       size="s"
       type={resolvedType}
       variant="flat-primary"
@@ -163,7 +146,6 @@ function Theme(props) {
 Theme.displayName = 'Theme';
 
 Theme.modes = THEME_MODES;
-Theme.previewStates = THEME_PREVIEW_STATES;
 
 Theme.propTypes = {
   applyToDocument: PropTypes.bool,
@@ -173,7 +155,6 @@ Theme.propTypes = {
   disabled: PropTypes.bool,
   mode: PropTypes.oneOf(THEME_MODE_VALUES),
   onModeChange: PropTypes.func,
-  previewState: PropTypes.oneOf(THEME_PREVIEW_STATE_VALUES),
   storageKey: PropTypes.string,
   type: PropTypes.string
 };

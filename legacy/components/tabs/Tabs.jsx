@@ -5,18 +5,6 @@ import './styles.css';
 
 var groupIdCounter = 0;
 
-const TAB_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  focused: 'focused'
-};
-
-const TAB_PREVIEW_STATE_VALUES = [
-  TAB_PREVIEW_STATES.default,
-  TAB_PREVIEW_STATES.hover,
-  TAB_PREVIEW_STATES.focused
-];
-
 function generateGroupId() {
   groupIdCounter += 1;
   return 'rshb-legacy-tabs-' + groupIdCounter;
@@ -66,7 +54,6 @@ const TabsItem = React.forwardRef(function TabsItem(props, ref) {
     disabled,
     label,
     leadingIcon,
-    previewState,
     selected,
     trailingIcon,
     type,
@@ -79,7 +66,6 @@ const TabsItem = React.forwardRef(function TabsItem(props, ref) {
       aria-selected={selected}
       className={classNames('rshb-legacy-tab', 'rshb-legacy-tabs__item', className)}
       data-id={dataId || rest['data-id']}
-      data-preview-state={previewState || TAB_PREVIEW_STATES.default}
       data-selected={selected ? 'true' : 'false'}
       disabled={Boolean(disabled)}
       ref={ref}
@@ -236,7 +222,6 @@ function Tabs(props) {
                 selectTab(option.value, event);
               }
             }}
-            previewState={option.previewState || mergedTabProps.previewState}
             ref={function (node) {
               tabRefs.current[index] = node;
             }}
@@ -251,7 +236,6 @@ function Tabs(props) {
 }
 
 Tabs.displayName = 'Tabs';
-Tabs.previewStates = TAB_PREVIEW_STATES;
 
 TabsItem.propTypes = {
   className: PropTypes.string,
@@ -259,7 +243,6 @@ TabsItem.propTypes = {
   disabled: PropTypes.bool,
   label: PropTypes.node,
   leadingIcon: PropTypes.node,
-  previewState: PropTypes.oneOf(TAB_PREVIEW_STATE_VALUES),
   selected: PropTypes.bool,
   trailingIcon: PropTypes.node,
   type: PropTypes.string
@@ -279,7 +262,6 @@ Tabs.propTypes = {
     label: PropTypes.node.isRequired,
     leadingIcon: PropTypes.node,
     panelId: PropTypes.string,
-    previewState: PropTypes.oneOf(TAB_PREVIEW_STATE_VALUES),
     trailingIcon: PropTypes.node,
     value: PropTypes.string.isRequired
   })).isRequired,
@@ -287,7 +269,6 @@ Tabs.propTypes = {
     className: PropTypes.string,
     dataId: PropTypes.string,
     onClick: PropTypes.func,
-    previewState: PropTypes.oneOf(TAB_PREVIEW_STATE_VALUES),
     type: PropTypes.string
   }),
   value: PropTypes.string

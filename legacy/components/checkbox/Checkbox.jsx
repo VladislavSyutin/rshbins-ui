@@ -3,18 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.css';
 
-const CHECKBOX_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  focused: 'focused'
-};
-
-const CHECKBOX_PREVIEW_STATE_VALUES = [
-  CHECKBOX_PREVIEW_STATES.default,
-  CHECKBOX_PREVIEW_STATES.hover,
-  CHECKBOX_PREVIEW_STATES.focused
-];
-
 const CHECKBOX_SIZES = ['m', 's'];
 
 function resolvePreviewStatus(props) {
@@ -60,7 +48,6 @@ function Checkbox(props) {
     invalid,
     label,
     onChange,
-    previewState,
     readOnly,
     size,
     ...rest
@@ -69,7 +56,6 @@ function Checkbox(props) {
   const resolvedDisabled = Boolean(disabled);
   const resolvedInvalid = Boolean(invalid);
   const resolvedSize = size || 'm';
-  const resolvedPreviewState = previewState || CHECKBOX_PREVIEW_STATES.default;
   const dataIdValue = dataId || rest['data-id'];
 
   const previewStatus = resolvePreviewStatus({
@@ -86,7 +72,6 @@ function Checkbox(props) {
       className={classNames('rshb-legacy-checkbox', className)}
       data-disabled={resolvedDisabled ? 'true' : 'false'}
       data-id={dataIdValue}
-      data-preview-state={resolvedPreviewState}
       data-preview-status={previewStatus}
       data-size={resolvedSize}
     >
@@ -115,8 +100,6 @@ function Checkbox(props) {
 
 Checkbox.displayName = 'Checkbox';
 
-Checkbox.previewStates = CHECKBOX_PREVIEW_STATES;
-
 Checkbox.propTypes = {
   checked: PropTypes.bool,
   className: PropTypes.string,
@@ -126,7 +109,6 @@ Checkbox.propTypes = {
   invalid: PropTypes.bool,
   label: PropTypes.node,
   onChange: PropTypes.func,
-  previewState: PropTypes.oneOf(CHECKBOX_PREVIEW_STATE_VALUES),
   readOnly: PropTypes.bool,
   size: PropTypes.oneOf(CHECKBOX_SIZES)
 };

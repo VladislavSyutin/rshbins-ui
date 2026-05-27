@@ -5,17 +5,6 @@ import './styles.css';
 
 var idCounter = 0;
 
-const SEGMENT_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  focused: 'focused'
-};
-
-const SEGMENT_PREVIEW_STATE_VALUES = [
-  SEGMENT_PREVIEW_STATES.default,
-  SEGMENT_PREVIEW_STATES.hover,
-  SEGMENT_PREVIEW_STATES.focused
-];
 
 function generateGroupName() {
   idCounter += 1;
@@ -47,7 +36,6 @@ function SegmentOption(props) {
     leadingIcon,
     name,
     onChange,
-    previewState,
     readOnly,
     required,
     trailingIcon,
@@ -55,7 +43,6 @@ function SegmentOption(props) {
   } = props;
 
   const resolvedDisabled = Boolean(disabled);
-  const resolvedPreviewState = previewState || SEGMENT_PREVIEW_STATES.default;
   const previewStatus = resolvePreviewStatus({ checked: checked });
   const resolvedReadOnly = readOnly != null ? readOnly : checked && onChange == null;
 
@@ -64,7 +51,6 @@ function SegmentOption(props) {
       className={classNames('rshb-legacy-segment', 'rshb-legacy-segmented-control__segment', className)}
       data-disabled={resolvedDisabled ? 'true' : 'false'}
       data-id={dataId}
-      data-preview-state={resolvedPreviewState}
       data-preview-status={previewStatus}
     >
       <input
@@ -105,7 +91,6 @@ function SegmentedControl(props) {
     name,
     onChange,
     options,
-    previewState,
     required,
     role,
     value,
@@ -115,7 +100,6 @@ function SegmentedControl(props) {
   const resolvedOptions = Array.isArray(options) ? options : [];
   const resolvedDisabled = Boolean(disabled);
   const resolvedRequired = Boolean(required);
-  const resolvedPreviewState = previewState || SEGMENT_PREVIEW_STATES.default;
   const dataIdValue = dataId || rest['data-id'];
 
   const [generatedName] = useState(generateGroupName);
@@ -157,7 +141,6 @@ function SegmentedControl(props) {
       aria-required={resolvedRequired || undefined}
       className={classNames('rshb-legacy-segmented-control', className)}
       data-id={dataIdValue}
-      data-preview-state={resolvedPreviewState}
       role={role !== undefined ? role : 'radiogroup'}
     >
       {resolvedOptions.map(function (option, index) {
@@ -177,7 +160,6 @@ function SegmentedControl(props) {
             onChange={function (event) {
               handleOptionChange(optionValue, event);
             }}
-            previewState={option.previewState || resolvedPreviewState}
             required={resolvedRequired}
             trailingIcon={option.trailingIcon}
             value={optionValue}
@@ -190,8 +172,6 @@ function SegmentedControl(props) {
 
 SegmentedControl.displayName = 'SegmentedControl';
 
-SegmentedControl.previewStates = SEGMENT_PREVIEW_STATES;
-
 SegmentOption.propTypes = {
   checked: PropTypes.bool,
   className: PropTypes.string,
@@ -202,7 +182,6 @@ SegmentOption.propTypes = {
   leadingIcon: PropTypes.node,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  previewState: PropTypes.oneOf(SEGMENT_PREVIEW_STATE_VALUES),
   readOnly: PropTypes.bool,
   required: PropTypes.bool,
   trailingIcon: PropTypes.node,
@@ -222,11 +201,9 @@ SegmentedControl.propTypes = {
     id: PropTypes.string,
     label: PropTypes.node.isRequired,
     leadingIcon: PropTypes.node,
-    previewState: PropTypes.oneOf(SEGMENT_PREVIEW_STATE_VALUES),
     trailingIcon: PropTypes.node,
     value: PropTypes.string.isRequired
   })).isRequired,
-  previewState: PropTypes.oneOf(SEGMENT_PREVIEW_STATE_VALUES),
   required: PropTypes.bool,
   role: PropTypes.string,
   value: PropTypes.string

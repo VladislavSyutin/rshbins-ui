@@ -1,14 +1,12 @@
 import type { ButtonHTMLAttributes, HTMLAttributes } from 'react';
 
 export type LegacyCalendarView = 'day' | 'month' | 'year';
-export type LegacyCalendarItemPreviewState = 'default' | 'hover' | 'focused';
 
 export interface LegacyCalendarDayItemProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
   anotherMonth?: boolean;
   dataId?: string;
   day: number;
-  previewState?: LegacyCalendarItemPreviewState;
   selected?: boolean;
 }
 
@@ -16,7 +14,6 @@ export interface LegacyCalendarPeriodItemProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
   dataId?: string;
   label: string;
-  previewState?: LegacyCalendarItemPreviewState;
   selected?: boolean;
 }
 

@@ -54,17 +54,6 @@ const CALENDAR_VIEWS = {
 
 const CALENDAR_VIEW_VALUES = [CALENDAR_VIEWS.day, CALENDAR_VIEWS.month, CALENDAR_VIEWS.year];
 
-const CALENDAR_ITEM_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  focused: 'focused'
-};
-
-const CALENDAR_ITEM_PREVIEW_STATE_VALUES = [
-  CALENDAR_ITEM_PREVIEW_STATES.default,
-  CALENDAR_ITEM_PREVIEW_STATES.hover,
-  CALENDAR_ITEM_PREVIEW_STATES.focused
-];
 
 function normalizeDate(value) {
   return new Date(value.getFullYear(), value.getMonth(), value.getDate());
@@ -263,7 +252,6 @@ function CalendarDayItem(props) {
     className,
     dataId,
     day,
-    previewState,
     selected,
     type
   } = props;
@@ -272,7 +260,6 @@ function CalendarDayItem(props) {
   delete buttonProps.className;
   delete buttonProps.dataId;
   delete buttonProps.day;
-  delete buttonProps.previewState;
   delete buttonProps.selected;
 
   return (
@@ -282,7 +269,6 @@ function CalendarDayItem(props) {
       className={classNames('rshb-legacy-calendar-day-item', className)}
       data-another-month={anotherMonth ? 'true' : 'false'}
       data-id={dataId || buttonProps['data-id']}
-      data-preview-state={previewState || CALENDAR_ITEM_PREVIEW_STATES.default}
       data-selected={selected ? 'true' : 'false'}
       type={type || 'button'}
     >
@@ -293,14 +279,11 @@ function CalendarDayItem(props) {
 
 CalendarDayItem.displayName = 'CalendarDayItem';
 
-CalendarDayItem.previewStates = CALENDAR_ITEM_PREVIEW_STATES;
-
 CalendarDayItem.propTypes = {
   anotherMonth: PropTypes.bool,
   className: PropTypes.string,
   dataId: PropTypes.string,
   day: PropTypes.number.isRequired,
-  previewState: PropTypes.oneOf(CALENDAR_ITEM_PREVIEW_STATE_VALUES),
   selected: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit', 'reset'])
 };
@@ -310,7 +293,6 @@ function CalendarPeriodItem(props) {
     className,
     dataId,
     label,
-    previewState,
     selected,
     type
   } = props;
@@ -318,7 +300,6 @@ function CalendarPeriodItem(props) {
   delete buttonProps.className;
   delete buttonProps.dataId;
   delete buttonProps.label;
-  delete buttonProps.previewState;
   delete buttonProps.selected;
 
   return (
@@ -327,7 +308,6 @@ function CalendarPeriodItem(props) {
       aria-pressed={Boolean(selected)}
       className={classNames('rshb-legacy-calendar-period-item', className)}
       data-id={dataId || buttonProps['data-id']}
-      data-preview-state={previewState || CALENDAR_ITEM_PREVIEW_STATES.default}
       data-selected={selected ? 'true' : 'false'}
       type={type || 'button'}
     >
@@ -338,13 +318,10 @@ function CalendarPeriodItem(props) {
 
 CalendarPeriodItem.displayName = 'CalendarPeriodItem';
 
-CalendarPeriodItem.previewStates = CALENDAR_ITEM_PREVIEW_STATES;
-
 CalendarPeriodItem.propTypes = {
   className: PropTypes.string,
   dataId: PropTypes.string,
   label: PropTypes.string.isRequired,
-  previewState: PropTypes.oneOf(CALENDAR_ITEM_PREVIEW_STATE_VALUES),
   selected: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit', 'reset'])
 };

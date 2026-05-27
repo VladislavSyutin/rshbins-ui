@@ -18,7 +18,6 @@ const meta = {
     heading: 'Ошибка',
     inputPlaceholder: 'Название',
     placement: 'inline',
-    previewState: 'shown',
     variant: 'default'
   },
   argTypes: {

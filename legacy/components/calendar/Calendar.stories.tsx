@@ -1,10 +1,70 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Calendar, {
-  CalendarDayItem,
-  CalendarPeriodItem,
-  type LegacyCalendarItemPreviewState
-} from './index.js';
+import type { LegacyCalendarDayItemProps, LegacyCalendarPeriodItemProps } from './index.js';
+import Calendar, { CalendarDayItem, CalendarPeriodItem } from './index.js';
+
+/** Storybook-only: visual states for the preview matrix */
+type CalendarItemPreviewState = 'default' | 'hover' | 'focused';
+
+/**
+ * Storybook-only wrapper for CalendarDayItem: injects data-preview-state on the
+ * root button element so CSS preview-state rules fire without a public prop.
+ */
+function CalendarDayItemWithPreviewState({
+  previewState,
+  ...props
+}: LegacyCalendarDayItemProps & { previewState?: CalendarItemPreviewState }) {
+  const ref = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (ref.current && previewState && previewState !== 'default') {
+      ref.current.setAttribute('data-preview-state', previewState);
+    }
+  }, [previewState]);
+
+  return (
+    <div
+      ref={(node) => {
+        ref.current = node ? (node.firstElementChild as HTMLButtonElement) : null;
+        if (ref.current && previewState && previewState !== 'default') {
+          ref.current.setAttribute('data-preview-state', previewState);
+        }
+      }}
+    >
+      <CalendarDayItem {...props} />
+    </div>
+  );
+}
+
+/**
+ * Storybook-only wrapper for CalendarPeriodItem: injects data-preview-state on
+ * the root button element so CSS preview-state rules fire without a public prop.
+ */
+function CalendarPeriodItemWithPreviewState({
+  previewState,
+  ...props
+}: LegacyCalendarPeriodItemProps & { previewState?: CalendarItemPreviewState }) {
+  const ref = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (ref.current && previewState && previewState !== 'default') {
+      ref.current.setAttribute('data-preview-state', previewState);
+    }
+  }, [previewState]);
+
+  return (
+    <div
+      ref={(node) => {
+        ref.current = node ? (node.firstElementChild as HTMLButtonElement) : null;
+        if (ref.current && previewState && previewState !== 'default') {
+          ref.current.setAttribute('data-preview-state', previewState);
+        }
+      }}
+    >
+      <CalendarPeriodItem {...props} />
+    </div>
+  );
+}
 
 const today = new Date();
 
@@ -102,7 +162,7 @@ const dayStates: Array<{
   day: number;
   disabled?: boolean;
   label: string;
-  previewState?: LegacyCalendarItemPreviewState;
+  previewState?: CalendarItemPreviewState;
   selected?: boolean;
 }> = [
   { day: 29, label: 'Default' },
@@ -118,7 +178,7 @@ const dayStates: Array<{
 const periodStates: Array<{
   disabled?: boolean;
   label: string;
-  previewState?: LegacyCalendarItemPreviewState;
+  previewState?: CalendarItemPreviewState;
   selected?: boolean;
   text: string;
 }> = [
@@ -160,7 +220,7 @@ export const Overview: Story = {
         <div style={compactRowStyle}>
           {dayStates.map((state) => (
             <div key={state.label} style={state.disabled ? undefined : staticItemStyle}>
-              <CalendarDayItem
+              <CalendarDayItemWithPreviewState
                 anotherMonth={state.anotherMonth}
                 dataId={'legacy-calendar-day-item-' + state.label.toLowerCase().replace(/\s+/g, '-')}
                 day={state.day}
@@ -178,7 +238,7 @@ export const Overview: Story = {
         <div style={compactRowStyle}>
           {periodStates.map((state) => (
             <div key={state.label} style={state.disabled ? undefined : staticItemStyle}>
-              <CalendarPeriodItem
+              <CalendarPeriodItemWithPreviewState
                 dataId={'legacy-calendar-period-item-' + state.label.toLowerCase()}
                 disabled={state.disabled}
                 label={state.text}

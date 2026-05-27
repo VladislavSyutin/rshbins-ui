@@ -33,16 +33,6 @@ const COOKIES_PLACEMENTS = {
 
 const COOKIES_PLACEMENT_VALUES = [COOKIES_PLACEMENTS.inline, COOKIES_PLACEMENTS.bottomCenter];
 
-const COOKIES_PREVIEW_STATES = {
-  shown: 'shown',
-  closing: 'closing'
-};
-
-const COOKIES_PREVIEW_STATE_VALUES = [
-  COOKIES_PREVIEW_STATES.shown,
-  COOKIES_PREVIEW_STATES.closing
-];
-
 function Cookies(props) {
   const {
     className,
@@ -54,7 +44,6 @@ function Cookies(props) {
     onPrimaryAction,
     onSecondaryAction,
     placement,
-    previewState,
     primaryActionLabel,
     secondaryActionLabel,
     size,
@@ -65,7 +54,6 @@ function Cookies(props) {
   const resolvedDescription = description !== undefined ? description : 'Описание';
   const resolvedHeading = heading !== undefined ? heading : 'Заголовок';
   const resolvedPlacement = placement || COOKIES_PLACEMENTS.inline;
-  const resolvedPreviewState = previewState || COOKIES_PREVIEW_STATES.shown;
   const resolvedPrimaryActionLabel = primaryActionLabel !== undefined ? primaryActionLabel : 'Принять';
   const resolvedSecondaryActionLabel = secondaryActionLabel !== undefined ? secondaryActionLabel : 'Настройки';
   const resolvedSize = size || COOKIES_SIZES.s;
@@ -73,7 +61,7 @@ function Cookies(props) {
   const [isClosing, setIsClosing] = useState(false);
   const closeTimerRef = useRef(null);
 
-  const activePreviewState = isClosing ? COOKIES_PREVIEW_STATES.closing : resolvedPreviewState;
+  const activePreviewState = isClosing ? 'closing' : 'shown';
   const dataIdValue = dataId || rest['data-id'];
 
   function clearCloseTimer() {
@@ -85,7 +73,7 @@ function Cookies(props) {
   }
 
   function requestClose() {
-    if (!onClose || isClosing || resolvedPreviewState === COOKIES_PREVIEW_STATES.closing) {
+    if (!onClose || isClosing) {
       return;
     }
     setIsClosing(true);
@@ -146,7 +134,6 @@ Cookies.displayName = 'Cookies';
 
 Cookies.sizes = COOKIES_SIZES;
 Cookies.placements = COOKIES_PLACEMENTS;
-Cookies.previewStates = COOKIES_PREVIEW_STATES;
 
 Cookies.propTypes = {
   className: PropTypes.string,
@@ -158,7 +145,6 @@ Cookies.propTypes = {
   onPrimaryAction: PropTypes.func,
   onSecondaryAction: PropTypes.func,
   placement: PropTypes.oneOf(COOKIES_PLACEMENT_VALUES),
-  previewState: PropTypes.oneOf(COOKIES_PREVIEW_STATE_VALUES),
   primaryActionLabel: PropTypes.string,
   secondaryActionLabel: PropTypes.string,
   size: PropTypes.oneOf(COOKIES_SIZE_VALUES)

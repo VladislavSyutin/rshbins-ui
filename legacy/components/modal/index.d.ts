@@ -3,7 +3,6 @@ import type { LegacyInputTextProps } from '../input-text/index.js';
 
 export type LegacyModalVariant = 'default' | 'captcha' | 'text-input';
 export type LegacyModalPlacement = 'inline' | 'top-center';
-export type LegacyModalPreviewState = 'shown' | 'closing';
 
 export interface LegacyModalActionsRenderContext {
   requestClose: () => void;
@@ -12,6 +11,8 @@ export interface LegacyModalActionsRenderContext {
 export interface LegacyModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   actions?: ReactNode | ((context: LegacyModalActionsRenderContext) => ReactNode);
   captchaLabel?: ReactNode;
+  captchaRefreshLabel?: string;
+  captchaVoiceLabel?: string;
   children?: ReactNode;
   className?: string;
   closeOnPrimaryAction?: boolean;
@@ -28,7 +29,6 @@ export interface LegacyModalProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   onTertiaryAction?: () => void;
   onVoiceCaptcha?: () => void;
   placement?: LegacyModalPlacement;
-  previewState?: LegacyModalPreviewState;
   primaryActionLabel?: string | null;
   secondaryActionLabel?: string | null;
   tertiaryActionLabel?: string | null;
@@ -47,7 +47,6 @@ declare const Modal: {
     inline: 'inline';
     topCenter: 'top-center';
   };
-  previewStates: Record<LegacyModalPreviewState, LegacyModalPreviewState>;
   propTypes: object;
 };
 

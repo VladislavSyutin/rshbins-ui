@@ -2,7 +2,6 @@ import type { HTMLAttributes, ReactNode } from 'react';
 
 export type LegacyCookiesSize = 's' | 'xs';
 export type LegacyCookiesPlacement = 'inline' | 'bottom-center';
-export type LegacyCookiesPreviewState = 'shown' | 'closing';
 
 export interface LegacyCookiesProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   className?: string;
@@ -14,7 +13,6 @@ export interface LegacyCookiesProps extends Omit<HTMLAttributes<HTMLDivElement>,
   onPrimaryAction?: () => void;
   onSecondaryAction?: () => void;
   placement?: LegacyCookiesPlacement;
-  previewState?: LegacyCookiesPreviewState;
   primaryActionLabel?: string | null;
   secondaryActionLabel?: string | null;
   size?: LegacyCookiesSize;
@@ -26,6 +24,5 @@ export namespace Cookies {
   const displayName: string;
   const sizes: Record<LegacyCookiesSize, LegacyCookiesSize>;
   const placements: { inline: 'inline'; bottomCenter: 'bottom-center' };
-  const previewStates: Record<LegacyCookiesPreviewState, LegacyCookiesPreviewState>;
   const propTypes: object;
 }

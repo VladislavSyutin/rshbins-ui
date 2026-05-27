@@ -1,11 +1,13 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type {
-  LegacyTabsProps,
-  LegacyTabsPreviewState
-} from './index.js';
+import type { LegacyTabsProps } from './index.js';
 import Tabs from './index.js';
 import starIcon from '../../../icons/star-regular.svg';
+
+/** Storybook-only: visual states for the preview matrix */
+type TabsPreviewState = 'default' | 'hover' | 'focused';
+
+const previewStates: TabsPreviewState[] = ['default', 'hover', 'focused'];
 
 function StarIcon() {
   return <span aria-hidden="true" style={starIconStyle} />;
@@ -18,7 +20,31 @@ const defaultOptions = [
   { label: 'Контент', leadingIcon: star, trailingIcon: star, value: 'second' }
 ];
 
-const previewStates: LegacyTabsPreviewState[] = ['default', 'hover', 'focused'];
+/**
+ * Storybook-only wrapper: injects data-preview-state on each tab button element
+ * so CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function TabsWithPreviewState({
+  previewState,
+  ...props
+}: LegacyTabsProps & { previewState?: TabsPreviewState }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !previewState || previewState === 'default') return;
+    const root = wrapperRef.current.firstElementChild;
+    if (!root) return;
+    root.querySelectorAll('.rshb-legacy-tab').forEach((el) => {
+      (el as HTMLElement).setAttribute('data-preview-state', previewState);
+    });
+  }, [previewState]);
+
+  return (
+    <div ref={wrapperRef}>
+      <Tabs {...props} />
+    </div>
+  );
+}
 
 const meta = {
   title: 'Legacy/Components/Tabs',
@@ -120,37 +146,22 @@ export const States: Story = {
         ))}
         <p style={metaStyle}>Inactive</p>
         {previewStates.map((state) => (
-          <div
+          <TabsWithPreviewState
             key={`inactive-${state}`}
-            style={singleTabCellStyle}
-          >
-            <button
-              aria-selected="false"
-              style={singleTabStyle}
-              type="button"
-            >
-              <span
-                className="rshb-legacy-tab"
-                data-preview-state={state}
-                data-selected="false"
-              >
-                <span className="rshb-legacy-tab__label">Контент</span>
-              </span>
-            </button>
-          </div>
+            dataId={`tabs-inactive-${state}`}
+            options={[{ label: 'Контент', value: 'operations' }]}
+            previewState={state}
+          />
         ))}
         <p style={metaStyle}>Active</p>
         {previewStates.map((state) => (
-          <div
+          <TabsWithPreviewState
             key={`active-${state}`}
-            style={singleTabCellStyle}
-          >
-            <Tabs
-              dataId={`tabs-active-${state}`}
-              defaultValue="operations"
-              options={[{ label: 'Контент', value: 'operations', previewState: state }]}
-            />
-          </div>
+            dataId={`tabs-active-${state}`}
+            defaultValue="operations"
+            options={[{ label: 'Контент', value: 'operations' }]}
+            previewState={state}
+          />
         ))}
       </div>
     </div>
@@ -199,19 +210,6 @@ const metaStyle: CSSProperties = {
   fontSize: 'var(--typography-footnote-regular-fontSize)',
   fontWeight: 'var(--typography-footnote-regular-fontWeight)',
   lineHeight: 'var(--typography-footnote-regular-lineHeight)',
-};
-
-const singleTabStyle: CSSProperties = {
-  margin: 0,
-  padding: 0,
-  border: 0,
-  background: 'transparent',
-};
-
-const singleTabCellStyle: CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  minHeight: '72px',
 };
 
 const starIconStyle: CSSProperties = {

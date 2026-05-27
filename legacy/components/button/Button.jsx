@@ -34,26 +34,6 @@ const BUTTON_SIZES = {
 
 const BUTTON_SIZE_VALUES = [BUTTON_SIZES.medium, BUTTON_SIZES.small];
 
-const BUTTON_PREVIEW_STATES = {
-  default: 'default',
-  hover: 'hover',
-  focused: 'focused',
-  pressed: 'pressed',
-  disabled: 'disabled',
-  loading: 'loading',
-  selection: 'selection'
-};
-
-const BUTTON_PREVIEW_STATE_VALUES = [
-  BUTTON_PREVIEW_STATES.default,
-  BUTTON_PREVIEW_STATES.hover,
-  BUTTON_PREVIEW_STATES.focused,
-  BUTTON_PREVIEW_STATES.pressed,
-  BUTTON_PREVIEW_STATES.disabled,
-  BUTTON_PREVIEW_STATES.loading,
-  BUTTON_PREVIEW_STATES.selection
-];
-
 function normalizeButtonType(buttonType) {
   switch (buttonType) {
     case BUTTON_TYPES.primary:
@@ -118,7 +98,6 @@ function resolveButtonType(buttonType, type, variant) {
 function resolveState(_ref) {
   const disabled = _ref.disabled;
   const loading = _ref.loading;
-  const previewState = _ref.previewState;
   const selected = _ref.selected;
 
   if (loading) {
@@ -133,7 +112,7 @@ function resolveState(_ref) {
     return 'selection';
   }
 
-  return previewState || 'default';
+  return 'default';
 }
 
 function Button(props) {
@@ -147,7 +126,6 @@ function Button(props) {
     leadingIcon,
     loading,
     name,
-    previewState,
     selected,
     size,
     trailingIcon,
@@ -164,7 +142,6 @@ function Button(props) {
   delete buttonProps.iconOnly;
   delete buttonProps.leadingIcon;
   delete buttonProps.loading;
-  delete buttonProps.previewState;
   delete buttonProps.selected;
   delete buttonProps.size;
   delete buttonProps.trailingIcon;
@@ -173,7 +150,6 @@ function Button(props) {
   const resolvedState = resolveState({
     disabled: Boolean(disabled),
     loading: Boolean(loading),
-    previewState: previewState,
     selected: Boolean(selected)
   });
   const resolvedButtonType = resolveButtonType(buttonType, type, variant);
@@ -250,7 +226,6 @@ Button.displayName = 'Button';
 
 Button.buttonTypes = BUTTON_TYPES;
 Button.sizes = BUTTON_SIZES;
-Button.previewStates = BUTTON_PREVIEW_STATES;
 
 Button.propTypes = {
   buttonType: PropTypes.oneOf(BUTTON_TYPE_VALUES),
@@ -262,7 +237,6 @@ Button.propTypes = {
   leadingIcon: PropTypes.node,
   loading: PropTypes.bool,
   name: PropTypes.string,
-  previewState: PropTypes.oneOf(BUTTON_PREVIEW_STATE_VALUES),
   selected: PropTypes.bool,
   size: PropTypes.oneOf(BUTTON_SIZE_VALUES),
   trailingIcon: PropTypes.node,

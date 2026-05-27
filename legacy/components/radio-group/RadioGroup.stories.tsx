@@ -1,11 +1,10 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type {
-  LegacyRadioGroupDirection,
-  LegacyRadioGroupPreviewState,
-  LegacyRadioGroupProps,
-} from './index.js';
+import type { LegacyRadioGroupDirection, LegacyRadioGroupProps } from './index.js';
 import RadioGroup from './index.js';
+
+/** Storybook-only: visual states for the preview matrix */
+type RadioGroupPreviewState = 'default' | 'hover' | 'focused';
 
 const defaultOptions = [
   { label: 'Контент', value: 'first', dataId: 'radio-first' },
@@ -14,7 +13,33 @@ const defaultOptions = [
 ];
 
 const directions: LegacyRadioGroupDirection[] = ['vertical', 'horizontal'];
-const previewStates: LegacyRadioGroupPreviewState[] = ['default', 'hover', 'focused'];
+const previewStates: RadioGroupPreviewState[] = ['default', 'hover', 'focused'];
+
+/**
+ * Storybook-only wrapper: injects data-preview-state on each option label element
+ * so CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function RadioGroupWithPreviewState({
+  previewState,
+  ...props
+}: LegacyRadioGroupProps & { previewState?: RadioGroupPreviewState }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !previewState || previewState === 'default') return;
+    const root = wrapperRef.current.firstElementChild;
+    if (!root) return;
+    root.querySelectorAll('.rshb-legacy-radio-group__option').forEach((el) => {
+      (el as HTMLElement).setAttribute('data-preview-state', previewState);
+    });
+  }, [previewState]);
+
+  return (
+    <div ref={wrapperRef}>
+      <RadioGroup {...props} />
+    </div>
+  );
+}
 
 const meta = {
   title: 'Legacy/Components/RadioGroup',
@@ -26,7 +51,6 @@ const meta = {
     direction: 'vertical',
     disabled: false,
     options: defaultOptions,
-    previewState: 'default',
     required: false,
   },
   argTypes: {
@@ -105,20 +129,20 @@ export const States: Story = {
         ))}
         <p style={metaStyle}>Inactive</p>
         {previewStates.map((state) => (
-          <RadioGroup
+          <RadioGroupWithPreviewState
             key={`inactive-${state}`}
             name={`states-inactive-${state}`}
-            options={[{ label: 'Контент', value: 'first', previewState: state }]}
+            options={[{ label: 'Контент', value: 'first' }]}
             previewState={state}
           />
         ))}
         <p style={metaStyle}>Active</p>
         {previewStates.map((state) => (
-          <RadioGroup
+          <RadioGroupWithPreviewState
             key={`active-${state}`}
             defaultValue="first"
             name={`states-active-${state}`}
-            options={[{ label: 'Контент', value: 'first', previewState: state }]}
+            options={[{ label: 'Контент', value: 'first' }]}
             previewState={state}
           />
         ))}

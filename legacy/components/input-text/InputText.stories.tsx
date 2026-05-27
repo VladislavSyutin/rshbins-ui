@@ -1,15 +1,29 @@
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { LegacyInputTextPreviewState, LegacyInputTextProps } from './index.js';
+import type { LegacyInputTextProps } from './index.js';
 import InputText from './index.js';
 
-type MatrixState = LegacyInputTextPreviewState;
+/** Storybook-only: visual states for the preview matrix */
+type InputTextPreviewState =
+  | 'default'
+  | 'hover'
+  | 'focused'
+  | 'typing'
+  | 'entered'
+  | 'entered-hover'
+  | 'error'
+  | 'error-hover'
+  | 'error-entered'
+  | 'error-entered-hover'
+  | 'disabled'
+  | 'disabled-entered'
+  | 'keyboard-focused';
 
 const overviewStates: Array<{
   helperText?: string;
   invalid?: boolean;
   label: string;
-  previewState: MatrixState;
+  previewState: InputTextPreviewState;
   value?: string;
 }> = [
   { label: 'Default', previewState: 'default' },
@@ -49,6 +63,35 @@ const overviewStates: Array<{
   { label: 'Keyboard Focused', previewState: 'keyboard-focused' }
 ];
 
+/**
+ * Storybook-only wrapper: injects data-state on the root div element so CSS
+ * preview-state rules fire without exposing previewState as a public prop.
+ */
+function InputTextWithPreviewState({
+  previewState,
+  ...props
+}: LegacyInputTextProps & { previewState?: InputTextPreviewState }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (wrapperRef.current && previewState) {
+      const root = wrapperRef.current.firstElementChild as HTMLElement | null;
+      if (root) {
+        root.setAttribute('data-state', previewState);
+      }
+    }
+  }, [previewState]);
+
+  // For disabled states, use the real disabled prop
+  const isDisabled = previewState === 'disabled' || previewState === 'disabled-entered';
+
+  return (
+    <div ref={wrapperRef}>
+      <InputText {...props} disabled={isDisabled || props.disabled} />
+    </div>
+  );
+}
+
 const meta = {
   title: 'Legacy/Components/InputText',
   component: InputText,
@@ -61,23 +104,11 @@ const meta = {
     label: 'Название'
   },
   argTypes: {
-    helperIcon: {
-      control: false,
-      table: {
-        disable: true
-      }
-    },
     helperText: {
       control: 'text'
     },
     label: {
       control: 'text'
-    },
-    showHelperIcon: {
-      control: false,
-      table: {
-        disable: true
-      }
     },
     onValueChange: {
       control: false,
@@ -130,7 +161,7 @@ export const Overview: Story = {
         {overviewStates.map((state) => (
           <section key={state.label} style={cardStyle}>
             <p style={metaStyle}>{state.label}</p>
-            <InputText
+            <InputTextWithPreviewState
               clearable
               dataId={`legacy-input-text-${state.previewState}`}
               helperText={state.helperText}

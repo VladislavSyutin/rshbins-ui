@@ -1,12 +1,11 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type {
-  LegacySegmentedControlOption,
-  LegacySegmentedControlPreviewState,
-  LegacySegmentedControlProps,
-} from './index.js';
+import type { LegacySegmentedControlOption, LegacySegmentedControlProps } from './index.js';
 import SegmentedControl from './index.js';
 import starIcon from '../../../icons/star-regular.svg';
+
+/** Storybook-only: visual states for the preview matrix */
+type SegmentedControlPreviewState = 'default' | 'hover' | 'focused';
 
 function StarIcon() {
   return <span aria-hidden="true" style={starIconStyle} />;
@@ -17,7 +16,33 @@ const defaultOptions: LegacySegmentedControlOption[] = [
   { label: 'Контент', leadingIcon: <StarIcon />, trailingIcon: <StarIcon />, value: 'second' },
 ];
 
-const previewStates: LegacySegmentedControlPreviewState[] = ['default', 'hover', 'focused'];
+const previewStates: SegmentedControlPreviewState[] = ['default', 'hover', 'focused'];
+
+/**
+ * Storybook-only wrapper: injects data-preview-state on each segment label element
+ * so CSS preview-state rules fire without exposing previewState as a public prop.
+ */
+function SegmentedControlWithPreviewState({
+  previewState,
+  ...props
+}: LegacySegmentedControlProps & { previewState?: SegmentedControlPreviewState }) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!wrapperRef.current || !previewState || previewState === 'default') return;
+    const root = wrapperRef.current.firstElementChild;
+    if (!root) return;
+    root.querySelectorAll('.rshb-legacy-segment').forEach((el) => {
+      (el as HTMLElement).setAttribute('data-preview-state', previewState);
+    });
+  }, [previewState]);
+
+  return (
+    <div ref={wrapperRef}>
+      <SegmentedControl {...props} />
+    </div>
+  );
+}
 
 const meta = {
   title: 'Legacy/Components/SegmentedControl',
@@ -27,7 +52,6 @@ const meta = {
     dataId: 'storybook-segmented-control',
     defaultValue: 'first',
     options: defaultOptions,
-    previewState: 'default',
     required: false,
   },
   argTypes: {
@@ -115,20 +139,20 @@ export const States: Story = {
         ))}
         <p style={metaStyle}>Inactive</p>
         {previewStates.map((state) => (
-          <SegmentedControl
+          <SegmentedControlWithPreviewState
             key={`inactive-${state}`}
             name={`segmented-inactive-${state}`}
-            options={[{ label: 'Контент', value: 'operations', previewState: state }]}
+            options={[{ label: 'Контент', value: 'operations' }]}
             previewState={state}
           />
         ))}
         <p style={metaStyle}>Active</p>
         {previewStates.map((state) => (
-          <SegmentedControl
+          <SegmentedControlWithPreviewState
             key={`active-${state}`}
             defaultValue="operations"
             name={`segmented-active-${state}`}
-            options={[{ label: 'Контент', value: 'operations', previewState: state }]}
+            options={[{ label: 'Контент', value: 'operations' }]}
             previewState={state}
           />
         ))}
