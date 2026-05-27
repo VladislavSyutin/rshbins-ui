@@ -1,0 +1,19 @@
+.rshb-legacy-theme__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: var(--rshb-legacy-theme-icon) center / contain no-repeat;
+  mask: var(--rshb-legacy-theme-icon) center / contain no-repeat;
+  animation: rshb-legacy-theme-icon-swap var(--motion-theme-duration) var(--motion-theme-curve);
+}
+
+@keyframes rshb-legacy-theme-icon-swap {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
