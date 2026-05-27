@@ -238,6 +238,7 @@ InputBirthDateIcon.propTypes = {
 
 const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
   const {
+    calendarOpenLabel,
     changeOnFocus,
     className,
     defaultValue,
@@ -277,7 +278,9 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
   const selectedBirthDate = parseDateDigits(resolvedValue);
   const birthDateMaskParts = buildBirthDateMaskParts(resolvedValue);
   const shouldShowMask = isFocused || resolvedValue.length > 0;
-  const isInteractive = rest.previewState == null;
+  const isInteractive = true;
+  const resolvedCalendarOpenLabel =
+    calendarOpenLabel !== undefined ? calendarOpenLabel : 'Открыть календарь';
 
   useImperativeHandle(ref, function () {
     return inputRef.current;
@@ -396,7 +399,7 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
     <Button
       aria-expanded={isCalendarOpen}
       aria-haspopup="dialog"
-      aria-label="Открыть календарь"
+      aria-label={resolvedCalendarOpenLabel}
       buttonType={Button.buttonTypes.flatSecondary}
       className="rshb-legacy-input-birth-date__calendar-toggle"
       dataId={rest.dataId ? rest.dataId + '-calendar-button' : undefined}
@@ -473,6 +476,7 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
 InputBirthDate.displayName = 'InputBirthDate';
 
 InputBirthDate.propTypes = {
+  calendarOpenLabel: PropTypes.string,
   changeOnFocus: PropTypes.func,
   className: PropTypes.string,
   clearButtonDataId: PropTypes.string,
@@ -483,7 +487,6 @@ InputBirthDate.propTypes = {
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   error: PropTypes.bool,
-  helperIcon: PropTypes.node,
   helperText: PropTypes.node,
   id: PropTypes.string,
   inputClassName: PropTypes.string,
@@ -496,9 +499,7 @@ InputBirthDate.propTypes = {
   onKeyDown: PropTypes.func,
   onPointerDown: PropTypes.func,
   onValueChange: PropTypes.func,
-  previewState: PropTypes.string,
   readOnly: PropTypes.bool,
-  showHelperIcon: PropTypes.bool,
   startIcon: PropTypes.node,
   style: PropTypes.object,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

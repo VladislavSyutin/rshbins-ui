@@ -25,8 +25,7 @@ React 17-compatible delivery of the shared floating-label text input for FOS int
 - `error` is supported as a compatibility alias for `invalid`.
 - `customInputStyle` is supported as a compatibility alias for an additional native input class.
 - `helperText` is only shown in error states (`invalid` + blur or preview error state).
-- Legacy `helperIcon` and `showHelperIcon` props are accepted for compatibility, but helper text renders text-only in this review slice.
-- `previewState` overrides the computed interactive state for Storybook/Figma matrix use.
+- `helperText` renders text-only; icon-based helper display is not supported.
 - Custom `aria-describedby` values are preserved and combined with the helper text id when helper text is rendered.
 - Generic composition points are available through `prefix`, `maskOverlay`, `hideControlValue`, and `endAdornment`; business validation and formatting should live in the composing `Input...` component.
 

@@ -57,6 +57,7 @@ const InputPassword = React.forwardRef(function InputPassword(props, ref) {
     disabled,
     endAdornment,
     helperText,
+    hidePasswordLabel,
     invalid,
     label,
     onBlur,
@@ -65,6 +66,7 @@ const InputPassword = React.forwardRef(function InputPassword(props, ref) {
     onKeyDown,
     onValueChange,
     readOnly,
+    showPasswordLabel,
     value,
     ...rest
   } = props;
@@ -76,6 +78,10 @@ const InputPassword = React.forwardRef(function InputPassword(props, ref) {
   const [hasBeenValidated, setHasBeenValidated] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const resolvedShowPasswordLabel =
+    showPasswordLabel !== undefined ? showPasswordLabel : 'Показать пароль';
+  const resolvedHidePasswordLabel =
+    hidePasswordLabel !== undefined ? hidePasswordLabel : 'Скрыть пароль';
   const inputRef = useRef(null);
   const pendingSelectionRef = useRef(null);
   const resolvedValue = isControlled
@@ -199,7 +205,7 @@ const InputPassword = React.forwardRef(function InputPassword(props, ref) {
 
   const visibilityToggle = resolvedValue.length > 0 ? (
     <Button
-      aria-label={isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'}
+      aria-label={isPasswordVisible ? resolvedHidePasswordLabel : resolvedShowPasswordLabel}
       aria-pressed={isPasswordVisible}
       buttonType={Button.buttonTypes.flatSecondary}
       className="rshb-legacy-input-password__visibility-toggle"
@@ -253,8 +259,8 @@ InputPassword.propTypes = {
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   error: PropTypes.bool,
-  helperIcon: PropTypes.node,
   helperText: PropTypes.node,
+  hidePasswordLabel: PropTypes.string,
   id: PropTypes.string,
   inputClassName: PropTypes.string,
   invalid: PropTypes.bool,
@@ -266,9 +272,8 @@ InputPassword.propTypes = {
   onKeyDown: PropTypes.func,
   onPointerDown: PropTypes.func,
   onValueChange: PropTypes.func,
-  previewState: PropTypes.string,
   readOnly: PropTypes.bool,
-  showHelperIcon: PropTypes.bool,
+  showPasswordLabel: PropTypes.string,
   startIcon: PropTypes.node,
   style: PropTypes.object,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

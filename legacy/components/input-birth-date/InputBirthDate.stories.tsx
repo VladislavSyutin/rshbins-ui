@@ -15,19 +15,7 @@ const meta = {
     label: 'Дата рождения'
   },
   argTypes: {
-    helperIcon: {
-      control: false,
-      table: {
-        disable: true
-      }
-    },
     onValueChange: {
-      control: false,
-      table: {
-        disable: true
-      }
-    },
-    showHelperIcon: {
       control: false,
       table: {
         disable: true
