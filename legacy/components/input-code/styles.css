@@ -1,3 +1,11 @@
 .rshb-legacy-input-code {
   max-width: 100%;
 }
+
+.rshb-legacy-input-code__mask-filled {
+  color: var(--color-text-primary-default);
+}
+
+.rshb-legacy-input-code__mask-placeholder {
+  color: var(--color-text-tertiary-default);
+}

@@ -11,8 +11,8 @@ const DATE_MASK = 'дд.мм.гггг';
 const DATE_MAX_DIGITS = 8;
 const BIRTH_DATE_MIN_AGE_YEARS = 18;
 const BIRTH_DATE_MAX_AGE_YEARS = 100;
-const REQUIRED_ERROR = 'Обязательно для заполнения';
-const BIRTH_DATE_FORMAT_ERROR = 'Введите дату в формате дд.мм.гггг.';
+const REQUIRED_ERROR = 'Обязательно для заполнения.';
+const BIRTH_DATE_INCOMPLETE_ERROR = 'Некорректная дата рождения';
 const BIRTH_DATE_RANGE_ERROR =
   'Возраст должен быть от ' + BIRTH_DATE_MIN_AGE_YEARS + ' до ' + BIRTH_DATE_MAX_AGE_YEARS + ' лет.';
 
@@ -210,7 +210,7 @@ function validateBirthDateValue(value) {
   const parsedDate = parseDateDigits(digits);
 
   if (!parsedDate) {
-    return BIRTH_DATE_FORMAT_ERROR;
+    return BIRTH_DATE_INCOMPLETE_ERROR;
   }
 
   const birthDateRange = getBirthDateRange(normalizeDate(new Date()));
@@ -271,7 +271,7 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
     ? sanitizeBirthDateValue(value != null ? value : '')
     : uncontrolledValue;
   const validationMessage = hasBeenValidated ? validateBirthDateValue(resolvedValue) : undefined;
-  const resolvedInvalid = Boolean(invalid || validationMessage);
+  const resolvedInvalid = Boolean(invalid || validationMessage !== undefined);
   const resolvedReadOnly = Boolean(readOnly);
   const birthDateRange = getBirthDateRange(normalizeDate(new Date()));
   const selectedBirthDate = parseDateDigits(resolvedValue);
@@ -429,7 +429,7 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
             {endAdornment}
           </>
         }
-        helperText={validationMessage || helperText}
+        helperText={validationMessage !== undefined ? validationMessage : helperText}
         hideControlValue
         inputMode="numeric"
         invalid={resolvedInvalid}

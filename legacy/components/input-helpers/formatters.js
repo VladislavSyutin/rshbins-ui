@@ -13,7 +13,7 @@ export const EMAIL_DOMAIN_DOT_ERROR =
 export const NAME_ALLOWED_CHARACTER_PATTERN = /^[А-Яа-яЁё.\-’,()]$/;
 export const SURNAME_ALLOWED_CHARACTER_PATTERN = /^[А-Яа-яЁё.\-’,() ]$/;
 export const LOGIN_ALLOWED_CHARACTER_PATTERN = /^[A-Za-z0-9._-]$/;
-export const EMAIL_ALLOWED_CHARACTER_PATTERN = /^[a-z0-9._+@-]$/;
+export const EMAIL_ALLOWED_CHARACTER_PATTERN = /^[A-Za-z0-9._+@-]$/;
 
 const CYRILLIC_LETTER_PATTERN = /^[А-Яа-яЁё]$/;
 const NAME_SEPARATOR_PATTERN = /^[.\-’,() ]$/;

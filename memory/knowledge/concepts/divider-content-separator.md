@@ -31,6 +31,10 @@
 - `src/components/divider/Divider.scss`
 - `src/components/divider/Divider.stories.tsx`
 - `src/styles/tokens.css`
+- `legacy/components/divider/Divider.jsx` — React 17/plain CSS FOS-поставка
+- `legacy/components/divider/styles.css`
+- `legacy/components/divider/index.js`
+- `legacy/components/divider/index.d.ts`
 
 ## Related Decisions
 

@@ -24,15 +24,24 @@ Segmented controls чувствительны к тому, кто владеет
 - Держать border-width нестабильным между inactive и active состояниями, если control должен визуально оставаться на одной сетке.
 - Потерять radio semantics, если helper-item превращается в чисто стилизованный контейнер без `input[type='radio']`.
 - Смешать visual composition родителя с логикой состояния item и усложнить дальнейшее расширение на другие segmented controls.
+- Использовать `box-shadow: inset 0 0 0 2px` для error-рамки на обоих айтемах одновременно: средняя линия выглядит вдвое толще внешней (2+2=4px). Решение: `border-color` + `border-right-width: 1px` / `border-left-width: 1px` на каждом айтеме.
+
+## Legacy Delivery (ветка legacy)
+
+В `legacy/components/gender/` реализован единый самодостаточный компонент без отдельного `GenderItem`. Внутренний `GenderOption` — приватная функция в `Gender.jsx`, не экспортируется. Вся CSS-геометрия объединена в один `styles.css` с BEM-именами `__item`, `__item-input`, `__item-content`, `__item-label`.
+
+Ключевые решения legacy-варианта:
+- Нет `disabled` состояния — убрано для FOS.
+- `Gender.values` static map для `{ male, female }`.
+- `dataId → data-id` по legacy-контракту.
+- Storybook: Playground + Overview (Default / Male / Female / Error).
 
 ## Related Modules Or Files
 
-- `src/components/gender/Gender.tsx`
-- `src/components/gender/Gender.scss`
-- `src/components/gender/Gender.stories.tsx`
-- `src/components/gender-item/GenderItem.tsx`
-- `src/components/gender-item/GenderItem.scss`
-- `src/components/gender-item/GenderItem.stories.tsx`
+- `src/components/gender/Gender.tsx` (modern)
+- `legacy/components/gender/Gender.jsx` (FOS delivery)
+- `legacy/components/gender/styles.css`
+- `legacy/components/gender/index.d.ts`
 
 ## Related Decisions
 

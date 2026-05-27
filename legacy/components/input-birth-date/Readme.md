@@ -23,7 +23,7 @@ export default function Example() {
   return (
     <InputBirthDate
       dataId="birth-date"
-      helperText="Введите дату в формате дд.мм.гггг"
+      helperText="Вспомогательный текст"
       label="Дата рождения"
       onValueChange={setBirthDate}
       value={birthDate}

@@ -26,17 +26,29 @@
 - Не использовать `:focus` для брендового ring в `Header`, иначе обводка появляется и после mouse click; для parity с клавиатурной навигацией нужен `:focus-visible`.
 - Не смешивать `Header` с app-shell spacing в одном компоненте: внешний контейнер страницы и внутренние отступы самого `Header` должны оставаться раздельными.
 
+## Legacy Layer
+
+`legacy/components/logo/`, `legacy/components/theme/`, `legacy/components/header/` — FOS-совместимые поставки. Ключевые решения:
+
+- Logo: inline SVG, цвет через `--color-logo-text` / `--color-logo-line-*` токены, `state` (default/focused).
+- Theme: обёртка над `Button size="s" iconOnly variant="flat-primary"`; иконки из `icons/` через CSS mask; анимация смены через `key`.
+- Header импортирует Logo и Theme (не хардкодит); `size` (l/m/s/xs/responsive), адаптивные breakpoints 1024px/743px в CSS.
+- `brandButtonProps` и `themeProps` для кастомизации без дублирования логики.
+
 ## Related Modules Or Files
 
 - `src/components/header/Header.tsx`
 - `src/components/header/Header.scss`
 - `src/components/header/Header.stories.tsx`
+- `legacy/components/header/Header.jsx`
+- `legacy/components/header/styles.css`
+- `legacy/components/logo/Logo.jsx`
+- `legacy/components/logo/styles.css`
+- `legacy/components/theme/Theme.jsx`
 - `src/components/logo/Logo.tsx`
-- `src/components/logo/Logo.scss`
-- `src/components/logo/Logo.stories.tsx`
 - `src/components/theme/Theme.tsx`
-- `src/App.tsx`
-- `src/App.scss`
+- `icons/moon.svg`
+- `icons/sun.svg`
 
 ## Related Concepts
 

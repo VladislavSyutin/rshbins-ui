@@ -19,10 +19,12 @@ export const businessInputPropTypes = {
   error: PropTypes.bool,
   helperIcon: PropTypes.node,
   helperText: PropTypes.node,
+  hideControlValue: PropTypes.bool,
   id: PropTypes.string,
   inputClassName: PropTypes.string,
   invalid: PropTypes.bool,
   label: PropTypes.node,
+  maskOverlay: PropTypes.node,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -47,6 +49,15 @@ export function isInputTextKey(event, allowedPattern) {
     event.altKey ||
     allowedPattern.test(event.key)
   );
+}
+
+function buildMaskParts(mask, value) {
+  const stringValue = String(value != null ? value : '');
+
+  return {
+    filledValue: stringValue,
+    placeholderValue: mask.slice(stringValue.length)
+  };
 }
 
 export function createBusinessInput(config) {
@@ -78,7 +89,9 @@ export function createBusinessInput(config) {
       ? config.sanitize(value != null ? value : '')
       : uncontrolledValue;
     const validationMessage = hasBeenValidated ? config.validate(resolvedValue) : undefined;
-    const resolvedInvalid = Boolean(invalid || validationMessage);
+    const resolvedInvalid = Boolean(invalid || validationMessage !== undefined);
+    const shouldShowMask = Boolean(config.mask) && (isFocused || resolvedValue.length > 0);
+    const maskParts = shouldShowMask ? buildMaskParts(config.mask, resolvedValue) : undefined;
 
     useImperativeHandle(ref, function () {
       return inputRef.current;
@@ -154,14 +167,22 @@ export function createBusinessInput(config) {
     return (
       <InputText
         {...rest}
+        autoComplete={rest.autoComplete != null ? rest.autoComplete : config.autoComplete}
         autoCapitalize={rest.autoCapitalize != null ? rest.autoCapitalize : config.autoCapitalize}
         autoCorrect={rest.autoCorrect != null ? rest.autoCorrect : config.autoCorrect}
         className={classNames(config.className, className)}
         defaultValue={undefined}
-        helperText={validationMessage || helperText}
+        helperText={validationMessage !== undefined ? validationMessage : helperText}
+        hideControlValue={rest.hideControlValue != null ? rest.hideControlValue : shouldShowMask}
         inputMode={rest.inputMode != null ? rest.inputMode : config.inputMode}
         invalid={resolvedInvalid}
         label={label || config.label}
+        maskOverlay={rest.maskOverlay != null ? rest.maskOverlay : (maskParts ? (
+          <>
+            <span className={config.className + '__mask-filled'}>{maskParts.filledValue}</span>
+            <span className={config.className + '__mask-placeholder'}>{maskParts.placeholderValue}</span>
+          </>
+        ) : undefined)}
         maxLength={rest.maxLength != null ? rest.maxLength : config.maxLength}
         onBlur={handleBlur}
         onFocus={handleFocus}

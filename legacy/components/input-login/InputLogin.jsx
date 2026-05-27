@@ -8,7 +8,7 @@ import './styles.css';
 
 const InputLogin = createBusinessInput({
   allowedKeyPattern: LOGIN_ALLOWED_CHARACTER_PATTERN,
-  autoCapitalize: 'off',
+  autoCapitalize: 'none',
   autoCorrect: 'off',
   className: 'rshb-legacy-input-login',
   displayName: 'InputLogin',

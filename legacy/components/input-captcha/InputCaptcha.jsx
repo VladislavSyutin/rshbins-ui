@@ -6,6 +6,7 @@ const InputCaptcha = createBusinessInput({
   allowedKeyPattern: /^\S$/,
   className: 'rshb-legacy-input-captcha',
   displayName: 'InputCaptcha',
+  inputMode: 'text',
   label: 'Код с картинки',
   sanitize: sanitizeCaptchaValue,
   validate: validateRequiredValue

@@ -26,15 +26,26 @@
 - Не хардкодить light/dark цвета в компоненте: различия должны приходить из generated semantic variables в `src/styles/tokens.css`.
 - Не считать Figma MCP Tailwind output production-ready; его нужно переводить в colocated Sass и project tokens.
 
+## Legacy Layer
+
+`legacy/components/theme/` — FOS-совместимая поставка. Ключевые решения:
+
+- Theme реализован как обёртка над `Button size="s" iconOnly variant="flat-primary"` — размер, hover/active/focus берутся оттуда.
+- Иконки импортируются из `../../../icons/moon.svg` и `../../../icons/sun.svg` как URL-строки (стандарт проекта).
+- Рендер иконки через CSS `mask` + `background-color: currentColor` — цвет следует за `color` кнопки.
+- Анимация смены иконки через `key={resolvedMode}` на `<ThemeIcon>` вызывает remount → запускает `@keyframes rshb-legacy-theme-icon-swap`.
+- `styles.css` содержит только animation keyframes; всё остальное визуальное поведение — от Button.
+- PropTypes, `Theme.modes`, `Theme.previewStates`, `dataId → data-id` по контракту legacy-слоя.
+
 ## Related Modules Or Files
 
 - `src/components/theme/Theme.tsx`
 - `src/components/theme/Theme.scss`
 - `src/components/theme/Theme.stories.tsx`
+- `legacy/components/theme/Theme.jsx`
+- `legacy/components/theme/styles.css`
+- `legacy/components/theme/Theme.stories.tsx`
 - `src/App.tsx`
-- `src/App.scss`
-- `src/main.tsx`
-- `index.html`
 - `icons/moon.svg`
 - `icons/sun.svg`
 

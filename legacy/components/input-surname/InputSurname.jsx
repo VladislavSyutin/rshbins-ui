@@ -11,6 +11,7 @@ const InputSurname = createBusinessInput({
   allowedKeyPattern: SURNAME_ALLOWED_CHARACTER_PATTERN,
   className: 'rshb-legacy-input-surname',
   displayName: 'InputSurname',
+  inputMode: 'text',
   label: 'Фамилия',
   normalizeOnBlur: function normalizeSurnameOnBlur(value) {
     return normalizePersonNameOnBlur(value, { allowSpace: true });

@@ -144,6 +144,7 @@ const InputMiddleName = React.forwardRef(function InputMiddleName(props, ref) {
         defaultValue={undefined}
         disabled={resolvedDisabled}
         helperText={validationMessage || helperText}
+        inputMode="text"
         invalid={resolvedInvalid}
         label={label || 'Отчество'}
         onBlur={handleBlur}

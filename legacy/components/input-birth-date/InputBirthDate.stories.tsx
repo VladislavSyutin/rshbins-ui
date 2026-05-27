@@ -10,7 +10,7 @@ const meta = {
   args: {
     clearable: true,
     dataId: 'legacy-input-birth-date',
-    helperText: 'Введите дату в формате дд.мм.гггг',
+    helperText: 'Вспомогательный текст',
     invalid: false,
     label: 'Дата рождения'
   },
@@ -67,7 +67,7 @@ export const Overview: Story = {
         <InputBirthDate dataId="input-birth-date-entered" label="Дата рождения" value="02.06.2001" />
         <InputBirthDate
           dataId="input-birth-date-error"
-          helperText="Введите дату в формате дд.мм.гггг"
+          helperText="Некорректная дата рождения"
           invalid
           label="Дата рождения"
         />
@@ -93,7 +93,7 @@ function ControlledBirthDateExample() {
     <div style={surfaceStyle}>
       <InputBirthDate
         dataId="input-birth-date-controlled"
-        helperText="Возраст должен быть от 18 до 100 лет"
+        helperText="Возраст должен быть от 18 до 100 лет."
         label="Дата рождения"
         onValueChange={setValue}
         value={value}
