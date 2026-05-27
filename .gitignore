@@ -6,4 +6,6 @@ storybook-static
 .env
 .env.*
 !.env.example
-debug-storybook.log
+memory/
+scripts/project_memory/
+*.log
