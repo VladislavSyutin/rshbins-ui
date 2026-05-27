@@ -1,0 +1,141 @@
+.rshb-legacy-radio-group {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-margins-inside-m);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.rshb-legacy-radio-group[data-direction='vertical'] {
+  flex-direction: column;
+}
+
+.rshb-legacy-radio-group[data-direction='horizontal'] {
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.rshb-legacy-radio-group__option {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-margins-inside-xs);
+  width: fit-content;
+  max-width: 100%;
+  color: var(--color-text-default-primary);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rshb-legacy-radio-group[data-direction='vertical'] .rshb-legacy-radio-group__option {
+  width: 100%;
+}
+
+.rshb-legacy-radio-group__option[data-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.rshb-legacy-radio-group__option[data-preview-status='active']:not([data-disabled='true']) {
+  cursor: default;
+}
+
+.rshb-legacy-radio-group__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rshb-legacy-radio-group__control {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 2px solid var(--color-border-default-default);
+  border-radius: 50%;
+  transition:
+    border-color var(--motion-hover-duration) var(--motion-hover-curve),
+    opacity var(--motion-hover-duration) var(--motion-hover-curve);
+}
+
+.rshb-legacy-radio-group__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-background-brand-default);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    transform var(--motion-pressed-duration) var(--motion-pressed-curve),
+    opacity var(--motion-pressed-duration) var(--motion-pressed-curve),
+    background-color var(--motion-hover-duration) var(--motion-hover-curve);
+}
+
+.rshb-legacy-radio-group__label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: inherit;
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  font-style: var(--typography-body-regular-fontStyle);
+  line-height: var(--typography-body-regular-lineHeight);
+  letter-spacing: var(--typography-body-regular-letterSpacing);
+  text-decoration: var(--typography-body-regular-textDecoration);
+  text-transform: var(--typography-body-regular-textTransform);
+}
+
+.rshb-legacy-radio-group__input:checked + .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-brand-default);
+}
+
+.rshb-legacy-radio-group__input:checked + .rshb-legacy-radio-group__control .rshb-legacy-radio-group__dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.rshb-legacy-radio-group__option:hover
+  .rshb-legacy-radio-group__input:not(:disabled):not(:checked)
+  + .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-default-default-hover);
+}
+
+.rshb-legacy-radio-group__input:not(:disabled):focus-visible + .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-default-default-focus);
+}
+
+.rshb-legacy-radio-group__input:not(:disabled):checked:focus-visible + .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-default-default-focus);
+}
+
+.rshb-legacy-radio-group__option[data-preview-state='hover'][data-preview-status='inactive']:not([data-disabled='true'])
+  .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-default-default-hover);
+}
+
+.rshb-legacy-radio-group__option[data-preview-state='focused'][data-preview-status='inactive']:not([data-disabled='true'])
+  .rshb-legacy-radio-group__control,
+.rshb-legacy-radio-group__option[data-preview-state='focused'][data-preview-status='active']:not([data-disabled='true'])
+  .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-default-default-focus);
+}
+
+.rshb-legacy-radio-group__option[data-preview-status='active'] .rshb-legacy-radio-group__control {
+  border-color: var(--color-border-brand-default);
+}
+
+.rshb-legacy-radio-group__option[data-preview-status='active'] .rshb-legacy-radio-group__dot {
+  opacity: 1;
+  transform: scale(1);
+}

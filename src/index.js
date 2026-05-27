@@ -17,3 +17,4 @@ export { default as InputSurname } from '../legacy/components/input-surname/inde
 export { default as InputText } from '../legacy/components/input-text/index.js';
 export { default as Spin } from '../legacy/components/spin/index.js';
 export { default as Switch } from '../legacy/components/switch/index.js';
+export { default as RadioGroup } from '../legacy/components/radio-group/index.js';

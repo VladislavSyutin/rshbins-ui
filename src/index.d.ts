@@ -95,3 +95,12 @@ export type {
   LegacySwitchPreviewState,
   LegacySwitchProps
 } from '../legacy/components/switch';
+
+export { default as RadioGroup } from '../legacy/components/radio-group';
+export type {
+  LegacyRadioGroupComponent,
+  LegacyRadioGroupDirection,
+  LegacyRadioGroupOption,
+  LegacyRadioGroupPreviewState,
+  LegacyRadioGroupProps
+} from '../legacy/components/radio-group';

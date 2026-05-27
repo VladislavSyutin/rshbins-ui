@@ -25,7 +25,8 @@ const config: StorybookConfig = {
     '../legacy/components/input-text/InputText.stories.tsx',
     '../legacy/components/spin/Spin.stories.tsx',
     '../legacy/components/switch/Switch.stories.tsx',
-    '../legacy/components/gender/Gender.stories.tsx'
+    '../legacy/components/gender/Gender.stories.tsx',
+    '../legacy/components/radio-group/RadioGroup.stories.tsx'
   ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: {

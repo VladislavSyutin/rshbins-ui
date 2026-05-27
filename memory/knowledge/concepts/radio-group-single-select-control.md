@@ -4,7 +4,9 @@
 
 ## Summary
 
-`src/components/radio/` и `src/components/radio-group/` закрепили новый слой form controls в UI kit: базовый `Radio` отвечает за native `input[type='radio']`, круглую геометрию, token-driven `hover`/`focused`/`active` состояния и Storybook-only `previewState`, а композиционный `RadioGroup` управляет списком options, layout (`vertical`/`horizontal`) и инвариантом "в группе всегда выбран один пункт".
+`src/components/radio/` и `src/components/radio-group/` закрепили новый слой form controls в UI kit: базовый `Radio` отвечает за native `input[type='radio']`, круглую геометрию, token-driven `hover`/`focused`/`active` состояния и Storybook-only `previewState`, а композиционный `RadioGroup` управляет списком options, layout (`vertical`/`horizontal`) и инвариантом single-select.
+
+В legacy/FOS delivery добавлен `legacy/components/radio-group/` как самодостаточный публичный компонент без отдельного экспортируемого `Radio`: radio option реализован внутри `RadioGroup.jsx`, чтобы не создавать публичный primitive, который пока не используется отдельно. Контракт остаётся привычным для форм: `options`, `value`/`defaultValue`, `name`, `required`, `disabled`, `direction`, `previewState`, `dataId -> data-id`, `onChange(value, event)`.
 
 ## Why It Matters
 
@@ -15,6 +17,8 @@
 - Строить radio-like control вокруг настоящего `input[type='radio']`, скрытого только визуально, чтобы сохранить keyboard navigation и стандартную семантику `radiogroup`.
 - Держать ownership круглой геометрии, border colors, inner dot и `previewState` в примитиве `Radio`, а не дублировать эти детали в каждом group-компоненте.
 - В `RadioGroup` разделять primitive и orchestration: сам group должен знать только `options`, `value`/`defaultValue`, `name`, `required`, `disabled`, `onChange` и направление раскладки.
+- Для legacy/FOS можно держать `RadioOption` внутренним, если отдельный radio не является самостоятельным продуктовым компонентом; важно сохранить native input, PropTypes, classnames, plain CSS и `dataId`.
+- В legacy Storybook обзор лучше держать сфокусированным на реальных review-сценариях: `Playground`, `Overview` с vertical/horizontal и `States` без лишних disabled/long-label кейсов, если их не просили.
 - Для uncontrolled radio group нормализовать выбор через fallback к `defaultValue` или первому option, но не сбрасывать текущее значение при каждом новом array-reference `options`, если выбранный option всё ещё существует.
 - Для простых Figma-геометрий вроде radio indicator предпочитать token-driven CSS-отрисовку вместо временного asset URL, чтобы компонент оставался theme-aware и не зависел от срока жизни MCP-asset.
 - Проверять radio controls на двух уровнях Storybook: отдельная матрица состояний для `Radio` и композиционные stories для `RadioGroup`.
@@ -26,6 +30,7 @@
 - Сбрасывать uncontrolled выбранное значение к первому option каждый раз, когда массив `options` приходит в новой ссылке.
 - Завязывать active indicator на внешний SVG-asset, хотя форма может быть выражена устойчиво через CSS и semantic tokens.
 - Если RadioGroup story висит на спиннере, не смотреть только на `index.json`: проверять прямые module URL `RadioGroup.tsx`, `Radio.tsx` и зависимые controls через Storybook/Vite.
+- В horizontal story не зажимать группу в узкую grid-колонку: секцию лучше располагать под vertical, чтобы подписи не дробились по словам.
 
 ## Related Modules Or Files
 
@@ -35,6 +40,9 @@
 - `src/components/radio-group/RadioGroup.tsx`
 - `src/components/radio-group/RadioGroup.scss`
 - `src/components/radio-group/RadioGroup.stories.tsx`
+- `legacy/components/radio-group/RadioGroup.jsx`
+- `legacy/components/radio-group/styles.css`
+- `legacy/components/radio-group/RadioGroup.stories.tsx`
 
 ## Related Decisions
 
