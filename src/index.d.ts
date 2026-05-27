@@ -122,3 +122,11 @@ export type {
   LegacyTabsPreviewState,
   LegacyTabsProps
 } from '../legacy/components/tabs';
+
+export { default as Toast } from '../legacy/components/toast';
+export type {
+  LegacyToastPlacement,
+  LegacyToastPreviewState,
+  LegacyToastProps,
+  LegacyToastVariant
+} from '../legacy/components/toast';

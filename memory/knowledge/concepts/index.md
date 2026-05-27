@@ -38,4 +38,4 @@
 - [[memory/knowledge/concepts/ui-kit-from-figma|UI kit на основе Figma]]
 
 ## Последнее обновление
-- 2026-05-27 10:34 MSK
+- 2026-05-27 10:51 MSK

@@ -157,29 +157,6 @@ export const States: Story = {
   ),
 };
 
-export const ManualActivation: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={surfaceStyle}>
-      <section style={sectionStyle}>
-        <h3 style={titleStyle}>Клавиатурная навигация</h3>
-        <p style={metaStyle}>
-          Стрелки переводят фокус и сразу переключают активную вкладку. `Tab` выводит фокус из группы.
-        </p>
-        <Tabs
-          dataId="tabs-manual"
-          defaultValue="sms"
-          options={[
-            { label: 'По SMS', value: 'sms' },
-            { label: 'По номеру карты', value: 'card' },
-            { label: 'Через Госуслуги', disabled: true, value: 'gosuslugi' },
-          ]}
-        />
-      </section>
-    </div>
-  ),
-};
-
 const surfaceStyle: CSSProperties = {
   display: 'grid',
   gap: '24px',
