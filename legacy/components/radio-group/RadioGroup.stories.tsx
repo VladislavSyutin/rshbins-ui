@@ -8,9 +8,9 @@ import type {
 import RadioGroup from './index.js';
 
 const defaultOptions = [
-  { label: 'На расчетный счет', value: 'account', dataId: 'radio-account' },
-  { label: 'На банковскую карту', value: 'card', dataId: 'radio-card' },
-  { label: 'Наличными в офисе банка', value: 'cash', dataId: 'radio-cash' },
+  { label: 'Контент', value: 'first', dataId: 'radio-first' },
+  { label: 'Контент', value: 'second', dataId: 'radio-second' },
+  { label: 'Контент', value: 'third', dataId: 'radio-third' },
 ];
 
 const directions: LegacyRadioGroupDirection[] = ['vertical', 'horizontal'];
@@ -22,7 +22,7 @@ const meta = {
   tags: ['autodocs'],
   args: {
     dataId: 'storybook-radio-group',
-    defaultValue: 'account',
+    defaultValue: 'first',
     direction: 'vertical',
     disabled: false,
     options: defaultOptions,
@@ -46,7 +46,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  render: ({ defaultValue = 'account', onChange, options = defaultOptions, ...args }: LegacyRadioGroupProps) => {
+  render: ({ defaultValue = 'first', onChange, options = defaultOptions, ...args }: LegacyRadioGroupProps) => {
     const [value, setValue] = useState(defaultValue);
 
     useEffect(() => {

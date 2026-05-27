@@ -55,6 +55,7 @@
 - [[memory/knowledge/decisions/adr-use-shared-spin-component-for-loading-states|ADR: Использовать shared Spin-компонент для loading states]]
 
 ### Последние логи
+- [[memory/logs/2026-05-27|2026-05-27]]
 - [[memory/logs/2026-05-26|2026-05-26]]
 - [[memory/logs/2026-05-25|2026-05-25]]
 - [[memory/logs/2026-05-19|2026-05-19]]
@@ -64,7 +65,6 @@
 - [[memory/logs/2026-05-06|2026-05-06]]
 - [[memory/logs/2026-04-29|2026-04-29]]
 - [[memory/logs/2026-04-28|2026-04-28]]
-- [[memory/logs/2026-04-28 2|2026-04-28 2]]
 
 ## Последнее обновление
-- 2026-05-26 15:09 MSK
+- 2026-05-27 10:12 MSK

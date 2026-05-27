@@ -18,6 +18,18 @@
 - Для простых 18px иконок удобно использовать inline SVG c `fill=\"currentColor\"`, чтобы активное и неактивное состояние автоматически наследовало token-driven цвет без отдельного icon-wrapper или Figma asset URL.
 - В docs-матрицах Storybook такие preview-состояния нужно рендерить как статичные примеры: отключать pointer events у demo-инстансов и открывать docs-страницу в неактивном дефолтном состоянии, иначе реальный `:hover` начинает конфликтовать с Figma preview-state.
 - Для uncontrolled single-select логики использовать тот же fallback-подход, что и в `RadioGroup`: если текущее значение ещё существует в новом `options`, не сбрасывать его только из-за новой ссылки на массив.
+- Для legacy/FOS delivery можно держать item приватным внутри `SegmentedControl.jsx`, если отдельный public `Segment` не нужен по контракту; не раскрывать лишний API без реального сценария переиспользования.
+- В legacy branch иконки для demo/stories лучше импортировать из корневой папки `icons/` и рендерить через CSS mask/currentColor, а не рисовать новые inline SVG прямо в story.
+- Storybook-покрытие для segmented controls должно повторять только нужный review scope: если пользователь или макет показал только `default/hover/focused` и базовый content example, не добавлять disabled, long-label и другие состояния без явного запроса.
+
+## Legacy Delivery (ветка legacy)
+
+В `legacy/components/segmented-control/` компонент собран как самодостаточный React 17/plain CSS control с приватным `SegmentOption` внутри `SegmentedControl.jsx`, без отдельного public `Segment` в поставке для ФОС. Поведение deliberately ближе к `RadioGroup`: если `value`/`defaultValue` не переданы, активный сегмент не выбирается автоматически.
+
+Storybook для legacy-варианта должен оставаться узким review surface:
+- `Docs` и `Playground` показывают ровно тот content/icon example, который нужен для текущего review;
+- `States` демонстрирует только реально запрошенные preview states;
+- если Storybook уже запущен для этого worktree, существующий процесс нужно обновлять и переиспользовать, а не плодить новый порт.
 
 ## Known Pitfalls
 

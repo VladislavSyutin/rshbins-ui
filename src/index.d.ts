@@ -104,3 +104,11 @@ export type {
   LegacyRadioGroupPreviewState,
   LegacyRadioGroupProps
 } from '../legacy/components/radio-group';
+
+export { default as SegmentedControl } from '../legacy/components/segmented-control';
+export type {
+  LegacySegmentedControlComponent,
+  LegacySegmentedControlOption,
+  LegacySegmentedControlPreviewState,
+  LegacySegmentedControlProps
+} from '../legacy/components/segmented-control';
