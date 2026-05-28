@@ -167,3 +167,59 @@ export type {
   LegacyModalProps,
   LegacyModalVariant
 } from '../legacy/components/modal';
+
+export { default as AuthenticationFirstScreen } from '../legacy/templates/authentication/authentication-first-screen';
+export type {
+  LegacyAuthenticationClientType,
+  LegacyAuthenticationFirstScreenDevice,
+  LegacyAuthenticationFirstScreenProps,
+  LegacyCorporateSubmitPayload,
+  LegacyIndividualSubmitPayload
+} from '../legacy/templates/authentication/authentication-first-screen';
+
+export { default as AuthenticationCreatingLoginPassword } from '../legacy/templates/authentication/authentication-creating-login-password';
+export type {
+  LegacyAuthenticationCreatingLoginPasswordDevice,
+  LegacyAuthenticationCreatingLoginPasswordMode,
+  LegacyAuthenticationCreatingLoginPasswordProps,
+  LegacyAuthenticationCreatingLoginPasswordSubmitPayload
+} from '../legacy/templates/authentication/authentication-creating-login-password';
+
+export { default as AuthenticationEmailConfirmation } from '../legacy/templates/authentication/authentication-email-confirmation';
+export type {
+  LegacyAuthenticationEmailConfirmationDevice,
+  LegacyAuthenticationEmailConfirmationEmailMode,
+  LegacyAuthenticationEmailConfirmationProps
+} from '../legacy/templates/authentication/authentication-email-confirmation';
+
+export { default as AuthenticationPhoneConfirmation } from '../legacy/templates/authentication/authentication-phone-confirmation';
+export type {
+  LegacyAuthenticationPhoneConfirmationDevice,
+  LegacyAuthenticationPhoneConfirmationPhoneMode,
+  LegacyAuthenticationPhoneConfirmationProps
+} from '../legacy/templates/authentication/authentication-phone-confirmation';
+
+export { default as AuthenticationRegistration } from '../legacy/templates/authentication/authentication-registration';
+export type {
+  LegacyAuthenticationRegistrationDevice,
+  LegacyAuthenticationRegistrationMethod,
+  LegacyAuthenticationRegistrationProps,
+  LegacyAuthenticationRegistrationSubmitPayload
+} from '../legacy/templates/authentication/authentication-registration';
+
+export { default as AuthenticationRegistrationData } from '../legacy/templates/authentication/authentication-registration-data';
+export type {
+  LegacyAuthenticationRegistrationDataDevice,
+  LegacyAuthenticationRegistrationDataProps,
+  LegacyAuthenticationRegistrationDataSubmitPayload
+} from '../legacy/templates/authentication/authentication-registration-data';
+
+export { default as AuthenticationRestoringAccess } from '../legacy/templates/authentication/authentication-restoring-access';
+export type {
+  LegacyAuthenticationRestoringAccessDevice,
+  LegacyAuthenticationRestoringAccessFlow,
+  LegacyAuthenticationRestoringAccessMethod,
+  LegacyAuthenticationRestoringAccessProps,
+  LegacyAuthenticationRestoringLoginSubmitPayload,
+  LegacyAuthenticationRestoringPasswordSubmitPayload
+} from '../legacy/templates/authentication/authentication-restoring-access';
