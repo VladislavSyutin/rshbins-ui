@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Button from '../../../components/button/index.js';
 import InputCodeItem from '../../../components/input-code-item/index.js';
 import Header from '../../../components/header/index.js';
+import TextLink from '../../../components/text-link/index.js';
 import DialogToast from '../../../dialogs/toasts/dialog-toast/index.js';
 import './styles.css';
 
@@ -122,13 +123,13 @@ function AuthenticationEmailConfirmation(props) {
           {emailMode === EMAIL_MODES.visible ? (
             <>
               {' '}
-              <button
-                className="rshb-authentication-email-confirmation__link-button"
+              <TextLink
+                as="button"
                 onClick={onChangeEmail}
-                type="button"
+                size="m"
               >
                 Изм.
-              </button>
+              </TextLink>
             </>
           ) : null}
         </p>

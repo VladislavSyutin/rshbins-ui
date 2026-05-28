@@ -7,6 +7,7 @@ import Header from '../../../components/header/index.js';
 import InputEmail from '../../../components/input-email/index.js';
 import InputInn from '../../../components/input-inn/index.js';
 import InputPhone from '../../../components/input-phone/index.js';
+import TextLink from '../../../components/text-link/index.js';
 import Tabs from '../../../components/tabs/index.js';
 import chevronLeftIcon from '../../../icons/chevron-left.js';
 import {
@@ -50,15 +51,15 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
       Соглашаюсь на{' '}
-      <a
-        className="rshb-authentication-registration__link-button"
+      <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
         rel="noreferrer"
+        size="s"
         target="_blank"
       >
         передачу и обработку
-      </a>{' '}
+      </TextLink>{' '}
       персональных данных.
     </>
   );

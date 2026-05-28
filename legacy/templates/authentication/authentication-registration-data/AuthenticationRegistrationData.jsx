@@ -10,6 +10,7 @@ import InputEmail from '../../../components/input-email/index.js';
 import InputMiddleName from '../../../components/input-middle-name/index.js';
 import InputName from '../../../components/input-name/index.js';
 import InputSurname from '../../../components/input-surname/index.js';
+import TextLink from '../../../components/text-link/index.js';
 import {
   validateEmailValue,
   validatePersonNameValue
@@ -103,15 +104,15 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
       Соглашаюсь на{' '}
-      <a
-        className="rshb-authentication-registration-data__link-button"
+      <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
         rel="noreferrer"
+        size="s"
         target="_blank"
       >
         передачу и обработку
-      </a>{' '}
+      </TextLink>{' '}
       персональных данных.
     </>
   );

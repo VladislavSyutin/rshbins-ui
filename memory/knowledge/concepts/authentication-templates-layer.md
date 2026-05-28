@@ -1,6 +1,6 @@
 # `src/templates/authentication/` как слой auth-шаблонов поверх UI kit
 
-Связанные заметки: [[memory/knowledge/index]] | [[memory/knowledge/concepts/index]] | [[memory/knowledge/concepts/ui-kit-from-figma]] | [[memory/knowledge/concepts/dialog-templates-layer]] | [[memory/logs/2026-04-22]] | [[memory/logs/2026-04-23]]
+Связанные заметки: [[memory/knowledge/index]] | [[memory/knowledge/concepts/index]] | [[memory/knowledge/concepts/ui-kit-from-figma]] | [[memory/knowledge/concepts/dialog-templates-layer]] | [[memory/knowledge/concepts/text-link-component]] | [[memory/logs/2026-04-22]] | [[memory/logs/2026-04-23]]
 
 ## Summary
 
@@ -42,6 +42,7 @@ Auth-флоу быстро разрастаются в набор близких
 - Для auth templates безопаснее использовать явный `device`-режим (`desktop` / `mobile`) вместо надежды только на media query внешнего viewport, чтобы mobile-layout корректно рендерился в Storybook и узких встройках.
 - В text-field family для auth-сценариев surface поля должен оставаться прозрачным: `InputText`, `InputPhone`, `InputPassword`, `InputMiddleName` и `InputCode` не должны добавлять собственный фон в обычных состояниях.
 - Для ссылок внутри auth templates нужно использовать token-driven link states: `--color-text-brand-link` в default, `--color-text-brand-link-hover` в hover и `--color-text-brand-link-focus` в active/focus-visible.
+- Для ссылок и link-like action buttons в legacy auth templates нужно переиспользовать общий `legacy/components/text-link/`, а не дублировать локальные `__link-button` стили в каждом экране.
 - Если brand-button внутри auth template использует иконку Госуслуг, иконка должна наследовать `currentColor` через `mask`, а не через `<img>`.
 - Overview-story для auth templates нельзя строить на grid-колонках уже самих карточек preview: desktop и mobile превью лучше держать в отдельных сетках с минимальной шириной не меньше `448px` и `361px`, иначе Storybook начнёт визуально наслаивать шаблоны друг на друга.
 - Flow-прототипы, собранные из готовых auth templates, складывать отдельно в `src/prototypes/authentication/`, чтобы не смешивать экспериментальные сценарии со стабильными template contracts.
@@ -86,6 +87,7 @@ Auth-флоу быстро разрастаются в набор близких
 - [[memory/knowledge/concepts/ui-kit-from-figma]]
 - [[memory/knowledge/concepts/dialog-templates-layer]]
 - [[memory/knowledge/concepts/authentication-prototypes-layer]]
+- [[memory/knowledge/concepts/text-link-component]]
 
 ## Source Logs
 

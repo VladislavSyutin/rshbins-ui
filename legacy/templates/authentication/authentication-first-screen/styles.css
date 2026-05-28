@@ -145,57 +145,8 @@
   line-height: var(--typography-footnote-regular-lineHeight);
 }
 
-.rshb-authentication-first-screen__link-button {
+.rshb-authentication-first-screen__forgot-link {
   justify-self: end;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--color-text-brand-link);
-  cursor: pointer;
-  font-family: var(--typography-body-regular-fontFamily);
-  font-size: var(--typography-body-regular-fontSize);
-  font-weight: var(--typography-body-regular-fontWeight);
-  font-style: var(--typography-body-regular-fontStyle);
-  line-height: var(--typography-body-regular-lineHeight);
-  letter-spacing: var(--typography-body-regular-letterSpacing);
-  text-decoration: underline;
-  text-decoration-thickness: from-font;
-  text-transform: var(--typography-body-regular-textTransform);
-  transition:
-    color var(--motion-hover-duration) var(--motion-hover-curve),
-    outline-color var(--motion-hover-duration) var(--motion-hover-curve);
-}
-
-.rshb-authentication-first-screen__link-button--inline {
-  display: inline;
-  justify-self: auto;
-  font-family: var(--typography-footnote-regular-fontFamily);
-  font-size: var(--typography-footnote-regular-fontSize);
-  font-weight: var(--typography-footnote-regular-fontWeight);
-  font-style: var(--typography-footnote-regular-fontStyle);
-  line-height: var(--typography-footnote-regular-lineHeight);
-  letter-spacing: var(--typography-footnote-regular-letterSpacing);
-  text-transform: var(--typography-footnote-regular-textTransform);
-}
-
-.rshb-authentication-first-screen__link-button:focus {
-  outline: none;
-}
-
-.rshb-authentication-first-screen__link-button:hover {
-  color: var(--color-text-brand-link-hover);
-}
-
-.rshb-authentication-first-screen__link-button:active {
-  color: var(--color-text-brand-link-focus);
-}
-
-.rshb-authentication-first-screen__link-button:focus-visible {
-  color: var(--color-text-brand-link-focus);
-  border-radius: var(--radius-2xs);
-  outline: 2px solid var(--color-border-default-default-focus);
-  outline-offset: 2px;
 }
 
 .rshb-authentication-first-screen[data-device='mobile'] {

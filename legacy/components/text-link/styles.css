@@ -1,0 +1,62 @@
+.rshb-legacy-text-link {
+  --rshb-legacy-text-link-color: var(--color-text-brand-link, var(--primitive-color-green-500-solid));
+  --rshb-legacy-text-link-color-hover: var(
+    --color-text-brand-link-hover,
+    var(--primitive-color-green-600-solid)
+  );
+  --rshb-legacy-text-link-color-focus: var(
+    --color-text-brand-link-focus,
+    var(--primitive-color-green-700-solid)
+  );
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--rshb-legacy-text-link-color);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  transition:
+    color var(--motion-hover-duration) var(--motion-hover-curve),
+    outline-color var(--motion-hover-duration) var(--motion-hover-curve);
+}
+
+.rshb-legacy-text-link[data-size='m'] {
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  font-style: var(--typography-body-regular-fontStyle);
+  line-height: var(--typography-body-regular-lineHeight);
+  letter-spacing: var(--typography-body-regular-letterSpacing);
+  text-transform: var(--typography-body-regular-textTransform);
+}
+
+.rshb-legacy-text-link[data-size='s'] {
+  font-family: var(--typography-footnote-regular-fontFamily);
+  font-size: var(--typography-footnote-regular-fontSize);
+  font-weight: var(--typography-footnote-regular-fontWeight);
+  font-style: var(--typography-footnote-regular-fontStyle);
+  line-height: var(--typography-footnote-regular-lineHeight);
+  letter-spacing: var(--typography-footnote-regular-letterSpacing);
+  text-transform: var(--typography-footnote-regular-textTransform);
+}
+
+.rshb-legacy-text-link:focus {
+  outline: none;
+}
+
+.rshb-legacy-text-link:hover {
+  color: var(--rshb-legacy-text-link-color-hover);
+}
+
+.rshb-legacy-text-link:active {
+  color: var(--rshb-legacy-text-link-color-focus);
+}
+
+.rshb-legacy-text-link:focus-visible {
+  color: var(--rshb-legacy-text-link-color-focus);
+  border-radius: var(--radius-2xs);
+  outline: 2px solid var(--color-border-default-default-focus);
+  outline-offset: 2px;
+}

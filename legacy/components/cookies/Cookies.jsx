@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.css';
 import Button from '../button/index.js';
+import TextLink from '../text-link/index.js';
 
 const COOKIES_EXIT_DURATION_FALLBACK = 150;
 
@@ -38,14 +39,14 @@ function getDefaultDescription() {
   return (
     <>
       Продолжая использование сайта, вы соглашаетесь на обработку файлов cookie и иных персональных данных с помощью сервиса Яндекс Метрика в соответствии с{' '}
-      <a
-        className="rshb-legacy-cookies__link"
+      <TextLink
         href={DEFAULT_POLICY_HREF}
         rel="noreferrer noopener"
+        size="s"
         target="_blank"
       >
         Политикой АО СК «РСХБ-Страхование»
-      </a>
+      </TextLink>
       .
     </>
   );

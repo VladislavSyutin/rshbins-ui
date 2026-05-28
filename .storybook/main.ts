@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     '../legacy/components/checkbox/Checkbox.stories.tsx',
     '../legacy/components/divider/Divider.stories.tsx',
     '../legacy/components/cookies/Cookies.stories.tsx',
+    '../legacy/components/text-link/TextLink.stories.tsx',
     '../legacy/components/calendar/Calendar.stories.tsx',
     '../legacy/components/input-birth-date/InputBirthDate.stories.tsx',
     '../legacy/components/input-captcha/InputCaptcha.stories.tsx',

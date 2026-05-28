@@ -35,6 +35,13 @@ export type {
   LegacyCookiesProps,
   LegacyCookiesSize
 } from '../legacy/components/cookies';
+
+export { default as TextLink } from '../legacy/components/text-link';
+export type {
+  LegacyTextLinkAs,
+  LegacyTextLinkProps,
+  LegacyTextLinkSize
+} from '../legacy/components/text-link';
 export type {
   LegacyCalendarDayItemProps,
   LegacyCalendarItemPreviewState,

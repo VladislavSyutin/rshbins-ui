@@ -9,6 +9,7 @@ import InputLogin from '../../../components/input-login/index.js';
 import InputPassword from '../../../components/input-password/index.js';
 import InputPhone from '../../../components/input-phone/index.js';
 import SegmentedControl from '../../../components/segmented-control/index.js';
+import TextLink from '../../../components/text-link/index.js';
 import gosuslugiIcon from '../../../icons/gosuslugi.js';
 import './styles.css';
 
@@ -45,18 +46,15 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
       Соглашаюсь на{' '}
-      <a
-        className={classNames(
-          'rshb-authentication-first-screen__link-button',
-          'rshb-authentication-first-screen__link-button--inline'
-        )}
+      <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
         rel="noreferrer"
+        size="s"
         target="_blank"
       >
         передачу и обработку
-      </a>{' '}
+      </TextLink>{' '}
       персональных данных.
     </>
   );
@@ -352,13 +350,14 @@ function AuthenticationFirstScreen(props) {
                 value={password}
               />
 
-              <button
-                className="rshb-authentication-first-screen__link-button"
+              <TextLink
+                as="button"
+                className="rshb-authentication-first-screen__forgot-link"
                 onClick={onForgotCredentials}
-                type="button"
+                size="m"
               >
                 {forgotCredentialsLabel}
-              </button>
+              </TextLink>
             </div>
 
             <div className="rshb-authentication-first-screen__group rshb-authentication-first-screen__group--tight">

@@ -3,6 +3,7 @@ export { default as Divider } from '../legacy/components/divider/index.js';
 export { default as Gender } from '../legacy/components/gender/index.js';
 export { default as Calendar, CalendarDayItem, CalendarPeriodItem } from '../legacy/components/calendar/index.js';
 export { default as Cookies } from '../legacy/components/cookies/index.js';
+export { default as TextLink } from '../legacy/components/text-link/index.js';
 export { default as InputBirthDate } from '../legacy/components/input-birth-date/index.js';
 export { default as InputCaptcha } from '../legacy/components/input-captcha/index.js';
 export { default as InputCodeItem } from '../legacy/components/input-code-item/index.js';
