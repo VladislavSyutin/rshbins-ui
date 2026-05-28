@@ -49,6 +49,13 @@ export type { LegacyInputBirthDateProps } from '../legacy/components/input-birth
 export { default as InputCaptcha } from '../legacy/components/input-captcha';
 export type { LegacyInputCaptchaProps } from '../legacy/components/input-captcha';
 
+export { default as InputCodeItem } from '../legacy/components/input-code-item';
+export type {
+  LegacyInputCodeItemCompletionBehavior,
+  LegacyInputCodeItemPreviewState,
+  LegacyInputCodeItemProps
+} from '../legacy/components/input-code-item';
+
 export { default as InputCode } from '../legacy/components/input-code';
 export type { LegacyInputCodeProps } from '../legacy/components/input-code';
 

@@ -5,6 +5,7 @@ export { default as Calendar, CalendarDayItem, CalendarPeriodItem } from '../leg
 export { default as Cookies } from '../legacy/components/cookies/index.js';
 export { default as InputBirthDate } from '../legacy/components/input-birth-date/index.js';
 export { default as InputCaptcha } from '../legacy/components/input-captcha/index.js';
+export { default as InputCodeItem } from '../legacy/components/input-code-item/index.js';
 export { default as InputCode } from '../legacy/components/input-code/index.js';
 export { default as InputEmail } from '../legacy/components/input-email/index.js';
 export { default as InputInn } from '../legacy/components/input-inn/index.js';

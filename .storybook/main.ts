@@ -13,6 +13,7 @@ const config: StorybookConfig = {
     '../legacy/components/calendar/Calendar.stories.tsx',
     '../legacy/components/input-birth-date/InputBirthDate.stories.tsx',
     '../legacy/components/input-captcha/InputCaptcha.stories.tsx',
+    '../legacy/components/input-code-item/InputCodeItem.stories.tsx',
     '../legacy/components/input-code/InputCode.stories.tsx',
     '../legacy/components/input-email/InputEmail.stories.tsx',
     '../legacy/components/input-inn/InputInn.stories.tsx',
