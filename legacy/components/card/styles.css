@@ -1,0 +1,8 @@
+.rshb-legacy-card {
+  display: grid;
+  min-width: 0;
+  box-sizing: border-box;
+  background: var(--color-background-default-primary);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+}

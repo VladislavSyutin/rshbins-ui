@@ -4,6 +4,7 @@ import AuthenticationFirstScreen from './index.js';
 import type {
   LegacyAuthenticationClientType
 } from './index.js';
+import Card from '../../../components/card/index.js';
 import type { LegacyThemeMode } from '../../../components/theme/index.js';
 
 const meta = {
@@ -122,54 +123,54 @@ export const Overview: Story = {
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Desktop</p>
         <div style={desktopOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Физическое лицо</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationFirstScreen
                 defaultClientType="individual"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Корпорат. клиент</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationFirstScreen
                 defaultClientType="corporate"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
 
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Mobile</p>
         <div style={mobileOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Физ. лицо</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationFirstScreen
                 defaultClientType="individual"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Корпорат. клиент</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationFirstScreen
                 defaultClientType="corporate"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
     </div>

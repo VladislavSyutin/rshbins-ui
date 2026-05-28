@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyGenderProps, LegacyGenderValue } from './index.js';
+import Card from '../card/index.js';
 import Gender from './index.js';
 
 const meta = {
@@ -70,10 +71,10 @@ export const Overview: Story = {
     <div style={surfaceStyle}>
       <div style={gridStyle}>
         {states.map((state) => (
-          <section key={state.label} style={cardStyle}>
+          <Card key={state.label} style={cardStyle}>
             <h3 style={titleStyle}>{state.label}</h3>
             <Gender {...state.props} />
-          </section>
+          </Card>
         ))}
       </div>
     </div>

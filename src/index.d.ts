@@ -8,6 +8,16 @@ export type {
   LegacyButtonType
 } from '../legacy/components/button';
 
+export { default as Card } from '../legacy/components/card';
+export type {
+  LegacyCardBorder,
+  LegacyCardElement,
+  LegacyCardPadding,
+  LegacyCardProps,
+  LegacyCardRadius,
+  LegacyCardSurface
+} from '../legacy/components/card';
+
 export { default as Divider } from '../legacy/components/divider';
 export type {
   LegacyDividerComponent,

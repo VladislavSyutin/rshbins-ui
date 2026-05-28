@@ -5,6 +5,7 @@ import type {
   LegacyAuthenticationRestoringAccessFlow,
   LegacyAuthenticationRestoringAccessMethod
 } from './index.js';
+import Card from '../../../components/card/index.js';
 import type { LegacyThemeMode } from '../../../components/theme/index.js';
 
 const meta = {
@@ -144,80 +145,80 @@ export const Overview: Story = {
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Desktop</p>
         <div style={desktopOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Восстановление пароля</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationRestoringAccess
                 defaultRestoringFlow="password"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Восстановление логина / Email</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationRestoringAccess
                 defaultLoginMethod="email"
                 defaultRestoringFlow="login"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Восстановление логина / Телефон</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationRestoringAccess
                 defaultLoginMethod="phone"
                 defaultRestoringFlow="login"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
 
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Mobile</p>
         <div style={mobileOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Восстановление пароля</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationRestoringAccess
                 defaultRestoringFlow="password"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Восстановление логина / Email</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationRestoringAccess
                 defaultLoginMethod="email"
                 defaultRestoringFlow="login"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Восстановление логина / Телефон</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationRestoringAccess
                 defaultLoginMethod="phone"
                 defaultRestoringFlow="login"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
     </div>

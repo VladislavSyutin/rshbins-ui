@@ -2,6 +2,7 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import AuthenticationRegistration from './index.js';
 import type { LegacyAuthenticationRegistrationMethod } from './index.js';
+import Card from '../../../components/card/index.js';
 import type { LegacyThemeMode } from '../../../components/theme/index.js';
 
 const meta = {
@@ -120,54 +121,54 @@ export const Overview: Story = {
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Desktop</p>
         <div style={desktopOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Email</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationRegistration
                 defaultMethod="email"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Phone</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationRegistration
                 defaultMethod="phone"
                 device="desktop"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
 
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Mobile</p>
         <div style={mobileOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Email</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationRegistration
                 defaultMethod="email"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Phone</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationRegistration
                 defaultMethod="phone"
                 device="mobile"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
     </div>

@@ -2,6 +2,7 @@ import { useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyHeaderSize } from './index.js';
 import type { LegacyThemeMode } from '../theme/index.js';
+import Card from '../card/index.js';
 import Header from './index.js';
 
 const meta = {
@@ -53,14 +54,14 @@ export const Overview: Story = {
     <div style={wrapperStyle}>
       {(Object.entries(viewportMap) as Array<[Exclude<LegacyHeaderSize, 'responsive'>, number]>).map(
         ([size, width]) => (
-          <section key={size} style={cardStyle}>
+          <Card key={size} style={cardStyle}>
             <p style={labelStyle}>
               {size.toUpperCase()} / {width}px
             </p>
             <div style={{ width: `${width}px`, maxWidth: '100%' }}>
               <Header size={size} themeProps={{ applyToDocument: false }} />
             </div>
-          </section>
+          </Card>
         )
       )}
     </div>

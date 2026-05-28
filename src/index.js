@@ -1,4 +1,5 @@
 export { default as Button } from '../legacy/components/button/index.js';
+export { default as Card } from '../legacy/components/card/index.js';
 export { default as Divider } from '../legacy/components/divider/index.js';
 export { default as Gender } from '../legacy/components/gender/index.js';
 export { default as Calendar, CalendarDayItem, CalendarPeriodItem } from '../legacy/components/calendar/index.js';

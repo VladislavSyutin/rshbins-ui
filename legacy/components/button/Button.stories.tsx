@@ -2,6 +2,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyButtonType, LegacyButtonProps } from './index.js';
 import Button from './index.js';
+import Card from '../card/index.js';
 import starIcon from '../../icons/star-regular.js';
 
 /** Storybook-only: visual states for the preview matrix */
@@ -131,7 +132,7 @@ export const Overview: Story = {
     <div style={surfaceStyle}>
       <div style={gridStyle}>
         {variants.map((variant) => (
-          <section key={variant.value} style={cardStyle}>
+          <Card key={variant.value} style={cardStyle}>
             <h3 style={{ margin: 0 }}>{variant.label}</h3>
             {overviewStates.map((state) => (
               <div key={`${variant.value}-${state}`} style={stackStyle}>
@@ -178,7 +179,7 @@ export const Overview: Story = {
                 </div>
               </div>
             ))}
-          </section>
+          </Card>
         ))}
       </div>
     </div>

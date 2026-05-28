@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import AuthenticationCreatingLoginPassword from './index.js';
+import Card from '../../../components/card/index.js';
 import type { LegacyThemeMode } from '../../../components/theme/index.js';
 
 const meta = {
@@ -101,76 +102,76 @@ export const Overview: Story = {
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Desktop</p>
         <div style={desktopOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Логин</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationCreatingLoginPassword
                 device="desktop"
                 mode="login"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Пароль</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationCreatingLoginPassword
                 device="desktop"
                 mode="password"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Логин и пароль</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationCreatingLoginPassword
                 device="desktop"
                 mode="login-and-password"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
 
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Mobile</p>
         <div style={mobileOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Логин</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationCreatingLoginPassword
                 device="mobile"
                 mode="login"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Пароль</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationCreatingLoginPassword
                 device="mobile"
                 mode="password"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Логин и пароль</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationCreatingLoginPassword
                 device="mobile"
                 mode="login-and-password"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
     </div>

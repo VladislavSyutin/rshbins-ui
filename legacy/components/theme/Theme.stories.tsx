@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyThemeMode, LegacyThemeProps } from './index.js';
+import Card from '../card/index.js';
 import Theme from './index.js';
 
 /** Storybook-only: visual states for the preview matrix */
@@ -78,7 +79,7 @@ export const Overview: Story = {
     <div style={surfaceStyle}>
       <div style={gridStyle}>
         {(['light', 'dark'] as LegacyThemeMode[]).map((mode) => (
-          <section key={mode} style={cardStyle}>
+          <Card key={mode} style={cardStyle}>
             <h3 style={titleStyle}>{mode === 'light' ? 'Light mode' : 'Dark mode'}</h3>
             <div style={rowStyle}>
               {previewStates.map((state) => (
@@ -88,7 +89,7 @@ export const Overview: Story = {
                 </div>
               ))}
             </div>
-          </section>
+          </Card>
         ))}
       </div>
     </div>

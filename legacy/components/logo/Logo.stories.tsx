@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import Card from '../card/index.js';
 import Logo from './index.js';
 
 const meta = {
@@ -28,14 +29,20 @@ export const Overview: Story = {
   render: () => (
     <div style={surfaceStyle}>
       <div style={gridStyle}>
-        <section className="theme-light" style={cardStyle}>
+        <Card
+          className="theme-light"
+          style={cardStyle}
+        >
           <h3 style={titleStyle}>Light</h3>
           <Logo />
-        </section>
-        <section className="theme-dark" style={cardStyle}>
+        </Card>
+        <Card
+          className="theme-dark"
+          style={cardStyle}
+        >
           <h3 style={titleStyle}>Dark</h3>
           <Logo />
-        </section>
+        </Card>
       </div>
     </div>
   )

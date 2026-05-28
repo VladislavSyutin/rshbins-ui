@@ -1,6 +1,7 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { LegacyInputTextProps } from './index.js';
+import Card from '../card/index.js';
 import InputText from './index.js';
 
 /** Storybook-only: visual states for the preview matrix */
@@ -159,7 +160,7 @@ export const Overview: Story = {
     <div style={surfaceStyle}>
       <div style={matrixStyle}>
         {overviewStates.map((state) => (
-          <section key={state.label} style={cardStyle}>
+          <Card key={state.label} style={cardStyle}>
             <p style={metaStyle}>{state.label}</p>
             <InputTextWithPreviewState
               clearable
@@ -170,7 +171,7 @@ export const Overview: Story = {
               previewState={state.previewState}
               value={state.value}
             />
-          </section>
+          </Card>
         ))}
       </div>
     </div>

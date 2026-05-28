@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import AuthenticationPhoneConfirmation from './index.js';
+import Card from '../../../components/card/index.js';
 import type { LegacyThemeMode } from '../../../components/theme/index.js';
 
 const meta = {
@@ -103,58 +104,58 @@ export const Overview: Story = {
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Desktop</p>
         <div style={desktopOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Номер открыт</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationPhoneConfirmation
                 device="desktop"
                 phoneMode="visible"
                 phoneNumber="+7 (952) 999-99-99"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Номер скрыт</p>
-            <div className="theme-light" style={storyWidthStyle}>
+            <Card className="theme-light" style={storyWidthStyle}>
               <AuthenticationPhoneConfirmation
                 device="desktop"
                 phoneMode="hidden"
                 phoneNumber="+7 (952) 999-99-99"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
 
       <section style={overviewSectionStyle}>
         <p style={labelStyle}>Mobile</p>
         <div style={mobileOverviewGridStyle}>
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Номер открыт</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationPhoneConfirmation
                 device="mobile"
                 phoneMode="visible"
                 phoneNumber="+7 (952) 999-99-99"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
 
-          <section style={sectionStyle}>
+          <Card style={sectionStyle}>
             <p style={labelStyle}>Номер скрыт</p>
-            <div className="theme-light" style={mobileWidthStyle}>
+            <Card className="theme-light" style={mobileWidthStyle}>
               <AuthenticationPhoneConfirmation
                 device="mobile"
                 phoneMode="hidden"
                 phoneNumber="+7 (952) 999-99-99"
                 themeProps={{ applyToDocument: false }}
               />
-            </div>
-          </section>
+            </Card>
+          </Card>
         </div>
       </section>
     </div>
