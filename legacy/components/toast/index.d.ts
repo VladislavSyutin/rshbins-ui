@@ -8,7 +8,6 @@ export interface LegacyToastProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   children?: ReactNode;
   className?: string;
   closeLabel?: string;
-  closable?: boolean;
   dataId?: string;
   onClose?: () => void;
   placement?: LegacyToastPlacement;

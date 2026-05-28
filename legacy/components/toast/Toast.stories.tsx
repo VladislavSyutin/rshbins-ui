@@ -12,7 +12,6 @@ const meta = {
   args: {
     autoCloseDuration: null,
     children: 'Контент',
-    closable: true,
     dataId: 'legacy-toast',
     variant: 'danger'
   },

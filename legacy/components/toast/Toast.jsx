@@ -84,7 +84,6 @@ function Toast(props) {
     children,
     className,
     closeLabel,
-    closable,
     dataId,
     onClose,
     placement,
@@ -96,7 +95,6 @@ function Toast(props) {
   const resolvedAutoCloseDuration = autoCloseDuration !== undefined ? autoCloseDuration : 5000;
   const resolvedChildren = children !== undefined ? children : 'Контент';
   const resolvedCloseLabel = closeLabel !== undefined ? closeLabel : 'Закрыть уведомление';
-  const resolvedClosable = closable !== undefined ? closable : true;
   const resolvedPlacement = placement || TOAST_PLACEMENTS.inline;
   const resolvedVariant = variant || TOAST_VARIANTS.danger;
   const resolvedRole = role != null ? role : (resolvedVariant === TOAST_VARIANTS.danger ? 'alert' : 'status');
@@ -172,18 +170,16 @@ function Toast(props) {
         <StatusIcon />
       </span>
       <span className="rshb-legacy-toast__content">{resolvedChildren}</span>
-      {resolvedClosable ? (
-        <button
-          aria-label={resolvedCloseLabel}
-          className="rshb-legacy-toast__close"
-          onClick={requestClose}
-          type="button"
-        >
-          <span aria-hidden="true" className="rshb-legacy-toast__close-icon">
-            <XmarkIcon />
-          </span>
-        </button>
-      ) : null}
+      <button
+        aria-label={resolvedCloseLabel}
+        className="rshb-legacy-toast__close"
+        onClick={requestClose}
+        type="button"
+      >
+        <span aria-hidden="true" className="rshb-legacy-toast__close-icon">
+          <XmarkIcon />
+        </span>
+      </button>
     </div>
   );
 }
@@ -198,7 +194,6 @@ Toast.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   closeLabel: PropTypes.string,
-  closable: PropTypes.bool,
   dataId: PropTypes.string,
   onClose: PropTypes.func,
   placement: PropTypes.oneOf(TOAST_PLACEMENT_VALUES),

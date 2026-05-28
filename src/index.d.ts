@@ -146,6 +146,13 @@ export type {
   LegacyToastVariant
 } from '../legacy/components/toast';
 
+export { default as DialogToast } from '../legacy/dialogs/toasts/dialog-toast';
+export type {
+  LegacyDialogToastProps,
+  LegacyDialogToastState,
+  LegacyDialogToastTemplate
+} from '../legacy/dialogs/toasts/dialog-toast';
+
 export { default as Modal } from '../legacy/components/modal';
 export type {
   LegacyModalActionsRenderContext,

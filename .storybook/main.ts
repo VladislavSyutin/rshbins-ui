@@ -32,6 +32,7 @@ const config: StorybookConfig = {
     '../legacy/components/segmented-control/SegmentedControl.stories.tsx',
     '../legacy/components/tabs/Tabs.stories.tsx',
     '../legacy/components/toast/Toast.stories.tsx',
+    '../legacy/dialogs/toasts/dialog-toast/DialogToast.stories.tsx',
     '../legacy/components/logo/Logo.stories.tsx',
     '../legacy/components/modal/Modal.stories.tsx',
     '../legacy/components/theme/Theme.stories.tsx',
