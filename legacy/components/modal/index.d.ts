@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import type { LegacyInputCaptchaProps } from '../input-captcha/index.js';
 import type { LegacyInputTextProps } from '../input-text/index.js';
 
 export type LegacyModalVariant = 'default' | 'captcha' | 'text-input';
@@ -21,7 +22,7 @@ export interface LegacyModalProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   description?: ReactNode;
   heading?: ReactNode;
   inputPlaceholder?: string;
-  inputProps?: Omit<LegacyInputTextProps, 'label'>;
+  inputProps?: Omit<LegacyInputTextProps | LegacyInputCaptchaProps, 'label'>;
   onClose?: () => void;
   onPrimaryAction?: () => void;
   onRefreshCaptcha?: () => void;
@@ -29,8 +30,11 @@ export interface LegacyModalProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   onTertiaryAction?: () => void;
   onVoiceCaptcha?: () => void;
   placement?: LegacyModalPlacement;
+  primaryActionIcon?: ReactNode;
   primaryActionLabel?: string | null;
+  secondaryActionIcon?: ReactNode;
   secondaryActionLabel?: string | null;
+  tertiaryActionIcon?: ReactNode;
   tertiaryActionLabel?: string | null;
   variant?: LegacyModalVariant;
 }

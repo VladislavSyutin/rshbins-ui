@@ -32,6 +32,24 @@ const COOKIES_PLACEMENTS = {
 };
 
 const COOKIES_PLACEMENT_VALUES = [COOKIES_PLACEMENTS.inline, COOKIES_PLACEMENTS.bottomCenter];
+const DEFAULT_POLICY_HREF = 'https://rshbins.ru/about/documentation/Politika_obrabotki_PDN.pdf';
+
+function getDefaultDescription() {
+  return (
+    <>
+      Продолжая использование сайта, вы соглашаетесь на обработку файлов cookie и иных персональных данных с помощью сервиса Яндекс Метрика в соответствии с{' '}
+      <a
+        className="rshb-legacy-cookies__link"
+        href={DEFAULT_POLICY_HREF}
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        Политикой АО СК «РСХБ-Страхование»
+      </a>
+      .
+    </>
+  );
+}
 
 function Cookies(props) {
   const {
@@ -51,11 +69,11 @@ function Cookies(props) {
   } = props;
 
   const resolvedCloseOnPrimaryAction = closeOnPrimaryAction !== undefined ? closeOnPrimaryAction : true;
-  const resolvedDescription = description !== undefined ? description : 'Описание';
-  const resolvedHeading = heading !== undefined ? heading : 'Заголовок';
+  const resolvedDescription = description !== undefined ? description : getDefaultDescription();
+  const resolvedHeading = heading !== undefined ? heading : null;
   const resolvedPlacement = placement || COOKIES_PLACEMENTS.inline;
-  const resolvedPrimaryActionLabel = primaryActionLabel !== undefined ? primaryActionLabel : 'Принять';
-  const resolvedSecondaryActionLabel = secondaryActionLabel !== undefined ? secondaryActionLabel : 'Настройки';
+  const resolvedPrimaryActionLabel = primaryActionLabel !== undefined ? primaryActionLabel : 'Понятно';
+  const resolvedSecondaryActionLabel = secondaryActionLabel !== undefined ? secondaryActionLabel : null;
   const resolvedSize = size || COOKIES_SIZES.s;
 
   const [isClosing, setIsClosing] = useState(false);

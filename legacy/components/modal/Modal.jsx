@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.css';
 import Button from '../button/index.js';
+import InputCaptcha from '../input-captcha/index.js';
 import InputText from '../input-text/index.js';
 import arrowRotateLeftIcon from '../../icons/arrow-rotate-left.js';
 import volumeRegularIcon from '../../icons/volume-regular.js';
@@ -94,9 +95,12 @@ function Modal(props) {
     onTertiaryAction,
     onVoiceCaptcha,
     placement,
+    primaryActionIcon,
     primaryActionLabel,
     role,
+    secondaryActionIcon,
     secondaryActionLabel,
+    tertiaryActionIcon,
     tertiaryActionLabel,
     variant,
     ...rest
@@ -258,7 +262,13 @@ function Modal(props) {
             </div>
           ) : null}
 
-          {shouldRenderInput ? <InputText {...resolvedInputProps} /> : null}
+          {shouldRenderInput ? (
+            shouldRenderCaptcha ? (
+              <InputCaptcha {...resolvedInputProps} />
+            ) : (
+              <InputText {...resolvedInputProps} />
+            )
+          ) : null}
         </>
       )}
 
@@ -270,6 +280,7 @@ function Modal(props) {
             <Button
               buttonType={Button.buttonTypes.primary}
               className="rshb-legacy-modal__action-button"
+              leadingIcon={primaryActionIcon}
               onClick={handlePrimaryAction}
               type="button"
             >
@@ -280,6 +291,7 @@ function Modal(props) {
             <Button
               buttonType={Button.buttonTypes.secondary}
               className="rshb-legacy-modal__action-button"
+              leadingIcon={secondaryActionIcon}
               onClick={onSecondaryAction}
               type="button"
             >
@@ -290,6 +302,7 @@ function Modal(props) {
             <Button
               buttonType={Button.buttonTypes.flatPrimary}
               className="rshb-legacy-modal__action-button"
+              leadingIcon={tertiaryActionIcon}
               onClick={handleTertiaryAction}
               type="button"
             >
@@ -338,9 +351,12 @@ Modal.propTypes = {
   onTertiaryAction: PropTypes.func,
   onVoiceCaptcha: PropTypes.func,
   placement: PropTypes.oneOf(MODAL_PLACEMENT_VALUES),
+  primaryActionIcon: PropTypes.node,
   primaryActionLabel: PropTypes.string,
   role: PropTypes.string,
+  secondaryActionIcon: PropTypes.node,
   secondaryActionLabel: PropTypes.string,
+  tertiaryActionIcon: PropTypes.node,
   tertiaryActionLabel: PropTypes.string,
   variant: PropTypes.oneOf(MODAL_VARIANT_VALUES)
 };

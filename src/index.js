@@ -24,4 +24,5 @@ export { default as SegmentedControl } from '../legacy/components/segmented-cont
 export { default as Tabs } from '../legacy/components/tabs/index.js';
 export { default as Toast } from '../legacy/components/toast/index.js';
 export { default as DialogToast } from '../legacy/dialogs/toasts/dialog-toast/index.js';
+export { default as DialogModal } from '../legacy/dialogs/modals/dialog-modal/index.js';
 export { default as Modal } from '../legacy/components/modal/index.js';

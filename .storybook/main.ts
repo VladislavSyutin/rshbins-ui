@@ -33,6 +33,7 @@ const config: StorybookConfig = {
     '../legacy/components/tabs/Tabs.stories.tsx',
     '../legacy/components/toast/Toast.stories.tsx',
     '../legacy/dialogs/toasts/dialog-toast/DialogToast.stories.tsx',
+    '../legacy/dialogs/modals/dialog-modal/DialogModal.stories.tsx',
     '../legacy/components/logo/Logo.stories.tsx',
     '../legacy/components/modal/Modal.stories.tsx',
     '../legacy/components/theme/Theme.stories.tsx',

@@ -58,6 +58,8 @@ const ICON_WHITELIST = [
   // runtime — legacy/components/modal/Modal.jsx
   'arrow-rotate-left',
   'volume-regular',
+  // runtime — legacy/dialogs/modals/dialog-modal/DialogModal.jsx
+  'gosuslugi',
   // storybook only — Button.stories, Tabs.stories, SegmentedControl.stories
   'star-regular',
 ];

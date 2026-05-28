@@ -13,6 +13,7 @@ React 17-compatible cookie consent banner for FOS integration.
 ## Integration Notes
 
 - Uses `Button` from `../button/index.js` for primary and secondary actions.
+- Default copy matches the filled cookie dialog: consent text with the RSHBINS personal data policy link and the primary label `Понятно`.
 - Pass `onClose` to enable the animated exit sequence (150 ms slide-down before unmount).
 - `closeOnPrimaryAction` (default `true`) triggers `onClose` automatically after the primary button click.
 - Use `placement="bottom-center"` to render the banner as a `position: fixed` overlay at the bottom of the viewport.
@@ -41,10 +42,6 @@ export default function Example() {
   return (
     <Cookies
       dataId="cookies-banner"
-      heading="Мы используем куки"
-      description="Для улучшения работы сайта и персонализации контента."
-      primaryActionLabel="Принять"
-      secondaryActionLabel="Настройки"
       placement="bottom-center"
       onClose={() => setVisible(false)}
     />

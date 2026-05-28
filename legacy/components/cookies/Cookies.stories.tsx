@@ -12,11 +12,7 @@ const meta = {
   args: {
     closeOnPrimaryAction: true,
     dataId: 'legacy-cookies',
-    description: 'Описание',
-    heading: 'Заголовок',
     placement: 'inline',
-    primaryActionLabel: 'Контент',
-    secondaryActionLabel: 'Контент',
     size: 's'
   },
   argTypes: {
@@ -138,10 +134,6 @@ export const Overview: Story = {
         <h3 style={titleStyle}>Size S</h3>
         <Cookies
           {...args}
-          description="Мы используем файлы куки для улучшения работы сайта и персонализации контента. Продолжая использовать сайт, вы соглашаетесь с их использованием."
-          heading="Мы используем куки"
-          primaryActionLabel="Принять"
-          secondaryActionLabel="Настройки"
           size="s"
         />
       </section>
@@ -149,10 +141,6 @@ export const Overview: Story = {
         <h3 style={titleStyle}>Size XS</h3>
         <Cookies
           {...args}
-          description="Мы используем файлы куки для улучшения работы сайта."
-          heading="Мы используем куки"
-          primaryActionLabel="Принять"
-          secondaryActionLabel="Настройки"
           size="xs"
         />
       </section>

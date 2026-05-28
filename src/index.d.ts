@@ -153,6 +153,12 @@ export type {
   LegacyDialogToastTemplate
 } from '../legacy/dialogs/toasts/dialog-toast';
 
+export { default as DialogModal } from '../legacy/dialogs/modals/dialog-modal';
+export type {
+  LegacyDialogModalProps,
+  LegacyDialogModalTemplate
+} from '../legacy/dialogs/modals/dialog-modal';
+
 export { default as Modal } from '../legacy/components/modal';
 export type {
   LegacyModalActionsRenderContext,
