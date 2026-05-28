@@ -1,0 +1,96 @@
+.rshb-legacy-loader-brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-paddings-inside-xs);
+  width: fit-content;
+  color: var(--color-text-default-primary);
+}
+
+.rshb-legacy-loader-brand__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.rshb-legacy-loader-brand__bar {
+  display: block;
+  width: 16px;
+  height: var(--rshb-legacy-loader-brand-bar-height);
+  flex-shrink: 0;
+  background: var(--rshb-legacy-loader-brand-bar-color);
+  transition: height var(--motion-loaderbrand-logo-duration) var(--motion-loaderbrand-logo-curve);
+  will-change: height;
+}
+
+.rshb-legacy-loader-brand__text {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  min-height: var(--typography-body-regular-lineHeight);
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  font-style: var(--typography-body-regular-fontStyle);
+  line-height: var(--typography-body-regular-lineHeight);
+  letter-spacing: var(--typography-body-regular-letterSpacing);
+  text-decoration: var(--typography-body-regular-textDecoration);
+  text-transform: var(--typography-body-regular-textTransform);
+  white-space: nowrap;
+}
+
+.rshb-legacy-loader-brand__text-sizer {
+  visibility: hidden;
+}
+
+.rshb-legacy-loader-brand__text-layer {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.rshb-legacy-loader-brand__text-layer[data-phase='entering'] {
+  animation: rshb-legacy-loader-brand-text-in var(--motion-loaderbrand-text-duration) var(--motion-loaderbrand-text-curve) forwards;
+}
+
+.rshb-legacy-loader-brand__text-layer[data-phase='exiting'] {
+  animation: rshb-legacy-loader-brand-text-out var(--motion-loaderbrand-text-duration) var(--motion-loaderbrand-text-curve) forwards;
+}
+
+@keyframes rshb-legacy-loader-brand-text-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rshb-legacy-loader-brand-text-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rshb-legacy-loader-brand__bar {
+    transition: none;
+  }
+
+  .rshb-legacy-loader-brand__text-layer[data-phase='entering'],
+  .rshb-legacy-loader-brand__text-layer[data-phase='exiting'] {
+    animation: none;
+  }
+}

@@ -90,6 +90,14 @@ export type {
   LegacyInputTextProps
 } from '../legacy/components/input-text';
 
+export { default as LoaderBrand } from '../legacy/components/loader-brand';
+export type {
+  LegacyLoaderBrandComponent,
+  LegacyLoaderBrandLogoStep,
+  LegacyLoaderBrandProps,
+  LegacyLoaderBrandTextStep
+} from '../legacy/components/loader-brand';
+
 export { default as Spin } from '../legacy/components/spin';
 export type {
   LegacySpinComponent,

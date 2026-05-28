@@ -16,6 +16,7 @@ export { default as InputPassword } from '../legacy/components/input-password/in
 export { default as InputPhone } from '../legacy/components/input-phone/index.js';
 export { default as InputSurname } from '../legacy/components/input-surname/index.js';
 export { default as InputText } from '../legacy/components/input-text/index.js';
+export { default as LoaderBrand } from '../legacy/components/loader-brand/index.js';
 export { default as Spin } from '../legacy/components/spin/index.js';
 export { default as Switch } from '../legacy/components/switch/index.js';
 export { default as RadioGroup } from '../legacy/components/radio-group/index.js';
