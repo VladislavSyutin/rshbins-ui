@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = { render: (args: LegacyInputCodeProps) => <div style={surfaceStyle}><InputCode {...args} /></div> };
 export const Overview: Story = {
   parameters: { controls: { disable: true } },
-  render: () => <div style={surfaceStyle}><div style={matrixStyle}><InputCode dataId="input-code-empty" /><InputCode dataId="input-code-entered" value="1234" /><InputCode dataId="input-code-error" helperText="Обязательно для заполнения" invalid /><InputCode dataId="input-code-disabled" disabled value="1234" /></div></div>
+  render: () => <div style={surfaceStyle}><div style={matrixStyle}><InputCode dataId="input-code-empty" /><InputCode dataId="input-code-entered" value="1234" /><InputCode dataId="input-code-error" helperText="Проверочный код должен содержать 4 цифры" invalid value="12" /><InputCode dataId="input-code-disabled" disabled value="1234" /></div></div>
 };
 export const Controlled: Story = { parameters: { controls: { disable: true } }, render: () => <ControlledExample /> };
 function ControlledExample() { const [value, setValue] = useState(''); return <div style={surfaceStyle}><InputCode dataId="input-code-controlled" onValueChange={setValue} value={value} /></div>; }

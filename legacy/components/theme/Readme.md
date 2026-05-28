@@ -17,7 +17,6 @@ React 17-compatible theme toggle button for FOS integration. Moon/Sun icons are 
 | `mode` | `'light' \| 'dark'` | — | Controlled mode |
 | `defaultMode` | `'light' \| 'dark'` | — | Initial uncontrolled mode |
 | `onModeChange` | `(mode) => void` | — | Called when user toggles |
-| `previewState` | `'default' \| 'hover' \| 'pressed' \| 'focused'` | `'default'` | Visual state for Storybook |
 | `storageKey` | `string` | `'rshbins-ui-theme'` | localStorage key |
 | `dataId` | `string` | — | Maps to `data-id` attribute |
 

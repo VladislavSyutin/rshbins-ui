@@ -9,6 +9,7 @@ export const EMAIL_DOMAIN_ERROR =
   'Адрес электронной почты должен содержать доменную часть (например, example.ru)';
 export const EMAIL_DOMAIN_DOT_ERROR =
   'Адрес электронной почты должен содержать “.” (например, example.ru)';
+export const CODE_LENGTH_ERROR = 'Проверочный код должен содержать 4 цифры';
 
 export const NAME_ALLOWED_CHARACTER_PATTERN = /^[А-Яа-яЁё.\-’,()]$/;
 export const SURNAME_ALLOWED_CHARACTER_PATTERN = /^[А-Яа-яЁё.\-’,() ]$/;
@@ -131,6 +132,14 @@ export function sanitizeInnValue(value) {
 
 export function validateRequiredValue(value) {
   return value.length === 0 ? REQUIRED_ERROR : undefined;
+}
+
+export function validateCodeValue(value) {
+  if (value.length === 0) {
+    return REQUIRED_ERROR;
+  }
+
+  return value.length === CODE_MAX_DIGITS ? undefined : CODE_LENGTH_ERROR;
 }
 
 export function validateInnValue(value) {

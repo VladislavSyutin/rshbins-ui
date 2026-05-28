@@ -14,7 +14,7 @@ React 17-compatible delivery of the checkbox component for FOS integration.
 
 - Keep CSS imports enabled in the target Webpack pipeline.
 - The component does not depend on Storybook, Sass, or React 18/19 APIs.
-- `invalid`, `previewState`, and `size` mirror the modern checkbox behavior.
+- `invalid` and `size` mirror the modern checkbox behavior.
 - `dataId` is mapped to `data-id` on the root `<label>` element.
 - Controlled usage: pass `checked` + `onChange`. Uncontrolled usage: pass `defaultChecked`.
 

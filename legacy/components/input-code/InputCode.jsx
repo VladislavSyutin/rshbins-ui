@@ -1,5 +1,5 @@
 import { createBusinessInput } from '../input-helpers/createBusinessInput.jsx';
-import { CODE_MAX_DIGITS, sanitizeCodeValue, validateRequiredValue } from '../input-helpers/formatters.js';
+import { CODE_MAX_DIGITS, sanitizeCodeValue, validateCodeValue } from '../input-helpers/formatters.js';
 import './styles.css';
 
 const InputCode = createBusinessInput({
@@ -16,7 +16,7 @@ const InputCode = createBusinessInput({
   pattern: '[0-9]*',
   sanitize: sanitizeCodeValue,
   spellCheck: false,
-  validate: validateRequiredValue
+  validate: validateCodeValue
 });
 
 export default InputCode;

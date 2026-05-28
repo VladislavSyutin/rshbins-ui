@@ -54,27 +54,28 @@ function ButtonWithPreviewState({
   children,
   ...props
 }: LegacyButtonProps & { previewState?: ButtonPreviewState; children?: ReactNode }) {
-  const ref = useRef<HTMLButtonElement | null>(null);
+  const wrapperRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
-    if (ref.current && previewState && previewState !== 'default') {
-      ref.current.setAttribute('data-state', previewState);
+    const button = wrapperRef.current?.firstElementChild;
+    if (button instanceof HTMLElement && previewState && previewState !== 'default') {
+      button.setAttribute('data-state', previewState);
     }
   }, [previewState]);
 
   // For 'disabled' and 'loading' states, use the real props so the component
   // renders correctly (disabled attribute, spinner, etc.)
   if (previewState === 'disabled') {
-    return <Button {...props} disabled ref={ref}>{children}</Button>;
+    return <span ref={wrapperRef}><Button {...props} disabled>{children}</Button></span>;
   }
   if (previewState === 'loading') {
-    return <Button {...props} loading ref={ref}>{children}</Button>;
+    return <span ref={wrapperRef}><Button {...props} loading>{children}</Button></span>;
   }
   if (previewState === 'selection') {
-    return <Button {...props} selected ref={ref}>{children}</Button>;
+    return <span ref={wrapperRef}><Button {...props} selected>{children}</Button></span>;
   }
 
-  return <Button {...props} ref={ref}>{children}</Button>;
+  return <span ref={wrapperRef}><Button {...props}>{children}</Button></span>;
 }
 
 const meta = {

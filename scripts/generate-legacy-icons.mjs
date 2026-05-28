@@ -11,8 +11,7 @@
  *   import xmarkIcon from '../../icons/xmark.js';
  *   // xmarkIcon === 'data:image/svg+xml;base64,...'
  *
- * This makes the icons consumable in any Webpack 3 / FOS project without
- * requiring a special SVG loader rule.
+ * This makes the icons consumable without requiring a special SVG loader rule.
  *
  * Usage:
  *   node scripts/generate-legacy-icons.mjs
@@ -90,10 +89,9 @@ for (const name of ICON_WHITELIST) {
     `// Source: icons/${name}.svg`,
     `// Re-generate with: npm run build:icons`,
     '',
-    `var icon = '${dataUri}';`,
+    `const icon = '${dataUri}';`,
     '',
-    'module.exports = icon;',
-    'module.exports.default = icon;',
+    'export default icon;',
     '',
   ].join('\n');
 

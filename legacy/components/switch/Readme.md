@@ -13,7 +13,7 @@ React 17-compatible binary switch control for FOS integration.
 ## Integration Notes
 
 - Implemented as native `input[type='checkbox']` with `role='switch'`.
-- Supports `checked`/`defaultChecked`, `disabled`, `readOnly`, `label`, `dataId` and Storybook-only `previewState`.
+- Supports `checked`/`defaultChecked`, `disabled`, `readOnly`, `label`, and `dataId`.
 - Maps `dataId` to `data-id` on the root label.
 - Uses React 17-compatible JSX, PropTypes, `classnames` and plain CSS only.
 

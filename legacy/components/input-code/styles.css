@@ -3,9 +3,9 @@
 }
 
 .rshb-legacy-input-code__mask-filled {
-  color: var(--color-text-primary-default);
+  color: var(--color-text-default-primary);
 }
 
 .rshb-legacy-input-code__mask-placeholder {
-  color: var(--color-text-tertiary-default);
+  color: var(--color-text-default-tertiary);
 }
