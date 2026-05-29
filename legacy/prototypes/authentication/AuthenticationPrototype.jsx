@@ -35,6 +35,12 @@ var LOG_IN_THROUGH_THE_GOSUSLUGI_LOADING_DURATION_MS = 3000;
 var CREATING_LOGIN_PASSWORD_LOADING_DURATION_MS = 3000;
 var FINAL_LOADING_DURATION_MS = 7000;
 var REGISTRATION_STEP_LOADING_DURATION_MS = 3000;
+var EMPTY_FIRST_SCREEN_DRAFT = {
+  login: '',
+  phone: '',
+  password: '',
+  consentAccepted: false
+};
 
 function getBrowserThemeMode() {
   if (
@@ -423,17 +429,17 @@ function AuthenticationPrototype(props) {
     }
 
     var timeoutId = window.setTimeout(function () {
-    setLoadingFlag('final', false);
-    setStep('first-screen');
-    setClientType('individual');
-    setFirstScreenDraft(null);
-    setSubmittedPhoneNumber('');
-    setRegistrationDraft(null);
-    setRestoringAccessDraft(null);
-    setRestoringLoginDraft(null);
-    setPolicyholderDetailsDraft(null);
-    setCredentialCreationMode('password');
-  }, FINAL_LOADING_DURATION_MS);
+      setLoadingFlag('final', false);
+      setStep('first-screen');
+      setClientType('individual');
+      setFirstScreenDraft(EMPTY_FIRST_SCREEN_DRAFT);
+      setSubmittedPhoneNumber('');
+      setRegistrationDraft(null);
+      setRestoringAccessDraft(null);
+      setRestoringLoginDraft(null);
+      setPolicyholderDetailsDraft(null);
+      setCredentialCreationMode('password');
+    }, FINAL_LOADING_DURATION_MS);
 
     return function () {
       window.clearTimeout(timeoutId);
@@ -470,7 +476,7 @@ function AuthenticationPrototype(props) {
     setIsTimeoutOpen(false);
     setSubmittedPhoneNumber('');
     if (!resolvedOptions.preserveFirstScreenDraft) {
-      setFirstScreenDraft(null);
+      setFirstScreenDraft(EMPTY_FIRST_SCREEN_DRAFT);
     }
     setRegistrationDraft(null);
     setRestoringAccessDraft(null);
