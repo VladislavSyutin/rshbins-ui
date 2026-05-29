@@ -197,7 +197,6 @@ const InputPhone = React.forwardRef(function InputPhone(props, ref) {
       onFocus={handleFocus}
       onKeyDown={handleKeyDown}
       onValueChange={commitValue}
-      pattern="[0-9]*"
       prefix={shouldShowMask ? '+7' : undefined}
       ref={inputRef}
       spellCheck={false}

@@ -204,7 +204,7 @@ function AuthenticationRegistrationData(props) {
         consentAccepted: consentAccepted,
         email: email,
         gender: gender,
-        middleName: middleName,
+        middleName: withoutMiddleName ? '' : middleName,
         name: name,
         surname: surname,
         withoutMiddleName: withoutMiddleName
@@ -276,9 +276,6 @@ function AuthenticationRegistrationData(props) {
             label={middleNameLabel}
             onSwitchChange={function (checked, event) {
               setWithoutMiddleName(checked);
-              if (checked) {
-                setMiddleName('');
-              }
               if (middleNameInputProps && middleNameInputProps.onSwitchChange) {
                 middleNameInputProps.onSwitchChange(checked, event);
               }

@@ -220,6 +220,7 @@ function AuthenticationPrototype(props) {
     logInThroughTheGosuslugi: false,
     phoneLogin: false,
     policyholderDetails: false,
+    proofOfIdentity: false,
     registration: false,
     restoringAccess: false,
     step: false
@@ -459,6 +460,7 @@ function AuthenticationPrototype(props) {
       logInThroughTheGosuslugi: false,
       phoneLogin: false,
       policyholderDetails: false,
+      proofOfIdentity: false,
       registration: false,
       restoringAccess: false,
       step: false
@@ -603,6 +605,15 @@ function AuthenticationPrototype(props) {
     });
   }
 
+  function handleProofOfIdentityContinue() {
+    setLoadingFlag('proofOfIdentity', true);
+
+    startTimer('proofOfIdentity', PHONE_LOGIN_LOADING_DURATION_MS, function () {
+      setLoadingFlag('proofOfIdentity', false);
+      openTextMessageCodeStep();
+    });
+  }
+
   function handleCorporateSubmit(payload) {
     if (resolvedAuthenticationProps.onCorporateSubmit) {
       resolvedAuthenticationProps.onCorporateSubmit(payload);
@@ -676,6 +687,9 @@ function AuthenticationPrototype(props) {
         normalizedValue === 'phone' ||
         phoneDigits.length === 10 ||
         phoneDigits.length === 11;
+      var isEmailValue =
+        normalizedValue === 'email' ||
+        normalizedValue.indexOf('@') !== -1;
 
       setLoadingFlag('restoringAccess', false);
 
@@ -684,7 +698,12 @@ function AuthenticationPrototype(props) {
         return;
       }
 
-      openRestoringEmailCodeStep();
+      if (isEmailValue) {
+        openRestoringEmailCodeStep();
+        return;
+      }
+
+      setUserWasNotFoundToastKey(function (currentKey) { return currentKey + 1; });
     });
   }
 
@@ -1090,10 +1109,11 @@ function AuthenticationPrototype(props) {
             closeOnPrimaryAction={false}
             closeOnTertiaryAction={false}
             onClose={handleBackToFirstScreen}
-            onPrimaryAction={openTextMessageCodeStep}
-            onSecondaryAction={openTextMessageCodeStep}
+            onPrimaryAction={handleProofOfIdentityContinue}
+            onSecondaryAction={function () {}}
             onTertiaryAction={handleBackToFirstScreen}
             placement="top-center"
+            primaryActionLoading={loading.proofOfIdentity}
             template="proof-of-identity"
           />
         </React.Fragment>
@@ -1230,6 +1250,7 @@ function AuthenticationPrototype(props) {
           onPrimaryAction={handleCaptchaContinue}
           onTertiaryAction={handleCaptchaClose}
           placement="top-center"
+          primaryActionLoading={loading.captcha}
           template="captcha"
         />
       ) : null}

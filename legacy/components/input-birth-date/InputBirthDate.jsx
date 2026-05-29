@@ -388,7 +388,6 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
   function handleCalendarChange(nextDate) {
     commitValue(formatDateValue(nextDate));
     setHasBeenValidated(true);
-    setIsCalendarOpen(false);
 
     if (inputRef.current) {
       inputRef.current.focus();

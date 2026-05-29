@@ -97,11 +97,14 @@ function Modal(props) {
     placement,
     primaryActionIcon,
     primaryActionLabel,
+    primaryActionLoading,
     role,
     secondaryActionIcon,
     secondaryActionLabel,
+    secondaryActionLoading,
     tertiaryActionIcon,
     tertiaryActionLabel,
+    tertiaryActionLoading,
     variant,
     ...rest
   } = props;
@@ -281,6 +284,7 @@ function Modal(props) {
               buttonType={Button.buttonTypes.primary}
               className="rshb-legacy-modal__action-button"
               leadingIcon={primaryActionIcon}
+              loading={primaryActionLoading}
               onClick={handlePrimaryAction}
               type="button"
             >
@@ -292,6 +296,7 @@ function Modal(props) {
               buttonType={Button.buttonTypes.secondary}
               className="rshb-legacy-modal__action-button"
               leadingIcon={secondaryActionIcon}
+              loading={secondaryActionLoading}
               onClick={onSecondaryAction}
               type="button"
             >
@@ -303,6 +308,7 @@ function Modal(props) {
               buttonType={Button.buttonTypes.flatPrimary}
               className="rshb-legacy-modal__action-button"
               leadingIcon={tertiaryActionIcon}
+              loading={tertiaryActionLoading}
               onClick={handleTertiaryAction}
               type="button"
             >
@@ -353,11 +359,14 @@ Modal.propTypes = {
   placement: PropTypes.oneOf(MODAL_PLACEMENT_VALUES),
   primaryActionIcon: PropTypes.node,
   primaryActionLabel: PropTypes.string,
+  primaryActionLoading: PropTypes.bool,
   role: PropTypes.string,
   secondaryActionIcon: PropTypes.node,
   secondaryActionLabel: PropTypes.string,
+  secondaryActionLoading: PropTypes.bool,
   tertiaryActionIcon: PropTypes.node,
   tertiaryActionLabel: PropTypes.string,
+  tertiaryActionLoading: PropTypes.bool,
   variant: PropTypes.oneOf(MODAL_VARIANT_VALUES)
 };
 

@@ -93,11 +93,14 @@ function DialogModal(props) {
     placement,
     primaryActionIcon,
     primaryActionLabel,
+    primaryActionLoading,
     role,
     secondaryActionIcon,
     secondaryActionLabel,
+    secondaryActionLoading,
     template,
     tertiaryActionLabel,
+    tertiaryActionLoading,
     variant,
     ...rest
   } = props;
@@ -173,6 +176,7 @@ function DialogModal(props) {
       primaryActionLabel={
         primaryActionLabel !== undefined ? primaryActionLabel : templateConfig.primaryActionLabel
       }
+      primaryActionLoading={primaryActionLoading}
       role={role}
       secondaryActionIcon={
         secondaryActionIcon !== undefined ? secondaryActionIcon : templateConfig.secondaryActionIcon
@@ -182,9 +186,11 @@ function DialogModal(props) {
           ? secondaryActionLabel
           : templateConfig.secondaryActionLabel
       }
+      secondaryActionLoading={secondaryActionLoading}
       tertiaryActionLabel={
         tertiaryActionLabel !== undefined ? tertiaryActionLabel : templateConfig.tertiaryActionLabel
       }
+      tertiaryActionLoading={tertiaryActionLoading}
       variant={resolvedVariant}
     >
       {children}
@@ -224,11 +230,14 @@ DialogModal.propTypes = {
   ]),
   primaryActionIcon: PropTypes.node,
   primaryActionLabel: PropTypes.string,
+  primaryActionLoading: PropTypes.bool,
   role: PropTypes.string,
   secondaryActionIcon: PropTypes.node,
   secondaryActionLabel: PropTypes.string,
+  secondaryActionLoading: PropTypes.bool,
   template: PropTypes.oneOf(DIALOG_MODAL_TEMPLATE_VALUES),
   tertiaryActionLabel: PropTypes.string,
+  tertiaryActionLoading: PropTypes.bool,
   variant: PropTypes.oneOf([
     Modal.variants.default,
     Modal.variants.captcha,

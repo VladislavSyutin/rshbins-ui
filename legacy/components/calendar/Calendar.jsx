@@ -604,13 +604,11 @@ function Calendar(props) {
   }
 
   function handleMonthSelect(month) {
-    let nextSelectedDate = state.selectedDate;
+    const year = state.displayDate.getFullYear();
+    const validDay = Math.min(state.selectedDay, getDaysInMonth(year, month));
+    const nextSelectedDate = createNextDate(year, month, validDay);
 
     setState(function updateState(previousState) {
-      const year = previousState.displayDate.getFullYear();
-      const validDay = Math.min(previousState.selectedDay, getDaysInMonth(year, month));
-      nextSelectedDate = createNextDate(year, month, validDay);
-
       return {
         ...previousState,
         selectedDate: nextSelectedDate,
@@ -624,19 +622,17 @@ function Calendar(props) {
   }
 
   function handleYearSelect(year) {
-    let nextSelectedDate = state.selectedDate;
+    let nextMonth = state.selectedMonth;
+    let nextDay = state.selectedDay;
+
+    if (state.selectedMonth === 1 && state.selectedDay === 29 && getDaysInMonth(year, 1) < 29) {
+      nextMonth = 2;
+      nextDay = 1;
+    }
+
+    const nextSelectedDate = createNextDate(year, nextMonth, nextDay);
 
     setState(function updateState(previousState) {
-      let nextMonth = previousState.selectedMonth;
-      let nextDay = previousState.selectedDay;
-
-      if (previousState.selectedMonth === 1 && previousState.selectedDay === 29 && getDaysInMonth(year, 1) < 29) {
-        nextMonth = 2;
-        nextDay = 1;
-      }
-
-      nextSelectedDate = createNextDate(year, nextMonth, nextDay);
-
       return {
         ...previousState,
         selectedDate: nextSelectedDate,

@@ -48,7 +48,7 @@
   --code-input-cell-background: var(--color-background-default-disabled);
   --code-input-cell-border-color: transparent;
   --code-input-cell-color: var(--color-text-default-disabled);
-  --code-input-cell-cursor: default;
+  --code-input-cell-cursor: not-allowed;
 }
 
 .rshb-legacy-input-code-item__cell:not([data-state='focused']):not([data-state='loading']):hover {

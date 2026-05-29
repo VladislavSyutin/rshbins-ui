@@ -35,11 +35,14 @@ export interface LegacyDialogModalProps
   placement?: LegacyModalPlacement;
   primaryActionIcon?: ReactNode;
   primaryActionLabel?: string | null;
+  primaryActionLoading?: boolean;
   role?: string;
   secondaryActionIcon?: ReactNode;
   secondaryActionLabel?: string | null;
+  secondaryActionLoading?: boolean;
   template?: LegacyDialogModalTemplate;
   tertiaryActionLabel?: string | null;
+  tertiaryActionLoading?: boolean;
   variant?: LegacyModalVariant;
 }
 
