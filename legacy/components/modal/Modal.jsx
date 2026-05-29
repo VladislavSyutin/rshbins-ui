@@ -95,13 +95,16 @@ function Modal(props) {
     onTertiaryAction,
     onVoiceCaptcha,
     placement,
+    primaryActionDisabled,
     primaryActionIcon,
     primaryActionLabel,
     primaryActionLoading,
     role,
+    secondaryActionDisabled,
     secondaryActionIcon,
     secondaryActionLabel,
     secondaryActionLoading,
+    tertiaryActionDisabled,
     tertiaryActionIcon,
     tertiaryActionLabel,
     tertiaryActionLoading,
@@ -283,6 +286,7 @@ function Modal(props) {
             <Button
               buttonType={Button.buttonTypes.primary}
               className="rshb-legacy-modal__action-button"
+              disabled={primaryActionDisabled}
               leadingIcon={primaryActionIcon}
               loading={primaryActionLoading}
               onClick={handlePrimaryAction}
@@ -295,6 +299,7 @@ function Modal(props) {
             <Button
               buttonType={Button.buttonTypes.secondary}
               className="rshb-legacy-modal__action-button"
+              disabled={secondaryActionDisabled}
               leadingIcon={secondaryActionIcon}
               loading={secondaryActionLoading}
               onClick={onSecondaryAction}
@@ -307,6 +312,7 @@ function Modal(props) {
             <Button
               buttonType={Button.buttonTypes.flatPrimary}
               className="rshb-legacy-modal__action-button"
+              disabled={tertiaryActionDisabled}
               leadingIcon={tertiaryActionIcon}
               loading={tertiaryActionLoading}
               onClick={handleTertiaryAction}
@@ -360,13 +366,16 @@ Modal.propTypes = {
   primaryActionIcon: PropTypes.node,
   primaryActionLabel: PropTypes.string,
   primaryActionLoading: PropTypes.bool,
+  primaryActionDisabled: PropTypes.bool,
   role: PropTypes.string,
   secondaryActionIcon: PropTypes.node,
   secondaryActionLabel: PropTypes.string,
   secondaryActionLoading: PropTypes.bool,
+  secondaryActionDisabled: PropTypes.bool,
   tertiaryActionIcon: PropTypes.node,
   tertiaryActionLabel: PropTypes.string,
   tertiaryActionLoading: PropTypes.bool,
+  tertiaryActionDisabled: PropTypes.bool,
   variant: PropTypes.oneOf(MODAL_VARIANT_VALUES)
 };
 

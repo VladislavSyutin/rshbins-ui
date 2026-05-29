@@ -91,14 +91,17 @@ function DialogModal(props) {
     onTertiaryAction,
     onVoiceCaptcha,
     placement,
+    primaryActionDisabled,
     primaryActionIcon,
     primaryActionLabel,
     primaryActionLoading,
     role,
+    secondaryActionDisabled,
     secondaryActionIcon,
     secondaryActionLabel,
     secondaryActionLoading,
     template,
+    tertiaryActionDisabled,
     tertiaryActionLabel,
     tertiaryActionLoading,
     variant,
@@ -177,6 +180,7 @@ function DialogModal(props) {
         primaryActionLabel !== undefined ? primaryActionLabel : templateConfig.primaryActionLabel
       }
       primaryActionLoading={primaryActionLoading}
+      primaryActionDisabled={primaryActionDisabled}
       role={role}
       secondaryActionIcon={
         secondaryActionIcon !== undefined ? secondaryActionIcon : templateConfig.secondaryActionIcon
@@ -187,10 +191,12 @@ function DialogModal(props) {
           : templateConfig.secondaryActionLabel
       }
       secondaryActionLoading={secondaryActionLoading}
+      secondaryActionDisabled={secondaryActionDisabled}
       tertiaryActionLabel={
         tertiaryActionLabel !== undefined ? tertiaryActionLabel : templateConfig.tertiaryActionLabel
       }
       tertiaryActionLoading={tertiaryActionLoading}
+      tertiaryActionDisabled={tertiaryActionDisabled}
       variant={resolvedVariant}
     >
       {children}
@@ -231,13 +237,16 @@ DialogModal.propTypes = {
   primaryActionIcon: PropTypes.node,
   primaryActionLabel: PropTypes.string,
   primaryActionLoading: PropTypes.bool,
+  primaryActionDisabled: PropTypes.bool,
   role: PropTypes.string,
   secondaryActionIcon: PropTypes.node,
   secondaryActionLabel: PropTypes.string,
   secondaryActionLoading: PropTypes.bool,
+  secondaryActionDisabled: PropTypes.bool,
   template: PropTypes.oneOf(DIALOG_MODAL_TEMPLATE_VALUES),
   tertiaryActionLabel: PropTypes.string,
   tertiaryActionLoading: PropTypes.bool,
+  tertiaryActionDisabled: PropTypes.bool,
   variant: PropTypes.oneOf([
     Modal.variants.default,
     Modal.variants.captcha,

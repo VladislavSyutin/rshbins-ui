@@ -33,12 +33,15 @@ export interface LegacyModalProps extends Omit<HTMLAttributes<HTMLDivElement>, '
   primaryActionIcon?: ReactNode;
   primaryActionLabel?: string | null;
   primaryActionLoading?: boolean;
+  primaryActionDisabled?: boolean;
   secondaryActionIcon?: ReactNode;
   secondaryActionLabel?: string | null;
   secondaryActionLoading?: boolean;
+  secondaryActionDisabled?: boolean;
   tertiaryActionIcon?: ReactNode;
   tertiaryActionLabel?: string | null;
   tertiaryActionLoading?: boolean;
+  tertiaryActionDisabled?: boolean;
   variant?: LegacyModalVariant;
 }
 

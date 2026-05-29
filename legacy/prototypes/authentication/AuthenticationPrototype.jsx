@@ -1250,6 +1250,7 @@ function AuthenticationPrototype(props) {
           onPrimaryAction={handleCaptchaContinue}
           onTertiaryAction={handleCaptchaClose}
           placement="top-center"
+          primaryActionDisabled={!captchaValue || !captchaValue.trim()}
           primaryActionLoading={loading.captcha}
           template="captcha"
         />
