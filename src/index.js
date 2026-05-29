@@ -35,3 +35,4 @@ export { default as AuthenticationPhoneConfirmation } from '../legacy/templates/
 export { default as AuthenticationRegistration } from '../legacy/templates/authentication/authentication-registration/index.js';
 export { default as AuthenticationRegistrationData } from '../legacy/templates/authentication/authentication-registration-data/index.js';
 export { default as AuthenticationRestoringAccess } from '../legacy/templates/authentication/authentication-restoring-access/index.js';
+export { default as AuthenticationPrototype } from '../legacy/prototypes/authentication/index.js';

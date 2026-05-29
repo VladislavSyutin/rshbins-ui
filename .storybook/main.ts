@@ -43,6 +43,7 @@ const config: StorybookConfig = {
     '../legacy/templates/authentication/authentication-registration/AuthenticationRegistration.stories.tsx',
     '../legacy/templates/authentication/authentication-registration-data/AuthenticationRegistrationData.stories.tsx',
     '../legacy/templates/authentication/authentication-restoring-access/AuthenticationRestoringAccess.stories.tsx',
+    '../legacy/prototypes/authentication/AuthenticationPrototype.stories.tsx',
     '../legacy/components/logo/Logo.stories.tsx',
     '../legacy/components/modal/Modal.stories.tsx',
     '../legacy/components/theme/Theme.stories.tsx',

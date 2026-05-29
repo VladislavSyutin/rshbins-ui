@@ -240,3 +240,8 @@ export type {
   LegacyAuthenticationRestoringLoginSubmitPayload,
   LegacyAuthenticationRestoringPasswordSubmitPayload
 } from '../legacy/templates/authentication/authentication-restoring-access';
+
+export { default as AuthenticationPrototype } from '../legacy/prototypes/authentication';
+export type {
+  LegacyAuthenticationPrototypeProps
+} from '../legacy/prototypes/authentication';
