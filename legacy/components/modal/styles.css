@@ -183,9 +183,46 @@
   }
 }
 
+@keyframes rshb-legacy-modal-mobile-center-move-in-up {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - var(--rshb-legacy-modal-motion-offset)));
+  }
+}
+
+@keyframes rshb-legacy-modal-mobile-center-move-in-down {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - var(--rshb-legacy-modal-motion-offset)));
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
 @media (max-width: 743px) {
   .rshb-legacy-modal {
     width: 313px;
     max-width: calc(100vw - (var(--space-margins-inside-xl) * 2));
+  }
+
+  .rshb-legacy-modal[data-placement='top-center'] {
+    inset-block-start: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .rshb-legacy-modal[data-placement='top-center'][data-preview-state='shown'] {
+    animation-name: rshb-legacy-modal-mobile-center-move-in-down;
+  }
+
+  .rshb-legacy-modal[data-placement='top-center'][data-preview-state='closing'] {
+    animation-name: rshb-legacy-modal-mobile-center-move-in-up;
   }
 }

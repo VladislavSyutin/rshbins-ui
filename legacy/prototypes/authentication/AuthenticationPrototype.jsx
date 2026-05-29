@@ -1262,7 +1262,7 @@ function AuthenticationPrototype(props) {
           closeOnTertiaryAction={false}
           countdownDurationSeconds={30 * 60}
           onClose={function () { setIsTimeoutOpen(false); }}
-          onPrimaryAction={function () { setIsTimeoutOpen(false); }}
+          onPrimaryAction={function () {}}
           onTertiaryAction={function () { setIsTimeoutOpen(false); }}
           placement="top-center"
           template="timeout"
