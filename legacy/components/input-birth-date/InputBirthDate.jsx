@@ -220,6 +220,31 @@ function validateBirthDateValue(value) {
     : BIRTH_DATE_RANGE_ERROR;
 }
 
+const isMobileDevice = typeof window !== 'undefined' && 
+  /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+function convertRuDateToIso(value) {
+  if (!value) {
+    return '';
+  }
+  const parts = String(value).split('.');
+  if (parts.length === 3 && parts[0].length === 2 && parts[1].length === 2 && parts[2].length === 4) {
+    return parts[2] + '-' + parts[1] + '-' + parts[0];
+  }
+  return '';
+}
+
+function convertIsoDateToRu(value) {
+  if (!value) {
+    return '';
+  }
+  const parts = String(value).split('-');
+  if (parts.length === 3 && parts[0].length === 4 && parts[1].length === 2 && parts[2].length === 2) {
+    return parts[2] + '.' + parts[1] + '.' + parts[0];
+  }
+  return value;
+}
+
 function InputBirthDateIcon(props) {
   const src = props.src;
 
@@ -377,12 +402,26 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
     }
 
     if (inputRef.current) {
-      inputRef.current.focus();
+      const inputEl = inputRef.current.inputElement || inputRef.current;
+      inputEl.focus();
+      if (isMobileDevice && typeof inputEl.showPicker === 'function') {
+        try {
+          inputEl.showPicker();
+        } catch (e) {
+          // ignore
+        }
+      }
     }
 
-    setIsCalendarOpen(function toggleCalendar(currentValue) {
-      return !currentValue;
-    });
+    if (!isMobileDevice) {
+      setIsCalendarOpen(function toggleCalendar(currentValue) {
+        return !currentValue;
+      });
+    }
+  }
+
+  function handleMobileValueChange(nextValue) {
+    commitValue(convertIsoDateToRu(nextValue));
   }
 
   function handleCalendarChange(nextDate) {
@@ -432,11 +471,11 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
           </>
         }
         helperText={validationMessage !== undefined ? validationMessage : helperText}
-        hideControlValue
-        inputMode="numeric"
+        hideControlValue={!isMobileDevice}
+        inputMode={isMobileDevice ? undefined : 'numeric'}
         invalid={resolvedInvalid}
         label={label || 'Дата рождения'}
-        maskOverlay={shouldShowMask ? (
+        maskOverlay={shouldShowMask && !isMobileDevice ? (
           <>
             <span className="rshb-legacy-input-birth-date__mask-filled">
               {birthDateMaskParts.filledValue}
@@ -446,18 +485,19 @@ const InputBirthDate = React.forwardRef(function InputBirthDate(props, ref) {
             </span>
           </>
         ) : undefined}
-        maxLength={DATE_MASK.length}
+        maxLength={isMobileDevice ? undefined : DATE_MASK.length}
         onBlur={handleBlur}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
-        onValueChange={commitValue}
-        pattern="[0-9.]*"
+        onValueChange={isMobileDevice ? handleMobileValueChange : commitValue}
+        pattern={isMobileDevice ? undefined : '[0-9.]*'}
         readOnly={resolvedReadOnly}
         ref={inputRef}
-        value={resolvedValue}
+        type={isMobileDevice ? 'date' : 'text'}
+        value={isMobileDevice ? convertRuDateToIso(resolvedValue) : resolvedValue}
         width="100%"
       />
-      {isCalendarOpen ? (
+      {isCalendarOpen && !isMobileDevice ? (
         <div className="rshb-legacy-input-birth-date__calendar" onMouseDown={keepInputFocusOnMouseDown}>
           <Calendar
             dataId={rest.dataId ? rest.dataId + '-calendar' : undefined}

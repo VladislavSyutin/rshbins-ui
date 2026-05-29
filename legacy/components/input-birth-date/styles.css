@@ -41,3 +41,14 @@
   z-index: 10;
   transform: translateX(-50%);
 }
+
+.rshb-legacy-input-birth-date__input input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.rshb-legacy-input-birth-date__input input[type="date"]::-webkit-clear-button,
+.rshb-legacy-input-birth-date__input input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
+}
