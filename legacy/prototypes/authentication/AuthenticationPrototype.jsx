@@ -1003,7 +1003,7 @@ function AuthenticationPrototype(props) {
             closeOnPrimaryAction={false}
             closeOnTertiaryAction={false}
             onClose={function () { setStep('policyholder-details'); }}
-            onPrimaryAction={function () { setStep('policyholder-details'); }}
+            onPrimaryAction={function () {}}
             onTertiaryAction={function () { setStep('policyholder-details'); }}
             placement="top-center"
             template="log-in-through-the-gosuslugi"
