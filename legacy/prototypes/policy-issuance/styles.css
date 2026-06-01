@@ -1,0 +1,167 @@
+.rshb-policy-issuance {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 72px 0 116px;
+  background: var(--color-background-default-secondary);
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-body-regular-fontFamily);
+  overflow-x: hidden;
+}
+
+.rshb-policy-issuance *,
+.rshb-policy-issuance *::before,
+.rshb-policy-issuance *::after {
+  box-sizing: border-box;
+}
+
+.rshb-policy-issuance__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  background: var(--color-background-default-primary);
+}
+
+.rshb-policy-issuance__main {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.rshb-policy-issuance__selection {
+  display: flex;
+  width: min(1156px, calc(100vw - 124px));
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-margins-inside-2xl);
+}
+
+.rshb-policy-issuance__title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-inline: var(--space-paddings-inside-2xl);
+}
+
+.rshb-policy-issuance__eyebrow,
+.rshb-policy-issuance__title,
+.rshb-policy-issuance__card-title,
+.rshb-policy-issuance__card-accent,
+.rshb-policy-issuance__card-text,
+.rshb-policy-issuance__card-list {
+  margin: 0;
+}
+
+.rshb-policy-issuance__eyebrow {
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--font-size-body-footnote);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--font-line-height-body-footnote);
+}
+
+.rshb-policy-issuance__title {
+  margin-top: var(--space-margins-inside-2xs);
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-heading-2-regular-fontFamily);
+  font-size: var(--typography-heading-2-regular-fontSize);
+  font-weight: var(--typography-heading-2-regular-fontWeight);
+  line-height: var(--typography-heading-2-regular-lineHeight);
+}
+
+.rshb-policy-issuance__tabs {
+  margin-top: 0;
+}
+
+.rshb-policy-issuance__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-margins-inside-2xl);
+}
+
+.rshb-policy-issuance__card {
+  display: flex;
+  width: 100%;
+  min-height: 400px;
+  flex-direction: row;
+  align-items: stretch;
+  border-radius: var(--radius-m);
+}
+
+.rshb-policy-issuance__card-content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-margins-inside-xl);
+  padding: var(--space-paddings-inside-2xl);
+}
+
+.rshb-policy-issuance__card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-policy-issuance__card-title {
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-heading-1-regular-fontFamily);
+  font-size: var(--typography-heading-1-regular-fontSize);
+  font-weight: var(--typography-heading-1-regular-fontWeight);
+  line-height: var(--typography-heading-1-regular-lineHeight);
+}
+
+.rshb-policy-issuance__card-accent,
+.rshb-policy-issuance__card-text,
+.rshb-policy-issuance__card-list {
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+}
+
+.rshb-policy-issuance__card-accent {
+  color: var(--color-text-brand-default);
+}
+
+.rshb-policy-issuance__card-text,
+.rshb-policy-issuance__card-list {
+  color: var(--color-text-default-primary);
+}
+
+.rshb-policy-issuance__card-list {
+  padding-left: 25px;
+}
+
+.rshb-policy-issuance__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-policy-issuance__button {
+  width: 100%;
+}
+
+.rshb-policy-issuance__image-wrap {
+  width: 400px;
+  min-height: 400px;
+  flex: 0 0 400px;
+  overflow: hidden;
+  border-top-right-radius: var(--radius-m);
+  border-bottom-right-radius: var(--radius-m);
+  background: var(--color-background-default-secondary);
+}
+
+.rshb-policy-issuance__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+}
