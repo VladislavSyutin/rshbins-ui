@@ -12,10 +12,12 @@ import InputMiddleName from '../../components/input-middle-name/index.js';
 import InputName from '../../components/input-name/index.js';
 import InputPhone from '../../components/input-phone/index.js';
 import InputSurname from '../../components/input-surname/index.js';
+import InputText from '../../components/input-text/index.js';
 import SegmentedControl from '../../components/segmented-control/index.js';
 import Tabs from '../../components/tabs/index.js';
 import TextLink from '../../components/text-link/index.js';
 import Toast from '../../components/toast/index.js';
+import calendarIcon from '../../icons/calendar.js';
 import propertyMortgageImage from './assets/property-mortgage.png';
 import propertyHomeImage from './assets/property-home.png';
 import propertyCardImage from './assets/property-card.png';
@@ -34,6 +36,27 @@ import './styles.css';
 const FAMILY_ACCIDENT_TITLE = 'Страхование от несчастных случаев для всей семьи';
 const RESEND_TIMER_SECONDS = 59;
 const FORM_SUBMIT_DELAY = 3000;
+const PREFILLED_POLICYHOLDER_PHONE = '79999999991';
+const PREFILLED_CHECK_PHONE = '79999999990';
+const PREFILLED_POLICYHOLDER = {
+  birthDate: '02.06.2001',
+  email: 'syutinvi@rshbins.ru',
+  firstName: 'Владислав',
+  gender: 'male',
+  lastName: 'Сютин',
+  middleName: 'Игоревич',
+  noMiddleName: false
+};
+const PREFILLED_PASSPORT = {
+  divisionCode: '000-000',
+  issueDate: '20.07.1990',
+  issuedBy: 'ГУ МВД РОССИИ ПО Г МОСКВЕ',
+  number: '1234 567890'
+};
+const PAYMENT_OPTIONS = [
+  { value: 'yandex-pay', label: 'Яндекс Пэй' },
+  { value: 'bank-card', label: 'Банковская карта' }
+];
 
 const CATEGORY_OPTIONS = [
   { value: 'property', label: 'Имущество и финансы' },
@@ -277,6 +300,47 @@ function DocumentIcon() {
   );
 }
 
+function PhonePaymentIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 18 18" width="18">
+      <path
+        d="M6.25 2.25H11.75C12.5784 2.25 13.25 2.92157 13.25 3.75V14.25C13.25 15.0784 12.5784 15.75 11.75 15.75H6.25C5.42157 15.75 4.75 15.0784 4.75 14.25V3.75C4.75 2.92157 5.42157 2.25 6.25 2.25Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <path d="M8 12.75H10" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+function CardPaymentIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 18 18" width="18">
+      <path
+        d="M2.75 5.25C2.75 4.42157 3.42157 3.75 4.25 3.75H13.75C14.5784 3.75 15.25 4.42157 15.25 5.25V12.75C15.25 13.5784 14.5784 14.25 13.75 14.25H4.25C3.42157 14.25 2.75 13.5784 2.75 12.75V5.25Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <path d="M3 7H15" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M5.5 11.25H8.25" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+function CalendarAdornment() {
+  return (
+    <span className="rshb-policy-issuance__input-adornment">
+      <span
+        aria-hidden="true"
+        className="rshb-policy-issuance__input-icon"
+        style={{ '--rshb-policy-issuance-input-icon': 'url("' + calendarIcon + '")' }}
+      />
+    </span>
+  );
+}
+
 function formatMoneyNumber(value) {
   return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
@@ -339,6 +403,69 @@ function getPrice(tariff, term, sum) {
 
 function getPhoneDigits(value) {
   return String(value || '').replace(/\D/g, '');
+}
+
+function updateObjectField(currentValue, fieldName, value) {
+  return Object.assign({}, currentValue, { [fieldName]: value });
+}
+
+function formatFullName(person) {
+  const parts = [
+    person.lastName,
+    person.firstName,
+    person.noMiddleName ? '' : person.middleName
+  ].filter(Boolean);
+
+  return parts.join(' ');
+}
+
+function formatGender(value) {
+  if (value === 'male') {
+    return 'Мужчина';
+  }
+
+  if (value === 'female') {
+    return 'Женщина';
+  }
+
+  return '';
+}
+
+function formatPhone(value) {
+  const digits = getPhoneDigits(value);
+
+  if (digits.length !== 10) {
+    return value;
+  }
+
+  return (
+    '+7 (' +
+    digits.slice(0, 3) +
+    ') ' +
+    digits.slice(3, 6) +
+    '-' +
+    digits.slice(6, 8) +
+    '-' +
+    digits.slice(8)
+  );
+}
+
+function resolveDataValue(value) {
+  return value || 'Не указано';
+}
+
+function isPhoneMatch(phoneDigits, fullPhoneDigits) {
+  return phoneDigits === fullPhoneDigits || phoneDigits === fullPhoneDigits.slice(1);
+}
+
+function resolvePolicyholderForPhone(phone, policyholder) {
+  const phoneDigits = getPhoneDigits(phone);
+
+  if (isPhoneMatch(phoneDigits, PREFILLED_POLICYHOLDER_PHONE)) {
+    return Object.assign({}, policyholder, PREFILLED_POLICYHOLDER);
+  }
+
+  return policyholder;
 }
 
 function PolicyCard(props) {
@@ -765,6 +892,438 @@ function GiftForm(props) {
   );
 }
 
+function PassportForm(props) {
+  const { passport, onPassportChange } = props;
+
+  function setPassportField(fieldName, value) {
+    onPassportChange(updateObjectField(passport, fieldName, value));
+  }
+
+  return (
+    <div className="rshb-policy-issuance__details-section">
+      <div className="rshb-policy-issuance__section-copy">
+        <p className="rshb-policy-issuance__details-heading">Паспортные данные</p>
+        <p className="rshb-policy-issuance__section-description">Нужны для заключения договора.</p>
+      </div>
+      <div className="rshb-policy-issuance__fields">
+        <InputText
+          className="rshb-policy-issuance__field"
+          dataId="policy-passport-number"
+          label="Серия и номер"
+          onValueChange={function (value) {
+            setPassportField('number', value);
+          }}
+          value={passport.number}
+          width="100%"
+        />
+        <div className="rshb-policy-issuance__two-fields">
+          <InputText
+            className="rshb-policy-issuance__field"
+            dataId="policy-passport-code"
+            label="Код подразделения"
+            onValueChange={function (value) {
+              setPassportField('divisionCode', value);
+            }}
+            value={passport.divisionCode}
+            width="100%"
+          />
+          <InputText
+            className="rshb-policy-issuance__field"
+            dataId="policy-passport-date"
+            endAdornment={<CalendarAdornment />}
+            label="Дата выдачи"
+            onValueChange={function (value) {
+              setPassportField('issueDate', value);
+            }}
+            value={passport.issueDate}
+            width="100%"
+          />
+        </div>
+        <InputText
+          className="rshb-policy-issuance__field"
+          dataId="policy-passport-issued-by"
+          label="Кем выдан"
+          onValueChange={function (value) {
+            setPassportField('issuedBy', value);
+          }}
+          value={passport.issuedBy}
+          width="100%"
+        />
+      </div>
+    </div>
+  );
+}
+
+function PolicyholderDetailsForm(props) {
+  const { policyholder, onPolicyholderChange } = props;
+
+  function setPolicyholderField(fieldName, value) {
+    onPolicyholderChange(updateObjectField(policyholder, fieldName, value));
+  }
+
+  return (
+    <div className="rshb-policy-issuance__details-section">
+      <div className="rshb-policy-issuance__section-copy">
+        <p className="rshb-policy-issuance__details-heading">Данные страхователя</p>
+        <p className="rshb-policy-issuance__section-description">
+          Страхователь — тот, кто оформляет полис.
+        </p>
+      </div>
+      <div className="rshb-policy-issuance__fields">
+        <InputSurname
+          className="rshb-policy-issuance__field"
+          dataId="policyholder-last-name"
+          onValueChange={function (value) {
+            setPolicyholderField('lastName', value);
+          }}
+          value={policyholder.lastName}
+          width="100%"
+        />
+        <InputName
+          className="rshb-policy-issuance__field"
+          dataId="policyholder-first-name"
+          onValueChange={function (value) {
+            setPolicyholderField('firstName', value);
+          }}
+          value={policyholder.firstName}
+          width="100%"
+        />
+        <InputMiddleName
+          className="rshb-policy-issuance__field"
+          dataId="policyholder-middle-name"
+          onSwitchChange={function (checked) {
+            setPolicyholderField('noMiddleName', checked);
+          }}
+          onValueChange={function (value) {
+            setPolicyholderField('middleName', value);
+          }}
+          switchChecked={policyholder.noMiddleName}
+          value={policyholder.middleName}
+          width="100%"
+        />
+        <div className="rshb-policy-issuance__date-gender">
+          <InputBirthDate
+            className="rshb-policy-issuance__field"
+            dataId="policyholder-birth-date"
+            label="Дата рождения"
+            onValueChange={function (value) {
+              setPolicyholderField('birthDate', value);
+            }}
+            value={policyholder.birthDate}
+            width="100%"
+          />
+          <Gender
+            className="rshb-policy-issuance__gender"
+            dataId="policyholder-gender"
+            onChange={function (value) {
+              setPolicyholderField('gender', value);
+            }}
+            value={policyholder.gender}
+          />
+        </div>
+        <InputText
+          className="rshb-policy-issuance__field"
+          dataId="policyholder-email"
+          label="Адрес электронной почты"
+          onValueChange={function (value) {
+            setPolicyholderField('email', value);
+          }}
+          value={policyholder.email}
+          width="100%"
+        />
+        <p className="rshb-policy-issuance__field-hint">
+          По этому адресу мы отправим вам документы.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function DetailsActions(props) {
+  const { consentChecked, isLoading, onBack, onConsentChange, onSubmit } = props;
+
+  return (
+    <div className="rshb-policy-issuance__details-actions">
+      <Checkbox
+        checked={consentChecked}
+        className="rshb-policy-issuance__consent rshb-policy-issuance__details-consent"
+        dataId="policy-details-personal-data"
+        label={(
+          <>
+            Соглашаюсь на{' '}
+            <span className="rshb-policy-issuance__inline-link">
+              передачу и обработку
+            </span>{' '}
+            персональных данных.
+          </>
+        )}
+        onChange={function (event) {
+          onConsentChange(event.target.checked);
+        }}
+        size="s"
+      />
+      <ButtonsRow
+        canContinue={consentChecked}
+        isLoading={isLoading}
+        onBack={onBack}
+        onContinue={onSubmit}
+      />
+    </div>
+  );
+}
+
+function EnterInformationScreen(props) {
+  const {
+    consentChecked,
+    includePolicyholder,
+    isSubmittingDetails,
+    onBackToCustomization,
+    onConsentChange,
+    onPassportChange,
+    onPolicyholderChange,
+    onSubmitDetails,
+    passport,
+    policyholder,
+    sum,
+    tariff,
+    term
+  } = props;
+
+  return (
+    <section className="rshb-policy-issuance__customization" aria-labelledby="policy-enter-title">
+      <div className="rshb-policy-issuance__custom-title-block">
+        <p className="rshb-policy-issuance__eyebrow">Шаг 3 из 4</p>
+        <h1 className="rshb-policy-issuance__title" id="policy-enter-title">
+          Укажите информацию
+        </h1>
+      </div>
+      <div className="rshb-policy-issuance__custom-grid">
+        <Card className="rshb-policy-issuance__details-card" dataId="policy-enter-details-card">
+          {includePolicyholder ? (
+            <PolicyholderDetailsForm
+              onPolicyholderChange={onPolicyholderChange}
+              policyholder={policyholder}
+            />
+          ) : null}
+          <PassportForm onPassportChange={onPassportChange} passport={passport} />
+          <DetailsActions
+            consentChecked={consentChecked}
+            isLoading={isSubmittingDetails}
+            onBack={onBackToCustomization}
+            onConsentChange={onConsentChange}
+            onSubmit={onSubmitDetails}
+          />
+        </Card>
+        <Information sum={sum} tariff={tariff} term={term} />
+      </div>
+    </section>
+  );
+}
+
+function CheckDataRow(props) {
+  const { label, text } = props;
+
+  return (
+    <div className="rshb-policy-issuance__check-row">
+      <p className="rshb-policy-issuance__check-label">{label}</p>
+      <p className="rshb-policy-issuance__check-value">{resolveDataValue(text)}</p>
+    </div>
+  );
+}
+
+function CheckDataGroup(props) {
+  const { children, title } = props;
+
+  return (
+    <div className="rshb-policy-issuance__check-group">
+      {title ? <p className="rshb-policy-issuance__check-subheading">{title}</p> : null}
+      <div className="rshb-policy-issuance__check-rows">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function PaymentMethod(props) {
+  const { checked, label, onChange, value } = props;
+
+  return (
+    <label className="rshb-policy-issuance__payment-method" data-checked={checked ? 'true' : 'false'}>
+      <input
+        checked={checked}
+        className="rshb-policy-issuance__payment-input"
+        name="policy-payment-method"
+        onChange={function () {
+          onChange(value);
+        }}
+        type="radio"
+        value={value}
+      />
+      <span aria-hidden="true" className="rshb-policy-issuance__payment-icon">
+        {value === 'yandex-pay' ? <PhonePaymentIcon /> : <CardPaymentIcon />}
+      </span>
+      <span className="rshb-policy-issuance__payment-label">{label}</span>
+      <span aria-hidden="true" className="rshb-policy-issuance__payment-radio">
+        <span className="rshb-policy-issuance__payment-radio-dot" />
+      </span>
+    </label>
+  );
+}
+
+function PaymentMethods(props) {
+  const { onPaymentMethodChange, paymentMethod } = props;
+
+  return (
+    <div className="rshb-policy-issuance__payment">
+      <p className="rshb-policy-issuance__check-heading">Выберите способ оплаты</p>
+      <div className="rshb-policy-issuance__payment-list" role="radiogroup" aria-label="Способ оплаты">
+        {PAYMENT_OPTIONS.map(function (option) {
+          return (
+            <PaymentMethod
+              checked={option.value === paymentMethod}
+              key={option.value}
+              label={option.label}
+              onChange={onPaymentMethodChange}
+              value={option.value}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function CheckPolicyholderData(props) {
+  const { phone, policyholder } = props;
+  const resolvedPolicyholder = resolvePolicyholderForPhone(phone, policyholder);
+
+  return (
+    <div className="rshb-policy-issuance__check-section">
+      <div className="rshb-policy-issuance__check-copy">
+        <p className="rshb-policy-issuance__check-heading">Данные страхователя</p>
+        <p className="rshb-policy-issuance__section-description">
+          Страхователь — тот, кто оформляет полис.
+        </p>
+      </div>
+      <CheckDataGroup title="Персональные данные">
+        <CheckDataRow label="ФИО" text={formatFullName(resolvedPolicyholder)} />
+        <CheckDataRow label="Дата рождения" text={resolvedPolicyholder.birthDate} />
+        <CheckDataRow label="Пол" text={formatGender(resolvedPolicyholder.gender)} />
+      </CheckDataGroup>
+    </div>
+  );
+}
+
+function CheckContactData(props) {
+  const { phone, policyholder } = props;
+  const resolvedPolicyholder = resolvePolicyholderForPhone(phone, policyholder);
+
+  return (
+    <CheckDataGroup title="Контактные данные">
+      <CheckDataRow label="Номер телефона" text={formatPhone(phone)} />
+      <CheckDataRow label="Адрес электронной почты" text={resolvedPolicyholder.email} />
+    </CheckDataGroup>
+  );
+}
+
+function CheckPassportData(props) {
+  const { passport } = props;
+
+  return (
+    <CheckDataGroup title="Паспортные данные">
+      <CheckDataRow label="Серия и номер" text={passport.number} />
+      <CheckDataRow label="Код подразделения" text={passport.divisionCode} />
+      <CheckDataRow label="Дата выдачи" text={passport.issueDate} />
+      <CheckDataRow label="Кем выдан" text={passport.issuedBy} />
+    </CheckDataGroup>
+  );
+}
+
+function CheckBeneficiaryData(props) {
+  const { beneficiary } = props;
+
+  return (
+    <div className="rshb-policy-issuance__check-section">
+      <div className="rshb-policy-issuance__check-copy">
+        <p className="rshb-policy-issuance__check-heading">Данные выгодоприобретателя</p>
+        <p className="rshb-policy-issuance__section-description">
+          Выгодоприобретатель — тот, кто получит выплату при наступлении страхового случая.
+        </p>
+      </div>
+      <CheckDataGroup>
+        <CheckDataRow label="ФИО" text={formatFullName(beneficiary)} />
+        <CheckDataRow label="Дата рождения" text={beneficiary.birthDate} />
+        <CheckDataRow label="Пол" text={formatGender(beneficiary.gender)} />
+      </CheckDataGroup>
+    </div>
+  );
+}
+
+function CheckActions(props) {
+  const { onEdit } = props;
+
+  return (
+    <div className="rshb-policy-issuance__check-actions">
+      <Button
+        buttonType="flat-primary"
+        className="rshb-policy-issuance__check-button"
+        dataId="policy-check-edit"
+        onClick={onEdit}
+      >
+        Изменить
+      </Button>
+      <Button
+        className="rshb-policy-issuance__check-button"
+        dataId="policy-check-pay"
+      >
+        Перейти к оплате
+      </Button>
+    </div>
+  );
+}
+
+function CheckDataScreen(props) {
+  const {
+    beneficiary,
+    includeBeneficiary,
+    includePassport,
+    onEdit,
+    onPaymentMethodChange,
+    passport,
+    paymentMethod,
+    phone,
+    policyholder,
+    sum,
+    tariff,
+    term
+  } = props;
+
+  return (
+    <section className="rshb-policy-issuance__customization" aria-labelledby="policy-check-title">
+      <div className="rshb-policy-issuance__custom-title-block">
+        <p className="rshb-policy-issuance__eyebrow">Шаг 4 из 4</p>
+        <h1 className="rshb-policy-issuance__title" id="policy-check-title">
+          Проверьте данные
+        </h1>
+      </div>
+      <div className="rshb-policy-issuance__custom-grid">
+        <Card className="rshb-policy-issuance__check-card" dataId="policy-check-card">
+          <CheckPolicyholderData phone={phone} policyholder={policyholder} />
+          {includePassport ? <CheckPassportData passport={passport} /> : null}
+          <CheckContactData phone={phone} policyholder={policyholder} />
+          {includeBeneficiary ? <CheckBeneficiaryData beneficiary={beneficiary} /> : null}
+          <PaymentMethods
+            onPaymentMethodChange={onPaymentMethodChange}
+            paymentMethod={paymentMethod}
+          />
+          <CheckActions onEdit={onEdit} />
+        </Card>
+        <Information sum={sum} tariff={tariff} term={term} />
+      </div>
+    </section>
+  );
+}
+
 function ParametersSection(props) {
   const { children, hasDivider, title } = props;
 
@@ -931,6 +1490,7 @@ function PolicyIssuancePrototype(props) {
   const { className, dataId, defaultCategory, ...rest } = props;
   const [category, setCategory] = useState(defaultCategory || 'property');
   const [screen, setScreen] = useState('selection');
+  const [checkSourceScreen, setCheckSourceScreen] = useState('customization');
   const [step, setStep] = useState('phone');
   const [recipient, setRecipient] = useState('myself');
   const [tariff, setTariff] = useState('individual');
@@ -939,6 +1499,7 @@ function PolicyIssuancePrototype(props) {
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('yandex-pay');
   const [beneficiary, setBeneficiary] = useState({
     birthDate: '',
     firstName: '',
@@ -947,13 +1508,31 @@ function PolicyIssuancePrototype(props) {
     middleName: '',
     noMiddleName: false
   });
+  const [policyholder, setPolicyholder] = useState({
+    birthDate: '',
+    email: '',
+    firstName: '',
+    gender: undefined,
+    lastName: '',
+    middleName: '',
+    noMiddleName: false
+  });
+  const [passport, setPassport] = useState({
+    divisionCode: '',
+    issueDate: '',
+    issuedBy: '',
+    number: ''
+  });
+  const [detailsConsentChecked, setDetailsConsentChecked] = useState(false);
   const [isSubmittingPhone, setIsSubmittingPhone] = useState(false);
   const [isSubmittingCode, setIsSubmittingCode] = useState(false);
+  const [isSubmittingDetails, setIsSubmittingDetails] = useState(false);
   const [resendSeconds, setResendSeconds] = useState(RESEND_TIMER_SECONDS);
   const [showToast, setShowToast] = useState(false);
   const [toastKey, setToastKey] = useState(0);
   const phoneTimerRef = useRef(null);
   const codeTimerRef = useRef(null);
+  const detailsTimerRef = useRef(null);
   const cards = CATEGORY_CARDS[category] || CATEGORY_CARDS.property;
   const dataIdValue = dataId || rest['data-id'];
 
@@ -964,6 +1543,9 @@ function PolicyIssuancePrototype(props) {
       }
       if (codeTimerRef.current !== null) {
         window.clearTimeout(codeTimerRef.current);
+      }
+      if (detailsTimerRef.current !== null) {
+        window.clearTimeout(detailsTimerRef.current);
       }
     };
   }, []);
@@ -985,7 +1567,7 @@ function PolicyIssuancePrototype(props) {
   }, [resendSeconds, screen, step]);
 
   function handleCalculate(card) {
-    if (card.title !== FAMILY_ACCIDENT_TITLE) {
+    if (String(card.title || '').indexOf('Страхование от несчастных случаев') !== 0) {
       return;
     }
 
@@ -1025,6 +1607,15 @@ function PolicyIssuancePrototype(props) {
     setStep('phone');
     setIsSubmittingPhone(false);
     setIsSubmittingCode(false);
+    setIsSubmittingDetails(false);
+  }
+
+  function handleBackToCustomization() {
+    setScreen('customization');
+    setStep('phone');
+    setIsSubmittingPhone(false);
+    setIsSubmittingCode(false);
+    setIsSubmittingDetails(false);
   }
 
   function handleSubmitPhone() {
@@ -1042,6 +1633,31 @@ function PolicyIssuancePrototype(props) {
     }, FORM_SUBMIT_DELAY);
   }
 
+  function goToNextScreenAfterPhoneConfirmation() {
+    const phoneDigits = getPhoneDigits(phone);
+
+    if (isPhoneMatch(phoneDigits, PREFILLED_CHECK_PHONE)) {
+      setPolicyholder(function (currentValue) {
+        return Object.assign({}, currentValue, PREFILLED_POLICYHOLDER);
+      });
+      setPassport(function (currentValue) {
+        return Object.assign({}, currentValue, PREFILLED_PASSPORT);
+      });
+      setCheckSourceScreen('policyholder-passport-details');
+      setScreen('check-data');
+      return;
+    }
+
+    if (isPhoneMatch(phoneDigits, PREFILLED_POLICYHOLDER_PHONE)) {
+      setScreen('passport-details');
+      setDetailsConsentChecked(false);
+      return;
+    }
+
+    setScreen('policyholder-passport-details');
+    setDetailsConsentChecked(false);
+  }
+
   function handleSubmitCode() {
     if (code.length !== 4 || isSubmittingCode) {
       return;
@@ -1051,7 +1667,26 @@ function PolicyIssuancePrototype(props) {
     codeTimerRef.current = window.setTimeout(function () {
       codeTimerRef.current = null;
       setIsSubmittingCode(false);
+      goToNextScreenAfterPhoneConfirmation();
     }, FORM_SUBMIT_DELAY);
+  }
+
+  function handleSubmitDetails() {
+    if (!detailsConsentChecked || isSubmittingDetails) {
+      return;
+    }
+
+    setIsSubmittingDetails(true);
+    setCheckSourceScreen(screen);
+    detailsTimerRef.current = window.setTimeout(function () {
+      detailsTimerRef.current = null;
+      setIsSubmittingDetails(false);
+      setScreen('check-data');
+    }, FORM_SUBMIT_DELAY);
+  }
+
+  function handleEditCheckData() {
+    setScreen(checkSourceScreen);
   }
 
   function handleChangePhone() {
@@ -1115,6 +1750,37 @@ function PolicyIssuancePrototype(props) {
             recipient={recipient}
             resendSeconds={resendSeconds}
             step={step}
+            sum={sum}
+            tariff={tariff}
+            term={term}
+          />
+        ) : screen === 'passport-details' || screen === 'policyholder-passport-details' ? (
+          <EnterInformationScreen
+            consentChecked={detailsConsentChecked}
+            includePolicyholder={screen === 'policyholder-passport-details'}
+            isSubmittingDetails={isSubmittingDetails}
+            onBackToCustomization={handleBackToCustomization}
+            onConsentChange={setDetailsConsentChecked}
+            onPassportChange={setPassport}
+            onPolicyholderChange={setPolicyholder}
+            onSubmitDetails={handleSubmitDetails}
+            passport={passport}
+            policyholder={policyholder}
+            sum={sum}
+            tariff={tariff}
+            term={term}
+          />
+        ) : screen === 'check-data' ? (
+          <CheckDataScreen
+            beneficiary={beneficiary}
+            includeBeneficiary={recipient === 'gift'}
+            includePassport
+            onEdit={handleEditCheckData}
+            onPaymentMethodChange={setPaymentMethod}
+            passport={passport}
+            paymentMethod={paymentMethod}
+            phone={phone}
+            policyholder={policyholder}
             sum={sum}
             tariff={tariff}
             term={term}
@@ -1242,6 +1908,78 @@ GiftForm.propTypes = {
   onBeneficiaryChange: PropTypes.func.isRequired
 };
 
+PassportForm.propTypes = {
+  onPassportChange: PropTypes.func.isRequired,
+  passport: PropTypes.shape({
+    divisionCode: PropTypes.string.isRequired,
+    issueDate: PropTypes.string.isRequired,
+    issuedBy: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired
+  }).isRequired
+};
+
+PolicyholderDetailsForm.propTypes = {
+  onPolicyholderChange: PropTypes.func.isRequired,
+  policyholder: PropTypes.shape({
+    birthDate: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    firstName: PropTypes.string.isRequired,
+    gender: PropTypes.oneOf(['male', 'female']),
+    lastName: PropTypes.string.isRequired,
+    middleName: PropTypes.string.isRequired,
+    noMiddleName: PropTypes.bool.isRequired
+  }).isRequired
+};
+
+DetailsActions.propTypes = {
+  consentChecked: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onBack: PropTypes.func.isRequired,
+  onConsentChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
+};
+
+CheckDataRow.propTypes = {
+  label: PropTypes.string.isRequired,
+  text: PropTypes.string
+};
+
+CheckDataGroup.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string
+};
+
+PaymentMethod.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
+};
+
+PaymentMethods.propTypes = {
+  onPaymentMethodChange: PropTypes.func.isRequired,
+  paymentMethod: PropTypes.string.isRequired
+};
+
+CheckPolicyholderData.propTypes = {
+  phone: PropTypes.string.isRequired,
+  policyholder: PolicyholderDetailsForm.propTypes.policyholder
+};
+
+CheckContactData.propTypes = CheckPolicyholderData.propTypes;
+
+CheckPassportData.propTypes = {
+  passport: PassportForm.propTypes.passport
+};
+
+CheckBeneficiaryData.propTypes = {
+  beneficiary: GiftForm.propTypes.beneficiary
+};
+
+CheckActions.propTypes = {
+  onEdit: PropTypes.func.isRequired
+};
+
 CodeForm.propTypes = {
   code: PropTypes.string.isRequired,
   isSubmittingCode: PropTypes.bool.isRequired,
@@ -1296,6 +2034,37 @@ CustomizeScreen.propTypes = {
   recipient: PropTypes.oneOf(['myself', 'gift']).isRequired,
   resendSeconds: PropTypes.number.isRequired,
   step: PropTypes.oneOf(['phone', 'code']).isRequired,
+  sum: PropTypes.string.isRequired,
+  tariff: PropTypes.string.isRequired,
+  term: PropTypes.string.isRequired
+};
+
+EnterInformationScreen.propTypes = {
+  consentChecked: PropTypes.bool.isRequired,
+  includePolicyholder: PropTypes.bool,
+  isSubmittingDetails: PropTypes.bool.isRequired,
+  onBackToCustomization: PropTypes.func.isRequired,
+  onConsentChange: PropTypes.func.isRequired,
+  onPassportChange: PropTypes.func.isRequired,
+  onPolicyholderChange: PropTypes.func.isRequired,
+  onSubmitDetails: PropTypes.func.isRequired,
+  passport: PassportForm.propTypes.passport,
+  policyholder: PolicyholderDetailsForm.propTypes.policyholder,
+  sum: PropTypes.string.isRequired,
+  tariff: PropTypes.string.isRequired,
+  term: PropTypes.string.isRequired
+};
+
+CheckDataScreen.propTypes = {
+  beneficiary: GiftForm.propTypes.beneficiary,
+  includeBeneficiary: PropTypes.bool.isRequired,
+  includePassport: PropTypes.bool.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onPaymentMethodChange: PropTypes.func.isRequired,
+  passport: PassportForm.propTypes.passport,
+  paymentMethod: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  policyholder: PolicyholderDetailsForm.propTypes.policyholder,
   sum: PropTypes.string.isRequired,
   tariff: PropTypes.string.isRequired,
   term: PropTypes.string.isRequired
