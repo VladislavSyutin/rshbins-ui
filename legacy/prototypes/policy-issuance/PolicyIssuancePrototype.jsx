@@ -9,6 +9,7 @@ import Header from '../../components/header/index.js';
 import InputBirthDate from '../../components/input-birth-date/index.js';
 import InputCode from '../../components/input-code/index.js';
 import InputMiddleName from '../../components/input-middle-name/index.js';
+import DialogModal from '../../dialogs/modals/dialog-modal/index.js';
 import InputName from '../../components/input-name/index.js';
 import InputPhone from '../../components/input-phone/index.js';
 import InputSurname from '../../components/input-surname/index.js';
@@ -38,6 +39,7 @@ const RESEND_TIMER_SECONDS = 59;
 const FORM_SUBMIT_DELAY = 3000;
 const PREFILLED_POLICYHOLDER_PHONE = '79999999991';
 const PREFILLED_CHECK_PHONE = '79999999990';
+const PROOF_IDENTITY_PHONE = '79999999992';
 const PREFILLED_POLICYHOLDER = {
   birthDate: '02.06.2001',
   email: 'syutinvi@rshbins.ru',
@@ -53,6 +55,23 @@ const PREFILLED_PASSPORT = {
   issuedBy: 'ГУ МВД РОССИИ ПО Г МОСКВЕ',
   number: '1234 567890'
 };
+function fillEmptyFields(currentValue, prefilledValue) {
+  const nextValue = Object.assign({}, currentValue);
+
+  Object.keys(prefilledValue).forEach(function (fieldName) {
+    const currentFieldValue = nextValue[fieldName];
+
+    if (
+      currentFieldValue === undefined ||
+      currentFieldValue === null ||
+      currentFieldValue === ''
+    ) {
+      nextValue[fieldName] = prefilledValue[fieldName];
+    }
+  });
+
+  return nextValue;
+}
 const PAYMENT_OPTIONS = [
   { value: 'yandex-pay', label: 'Яндекс Пэй' },
   { value: 'bank-card', label: 'Банковская карта' }
@@ -1072,6 +1091,36 @@ function DetailsActions(props) {
   );
 }
 
+function ProofIdentityModal(props) {
+  const {
+    isLoading,
+    onClose,
+    onSubmit,
+    onSurnameChange,
+    surname
+  } = props;
+
+  return (
+    <DialogModal
+      closeOnPrimaryAction={false}
+      dataId="policy-proof-identity-modal"
+      inputProps={{
+        dataId: 'policy-proof-identity-surname',
+        onValueChange: onSurnameChange,
+        value: surname
+      }}
+      onClose={onClose}
+      onPrimaryAction={onSubmit}
+      onTertiaryAction={onClose}
+      placement="top-center"
+      primaryActionDisabled={!surname || isLoading}
+      primaryActionLoading={isLoading}
+      template="proof-of-identity"
+      tertiaryActionDisabled={isLoading}
+    />
+  );
+}
+
 function EnterInformationScreen(props) {
   const {
     consentChecked,
@@ -1530,9 +1579,13 @@ function PolicyIssuancePrototype(props) {
   const [resendSeconds, setResendSeconds] = useState(RESEND_TIMER_SECONDS);
   const [showToast, setShowToast] = useState(false);
   const [toastKey, setToastKey] = useState(0);
+  const [isProofIdentityOpen, setIsProofIdentityOpen] = useState(false);
+  const [proofIdentitySurname, setProofIdentitySurname] = useState('');
+  const [isSubmittingProofIdentity, setIsSubmittingProofIdentity] = useState(false);
   const phoneTimerRef = useRef(null);
   const codeTimerRef = useRef(null);
   const detailsTimerRef = useRef(null);
+  const proofIdentityTimerRef = useRef(null);
   const cards = CATEGORY_CARDS[category] || CATEGORY_CARDS.property;
   const dataIdValue = dataId || rest['data-id'];
 
@@ -1546,6 +1599,10 @@ function PolicyIssuancePrototype(props) {
       }
       if (detailsTimerRef.current !== null) {
         window.clearTimeout(detailsTimerRef.current);
+      }
+
+      if (proofIdentityTimerRef.current !== null) {
+        window.clearTimeout(proofIdentityTimerRef.current);
       }
     };
   }, []);
@@ -1627,21 +1684,28 @@ function PolicyIssuancePrototype(props) {
     phoneTimerRef.current = window.setTimeout(function () {
       phoneTimerRef.current = null;
       setIsSubmittingPhone(false);
+
+      if (isPhoneMatch(getPhoneDigits(phone), PROOF_IDENTITY_PHONE)) {
+        setProofIdentitySurname(policyholder.lastName || '');
+        setIsProofIdentityOpen(true);
+        return;
+      }
+
       setStep('code');
       setCode('');
       setResendSeconds(RESEND_TIMER_SECONDS);
     }, FORM_SUBMIT_DELAY);
   }
 
-  function goToNextScreenAfterPhoneConfirmation() {
-    const phoneDigits = getPhoneDigits(phone);
+  function goToNextScreenAfterPhoneConfirmation(phoneValue) {
+    const phoneDigits = getPhoneDigits(phoneValue || phone);
 
     if (isPhoneMatch(phoneDigits, PREFILLED_CHECK_PHONE)) {
       setPolicyholder(function (currentValue) {
-        return Object.assign({}, currentValue, PREFILLED_POLICYHOLDER);
+        return fillEmptyFields(currentValue, PREFILLED_POLICYHOLDER);
       });
       setPassport(function (currentValue) {
-        return Object.assign({}, currentValue, PREFILLED_PASSPORT);
+        return fillEmptyFields(currentValue, PREFILLED_PASSPORT);
       });
       setCheckSourceScreen('policyholder-passport-details');
       setScreen('check-data');
@@ -1656,6 +1720,36 @@ function PolicyIssuancePrototype(props) {
 
     setScreen('policyholder-passport-details');
     setDetailsConsentChecked(false);
+  }
+
+  function handleCloseProofIdentity() {
+    if (proofIdentityTimerRef.current !== null) {
+      window.clearTimeout(proofIdentityTimerRef.current);
+      proofIdentityTimerRef.current = null;
+    }
+
+    setIsProofIdentityOpen(false);
+    setIsSubmittingProofIdentity(false);
+  }
+
+  function handleSubmitProofIdentity() {
+    if (!proofIdentitySurname || isSubmittingProofIdentity) {
+      return;
+    }
+
+    setIsSubmittingProofIdentity(true);
+    setPolicyholder(function (currentValue) {
+      return Object.assign({}, currentValue, {
+        lastName: proofIdentitySurname
+      });
+    });
+
+    proofIdentityTimerRef.current = window.setTimeout(function () {
+      proofIdentityTimerRef.current = null;
+      setIsSubmittingProofIdentity(false);
+      setIsProofIdentityOpen(false);
+      goToNextScreenAfterPhoneConfirmation(PREFILLED_CHECK_PHONE);
+    }, FORM_SUBMIT_DELAY);
   }
 
   function handleSubmitCode() {
@@ -1686,7 +1780,13 @@ function PolicyIssuancePrototype(props) {
   }
 
   function handleEditCheckData() {
-    setScreen(checkSourceScreen);
+    setPolicyholder(function (currentValue) {
+      return fillEmptyFields(currentValue, PREFILLED_POLICYHOLDER);
+    });
+    setPassport(function (currentValue) {
+      return fillEmptyFields(currentValue, PREFILLED_PASSPORT);
+    });
+    setScreen('policyholder-passport-details');
   }
 
   function handleChangePhone() {
@@ -1818,6 +1918,16 @@ function PolicyIssuancePrototype(props) {
             </div>
           </section>
         )}
+        {isProofIdentityOpen ? (
+          <ProofIdentityModal
+            isLoading={isSubmittingProofIdentity}
+            onClose={handleCloseProofIdentity}
+            onSubmit={handleSubmitProofIdentity}
+            onSurnameChange={setProofIdentitySurname}
+            surname={proofIdentitySurname}
+          />
+        ) : null}
+
         {showToast ? (
           <Toast
             autoCloseDuration={2500}
@@ -1937,6 +2047,14 @@ DetailsActions.propTypes = {
   onBack: PropTypes.func.isRequired,
   onConsentChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
+};
+
+ProofIdentityModal.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onSurnameChange: PropTypes.func.isRequired,
+  surname: PropTypes.string.isRequired
 };
 
 CheckDataRow.propTypes = {
