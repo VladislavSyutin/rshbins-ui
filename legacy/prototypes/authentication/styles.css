@@ -41,7 +41,7 @@
 @media (max-width: 743px) {
   .rshb-authentication-prototype:not(.rshb-authentication-prototype--loading) {
     justify-items: stretch;
-    padding: 0 16px 32px;
+    padding: 64px 16px;
     background: var(--color-background-default-secondary);
   }
 
