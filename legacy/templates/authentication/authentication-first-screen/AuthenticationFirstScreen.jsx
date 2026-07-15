@@ -442,7 +442,7 @@ AuthenticationFirstScreen.defaultProps = {
   clientType: undefined,
   consentCheckboxProps: undefined,
   consentLabel: undefined,
-  corporateClientLabel: 'Корп. клиент',
+  corporateClientLabel: 'Корпорат. клиент',
   corporateClientShortLabel: 'Корп. клиент',
   dataId: undefined,
   defaultClientType: CLIENT_TYPES.individual,
