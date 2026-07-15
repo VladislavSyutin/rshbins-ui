@@ -181,9 +181,9 @@
 
 .rshb-authentication-restoring-access[data-device='mobile'] {
   --rshb-authentication-restoring-access-surface-width: 361px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: var(--space-paddings-inside-2xl);
+  border-radius: var(--radius-2xl);
+  background: var(--color-background-default-primary);
 }
 
 .rshb-authentication-restoring-access[data-device='mobile'] .rshb-authentication-restoring-access__topbar {
@@ -193,9 +193,9 @@
 @media (max-width: 743px) {
   .rshb-authentication-restoring-access[data-device='auto'] {
     --rshb-authentication-restoring-access-surface-width: 361px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: var(--space-paddings-inside-2xl);
+    border-radius: var(--radius-2xl);
+    background: var(--color-background-default-primary);
   }
 
   .rshb-authentication-restoring-access[data-device='auto'] .rshb-authentication-restoring-access__topbar {
