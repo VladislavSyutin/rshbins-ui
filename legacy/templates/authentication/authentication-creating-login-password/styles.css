@@ -131,6 +131,11 @@
   min-height: 72px;
 }
 
+.rshb-authentication-creating-login-password[data-device='mobile']
+  .rshb-authentication-creating-login-password__fields {
+  gap: var(--space-margins-inside-xs);
+}
+
 @media (max-width: 743px) {
   .rshb-authentication-creating-login-password[data-device='auto'] {
     --rshb-authentication-creating-login-password-surface-width: 361px;
@@ -142,5 +147,10 @@
   .rshb-authentication-creating-login-password[data-device='auto']
     .rshb-authentication-creating-login-password__topbar {
     min-height: 72px;
+  }
+
+  .rshb-authentication-creating-login-password[data-device='auto']
+    .rshb-authentication-creating-login-password__fields {
+    gap: var(--space-margins-inside-xs);
   }
 }
