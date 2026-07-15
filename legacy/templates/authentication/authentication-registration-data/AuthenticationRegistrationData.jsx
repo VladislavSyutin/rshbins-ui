@@ -103,7 +103,7 @@ function isEmailValid(value) {
 function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
-      Соглашаюсь на{' '}
+      Соглашаюсь на{'\u00A0'}
       <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
@@ -444,7 +444,7 @@ AuthenticationRegistrationData.defaultProps = {
   surnameInputProps: undefined,
   surnameLabel: 'Фамилия',
   themeProps: undefined,
-  title: 'Заполните информацию о себе'
+  title: 'Заполните информацию о\u00A0себе'
 };
 
 export default AuthenticationRegistrationData;

@@ -50,7 +50,7 @@ function isPhoneValid(value) {
 function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
-      Соглашаюсь на{' '}
+      Соглашаюсь на{'\u00A0'}
       <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
@@ -392,7 +392,7 @@ AuthenticationRegistration.defaultProps = {
   defaultValue: '',
   device: DEVICES.auto,
   emailDescription:
-    'Введите ИНН и адрес электронной почты, которые были указаны при оформлении полиса',
+    'Введите ИНН и адрес электронной почты, которые были указаны при\u00A0оформлении полиса',
   emailInputProps: undefined,
   emailLabel: 'Электронная почта',
   emailMethodLabel: 'Электронная почта',
@@ -405,7 +405,7 @@ AuthenticationRegistration.defaultProps = {
   onPersonalDataClick: undefined,
   onSubmit: undefined,
   phoneDescription:
-    'Введите ИНН и номер телефона, которые были указаны при оформлении полиса',
+    'Введите ИНН и номер телефона, которые были указаны при\u00A0оформлении полиса',
   phoneInputProps: undefined,
   phoneLabel: 'Номер телефона',
   phoneMethodLabel: 'Номер телефона',

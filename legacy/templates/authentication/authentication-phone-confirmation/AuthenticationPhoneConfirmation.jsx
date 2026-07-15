@@ -66,7 +66,7 @@ function AuthenticationPhoneConfirmation(props) {
     phoneMode === PHONE_MODES.visible && showEmailButton;
   const isResendWaiting = secondsLeft > 0;
   const resolvedResendLabel = isResendWaiting
-    ? 'Получить новый код через ' + secondsLeft + ' сек'
+    ? 'Получить новый код через\u00A0' + secondsLeft + ' сек'
     : resendButtonLabel;
 
   useEffect(function () {
@@ -134,10 +134,10 @@ function AuthenticationPhoneConfirmation(props) {
 
         <p className="rshb-authentication-phone-confirmation__description">
           <span className="rshb-authentication-phone-confirmation__description-prefix rshb-authentication-phone-confirmation__description-prefix--desktop">
-            Отправили на номер{' '}
+            Отправили на{'\u00A0'}номер{' '}
           </span>
           <span className="rshb-authentication-phone-confirmation__description-prefix rshb-authentication-phone-confirmation__description-prefix--mobile">
-            Отправили на{' '}
+            Отправили на{'\u00A0'}
           </span>
           <span className="rshb-authentication-phone-confirmation__phone">
             {resolvedPhoneNumber}
@@ -256,7 +256,7 @@ AuthenticationPhoneConfirmation.defaultProps = {
   codeInputProps: undefined,
   dataId: undefined,
   device: DEVICES.auto,
-  emailButtonLabel: 'Получить код на эл. почту',
+  emailButtonLabel: 'Получить код на\u00A0эл. почту',
   emailButtonProps: undefined,
   hiddenPhoneNumber: '+7 (***) ***-99-99',
   onChangePhone: undefined,
@@ -267,7 +267,7 @@ AuthenticationPhoneConfirmation.defaultProps = {
   safetyLabel: 'Никому не сообщайте код.',
   showEmailButton: true,
   themeProps: undefined,
-  title: 'Введите код из смс'
+  title: 'Введите код из\u00A0смс'
 };
 
 export default AuthenticationPhoneConfirmation;

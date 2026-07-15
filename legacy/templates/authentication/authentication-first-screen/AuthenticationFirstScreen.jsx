@@ -45,7 +45,7 @@ function getDigitsOnly(value) {
 function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
-      Соглашаюсь на{' '}
+      Соглашаюсь на{'\u00A0'}
       <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
@@ -119,8 +119,8 @@ function AuthenticationFirstScreen(props) {
     loginButtonLabel !== undefined
       ? loginButtonLabel
       : resolvedClientType === CLIENT_TYPES.individual
-        ? 'Войти по номеру телефона'
-        : 'Войти в личный кабинет';
+        ? 'Войти по\u00A0номеру телефона'
+        : 'Войти в\u00A0личный кабинет';
   const resolvedConsentLabel =
     consentLabel !== undefined
       ? consentLabel
@@ -452,8 +452,8 @@ AuthenticationFirstScreen.defaultProps = {
   defaultPhone: '',
   device: DEVICES.auto,
   forgotCredentialsLabel: 'Забыли логин или пароль?',
-  gosuslugiButtonLabel: 'Войти через Госуслуги',
-  heading: 'Вход в личный кабинет',
+  gosuslugiButtonLabel: 'Войти через\u00A0Госуслуги',
+  heading: 'Вход в\u00A0личный кабинет',
   individualClientLabel: 'Физическое лицо',
   individualClientShortLabel: 'Физ. лицо',
   loginButtonLabel: undefined,

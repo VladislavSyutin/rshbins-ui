@@ -67,7 +67,7 @@ function isPhoneValid(value) {
 function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
-      Соглашаюсь на{' '}
+      Соглашаюсь на{'\u00A0'}
       <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
@@ -592,14 +592,14 @@ AuthenticationRestoringAccess.defaultProps = {
   innLabel: 'ИНН',
   loginButtonLabel: 'Восстановить логин',
   loginEmailDescription:
-    'Введите ИНН и адрес электронной почты, которые были указаны при регистрации',
+    'Введите ИНН и адрес электронной почты, которые были указаны при\u00A0регистрации',
   loginFlowLabel: 'Восстанов. логина',
   loginFlowMobileLabel: 'Восстан. логина',
   loginInputProps: undefined,
   loginLabel: 'Логин',
   loginMethod: undefined,
   loginPhoneDescription:
-    'Введите ИНН и номер телефона, которые были указаны при регистрации',
+    'Введите ИНН и номер телефона, которые были указаны при\u00A0регистрации',
   onBack: undefined,
   onConsentChange: undefined,
   onLoginMethodChange: undefined,
@@ -608,7 +608,7 @@ AuthenticationRestoringAccess.defaultProps = {
   onRestoringFlowChange: undefined,
   onRestoringLoginSubmit: undefined,
   passwordButtonLabel: 'Восстановить пароль',
-  passwordDescription: 'Введите логин, который был создан при регистрации',
+  passwordDescription: 'Введите логин, который был создан при\u00A0регистрации',
   passwordFlowLabel: 'Восстанов. пароля',
   passwordFlowMobileLabel: 'Восстан. пароля',
   phoneInputProps: undefined,
