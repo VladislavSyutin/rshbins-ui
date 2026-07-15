@@ -298,6 +298,7 @@ function AuthenticationRegistration(props) {
                   backButtonProps && backButtonProps.className
                 )}
                 onClick={handleBackButtonClick}
+                size="m"
                 type="button"
                 variant="normal"
               >
@@ -311,6 +312,7 @@ function AuthenticationRegistration(props) {
                   registerButtonProps && registerButtonProps.className
                 )}
                 disabled={!canSubmit || Boolean(registerButtonProps && registerButtonProps.disabled)}
+                size="m"
                 type="submit"
                 variant="brand"
               >
@@ -393,7 +395,7 @@ AuthenticationRegistration.defaultProps = {
   phoneInputProps: undefined,
   phoneLabel: 'Номер телефона',
   phoneMethodLabel: 'Номер телефона',
-  registerButtonLabel: 'Зарегистрироваться',
+  registerButtonLabel: 'Продолжить',
   registerButtonProps: undefined,
   themeProps: undefined,
   title: 'Регистрация'

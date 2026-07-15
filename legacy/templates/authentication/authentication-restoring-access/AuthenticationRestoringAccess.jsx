@@ -370,6 +370,7 @@ function AuthenticationRestoringAccess(props) {
                   backButtonProps && backButtonProps.className
                 )}
                 onClick={handleBackButtonClick}
+                size="m"
                 type="button"
                 variant="normal"
               >
@@ -383,6 +384,7 @@ function AuthenticationRestoringAccess(props) {
                   submitButtonProps && submitButtonProps.className
                 )}
                 disabled={!canSubmitPassword || Boolean(submitButtonProps && submitButtonProps.disabled)}
+                size="m"
                 type="submit"
                 variant="brand"
               >
@@ -490,6 +492,7 @@ function AuthenticationRestoringAccess(props) {
                     backButtonProps && backButtonProps.className
                   )}
                   onClick={handleBackButtonClick}
+                  size="m"
                   type="button"
                   variant="normal"
                 >
@@ -503,6 +506,7 @@ function AuthenticationRestoringAccess(props) {
                     submitButtonProps && submitButtonProps.className
                   )}
                   disabled={!canSubmitLogin || Boolean(submitButtonProps && submitButtonProps.disabled)}
+                  size="m"
                   type="submit"
                   variant="brand"
                 >
@@ -589,7 +593,7 @@ AuthenticationRestoringAccess.defaultProps = {
   emailMethodLabel: 'Электронная почта',
   innInputProps: undefined,
   innLabel: 'ИНН',
-  loginButtonLabel: 'Восстановить логин',
+  loginButtonLabel: 'Продолжить',
   loginEmailDescription:
     'Введите ИНН и адрес электронной почты, которые были указаны при\u00A0регистрации',
   loginFlowLabel: 'Восстанов. логина',
@@ -606,7 +610,7 @@ AuthenticationRestoringAccess.defaultProps = {
   onPersonalDataClick: undefined,
   onRestoringFlowChange: undefined,
   onRestoringLoginSubmit: undefined,
-  passwordButtonLabel: 'Восстановить пароль',
+  passwordButtonLabel: 'Продолжить',
   passwordDescription: 'Введите логин, который был создан при\u00A0регистрации',
   passwordFlowLabel: 'Восстанов. пароля',
   passwordFlowMobileLabel: 'Восстан. пароля',
