@@ -98,9 +98,9 @@
 
 .rshb-authentication-email-confirmation[data-device='mobile'] {
   --rshb-authentication-email-confirmation-surface-width: 361px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: var(--space-paddings-inside-2xl);
+  border-radius: var(--radius-2xl);
+  background: var(--color-background-default-primary);
 }
 
 .rshb-authentication-email-confirmation[data-device='mobile']
@@ -111,9 +111,9 @@
 @media (max-width: 743px) {
   .rshb-authentication-email-confirmation[data-device='auto'] {
     --rshb-authentication-email-confirmation-surface-width: 361px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: var(--space-paddings-inside-2xl);
+    border-radius: var(--radius-2xl);
+    background: var(--color-background-default-primary);
   }
 
   .rshb-authentication-email-confirmation[data-device='auto']

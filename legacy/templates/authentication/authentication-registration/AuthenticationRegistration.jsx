@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from '../../../components/button/index.js';
@@ -9,7 +9,6 @@ import InputInn from '../../../components/input-inn/index.js';
 import InputPhone from '../../../components/input-phone/index.js';
 import TextLink from '../../../components/text-link/index.js';
 import Tabs from '../../../components/tabs/index.js';
-import chevronLeftIcon from '../../../icons/chevron-left.js';
 import {
   getPhoneDigits,
   validateEmailValue,
@@ -24,6 +23,7 @@ const DEVICES = {
 };
 
 const DEVICE_VALUES = [DEVICES.auto, DEVICES.desktop, DEVICES.mobile];
+const MOBILE_BREAKPOINT_PX = 743;
 
 const METHODS = {
   email: 'email',
@@ -50,7 +50,7 @@ function isPhoneValid(value) {
 function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
-      Соглашаюсь на{' '}
+      Соглашаюсь на{'\u00A0'}
       <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
@@ -62,19 +62,6 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
       </TextLink>{' '}
       персональных данных.
     </>
-  );
-}
-
-function BackIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="rshb-authentication-registration__back-icon"
-      style={{
-        '--rshb-authentication-registration-back-icon-url':
-          'url("' + chevronLeftIcon + '")'
-      }}
-    />
   );
 }
 
@@ -120,8 +107,14 @@ function AuthenticationRegistration(props) {
   const [inn, setInn] = useState(defaultInn);
   const [registrationValue, setRegistrationValue] = useState(defaultValue);
   const [consentAccepted, setConsentAccepted] = useState(defaultConsentAccepted);
+  const [isAutoMobileViewport, setIsAutoMobileViewport] = useState(function () {
+    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT_PX;
+  });
 
   const resolvedMethod = isMethodControlled ? method : internalMethod;
+  const usesMobileMethodLabels =
+    device === DEVICES.mobile ||
+    (device === DEVICES.auto && isAutoMobileViewport);
   const resolvedConsentLabel =
     consentLabel !== undefined
       ? consentLabel
@@ -134,6 +127,26 @@ function AuthenticationRegistration(props) {
       ? isPhoneValid(registrationValue)
       : isEmailValid(registrationValue)) &&
     consentAccepted;
+
+  useEffect(
+    function () {
+      if (device !== DEVICES.auto || typeof window === 'undefined') {
+        return undefined;
+      }
+
+      function handleResize() {
+        setIsAutoMobileViewport(window.innerWidth <= MOBILE_BREAKPOINT_PX);
+      }
+
+      handleResize();
+      window.addEventListener('resize', handleResize);
+
+      return function () {
+        window.removeEventListener('resize', handleResize);
+      };
+    },
+    [device]
+  );
 
   function handleMethodChange(nextValue) {
     const nextMethod = nextValue === METHODS.phone ? METHODS.phone : METHODS.email;
@@ -229,23 +242,6 @@ function AuthenticationRegistration(props) {
 
       <div className="rshb-authentication-registration__content">
         <div className="rshb-authentication-registration__heading">
-          <Button
-            {...backButtonProps}
-            aria-label={
-              (backButtonProps && backButtonProps['aria-label']) || 'Вернуться назад'
-            }
-            className={classNames(
-              'rshb-authentication-registration__back',
-              backButtonProps && backButtonProps.className
-            )}
-            iconOnly
-            leadingIcon={<BackIcon />}
-            onClick={handleBackButtonClick}
-            size="s"
-            type="button"
-            variant="flat-primary"
-          />
-
           <h1 className="rshb-authentication-registration__title">{title}</h1>
 
           <Tabs
@@ -254,8 +250,14 @@ function AuthenticationRegistration(props) {
               handleMethodChange(nextValue);
             }}
             options={[
-              { label: emailMethodLabel, value: METHODS.email },
-              { label: phoneMethodLabel, value: METHODS.phone }
+              {
+                label: usesMobileMethodLabels ? 'Почта' : emailMethodLabel,
+                value: METHODS.email
+              },
+              {
+                label: usesMobileMethodLabels ? 'Телефон' : phoneMethodLabel,
+                value: METHODS.phone
+              }
             ]}
             value={resolvedMethod}
           />
@@ -321,18 +323,35 @@ function AuthenticationRegistration(props) {
               size="s"
             />
 
-            <Button
-              {...registerButtonProps}
-              className={classNames(
-                'rshb-authentication-registration__action',
-                registerButtonProps && registerButtonProps.className
-              )}
-              disabled={!canSubmit || Boolean(registerButtonProps && registerButtonProps.disabled)}
-              type="submit"
-              variant="brand"
-            >
-              {registerButtonLabel}
-            </Button>
+            <div className="rshb-authentication-registration__action-row">
+              <Button
+                {...backButtonProps}
+                className={classNames(
+                  'rshb-authentication-registration__action',
+                  backButtonProps && backButtonProps.className
+                )}
+                onClick={handleBackButtonClick}
+                size="m"
+                type="button"
+                variant="normal"
+              >
+                Назад
+              </Button>
+
+              <Button
+                {...registerButtonProps}
+                className={classNames(
+                  'rshb-authentication-registration__action',
+                  registerButtonProps && registerButtonProps.className
+                )}
+                disabled={!canSubmit || Boolean(registerButtonProps && registerButtonProps.disabled)}
+                size="m"
+                type="submit"
+                variant="brand"
+              >
+                {registerButtonLabel}
+              </Button>
+            </div>
           </div>
         </form>
       </div>
@@ -392,7 +411,7 @@ AuthenticationRegistration.defaultProps = {
   defaultValue: '',
   device: DEVICES.auto,
   emailDescription:
-    'Введите ИНН и адрес электронной почты, которые были указаны при оформлении полиса',
+    'Введите ИНН и адрес электронной почты, которые были указаны при\u00A0оформлении полиса',
   emailInputProps: undefined,
   emailLabel: 'Электронная почта',
   emailMethodLabel: 'Электронная почта',
@@ -405,11 +424,11 @@ AuthenticationRegistration.defaultProps = {
   onPersonalDataClick: undefined,
   onSubmit: undefined,
   phoneDescription:
-    'Введите ИНН и номер телефона, которые были указаны при оформлении полиса',
+    'Введите ИНН и номер телефона, которые были указаны при\u00A0оформлении полиса',
   phoneInputProps: undefined,
   phoneLabel: 'Номер телефона',
   phoneMethodLabel: 'Номер телефона',
-  registerButtonLabel: 'Зарегистрироваться',
+  registerButtonLabel: 'Продолжить',
   registerButtonProps: undefined,
   themeProps: undefined,
   title: 'Регистрация'

@@ -121,9 +121,9 @@
 
 .rshb-authentication-creating-login-password[data-device='mobile'] {
   --rshb-authentication-creating-login-password-surface-width: 361px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: var(--space-paddings-inside-2xl);
+  border-radius: var(--radius-2xl);
+  background: var(--color-background-default-primary);
 }
 
 .rshb-authentication-creating-login-password[data-device='mobile']
@@ -131,16 +131,26 @@
   min-height: 72px;
 }
 
+.rshb-authentication-creating-login-password[data-device='mobile']
+  .rshb-authentication-creating-login-password__fields {
+  gap: var(--space-margins-inside-xs);
+}
+
 @media (max-width: 743px) {
   .rshb-authentication-creating-login-password[data-device='auto'] {
     --rshb-authentication-creating-login-password-surface-width: 361px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: var(--space-paddings-inside-2xl);
+    border-radius: var(--radius-2xl);
+    background: var(--color-background-default-primary);
   }
 
   .rshb-authentication-creating-login-password[data-device='auto']
     .rshb-authentication-creating-login-password__topbar {
     min-height: 72px;
+  }
+
+  .rshb-authentication-creating-login-password[data-device='auto']
+    .rshb-authentication-creating-login-password__fields {
+    gap: var(--space-margins-inside-xs);
   }
 }

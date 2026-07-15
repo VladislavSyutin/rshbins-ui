@@ -119,9 +119,9 @@
 
 .rshb-authentication-registration-data[data-device='mobile'] {
   --rshb-authentication-registration-data-surface-width: 361px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: var(--space-paddings-inside-2xl);
+  border-radius: var(--radius-2xl);
+  background: var(--color-background-default-primary);
 }
 
 .rshb-authentication-registration-data[data-device='mobile'] .rshb-authentication-registration-data__topbar {
@@ -131,9 +131,9 @@
 @media (max-width: 743px) {
   .rshb-authentication-registration-data[data-device='auto'] {
     --rshb-authentication-registration-data-surface-width: 361px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: var(--space-paddings-inside-2xl);
+    border-radius: var(--radius-2xl);
+    background: var(--color-background-default-primary);
   }
 
   .rshb-authentication-registration-data[data-device='auto'] .rshb-authentication-registration-data__topbar {

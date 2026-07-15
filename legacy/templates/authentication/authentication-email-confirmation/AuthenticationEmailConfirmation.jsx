@@ -59,7 +59,7 @@ function AuthenticationEmailConfirmation(props) {
   const resolvedEmail = emailMode === EMAIL_MODES.hidden ? hiddenEmail : email;
   const isResendWaiting = secondsLeft > 0;
   const resolvedResendLabel = isResendWaiting
-    ? 'Получить новый код через ' + secondsLeft + ' сек'
+    ? 'Получить новый код через\u00A0' + secondsLeft + ' сек'
     : resendButtonLabel;
 
   useEffect(function () {
@@ -116,7 +116,7 @@ function AuthenticationEmailConfirmation(props) {
         <h1 className="rshb-authentication-email-confirmation__title">{title}</h1>
 
         <p className="rshb-authentication-email-confirmation__description">
-          <span>Отправили по адресу </span>
+          <span>Отправили по{'\u00A0'}адресу </span>
           <span className="rshb-authentication-email-confirmation__email">
             {resolvedEmail}
           </span>
@@ -219,7 +219,7 @@ AuthenticationEmailConfirmation.defaultProps = {
   resendButtonProps: undefined,
   safetyLabel: 'Никому не сообщайте код.',
   themeProps: undefined,
-  title: 'Введите код из письма'
+  title: 'Введите код из\u00A0письма'
 };
 
 export default AuthenticationEmailConfirmation;

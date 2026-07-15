@@ -27,26 +27,6 @@
   width: 100%;
 }
 
-.rshb-authentication-restoring-access__back.rshb-button,
-.rshb-authentication-restoring-access__back.rshb-legacy-button {
-  justify-self: start;
-}
-
-.rshb-authentication-restoring-access__back .rshb-button__icon,
-.rshb-authentication-restoring-access__back .rshb-legacy-button__icon {
-  width: 16px;
-  height: 16px;
-}
-
-.rshb-authentication-restoring-access__back-icon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  background: currentColor;
-  -webkit-mask: var(--rshb-authentication-restoring-access-back-icon-url) center / contain no-repeat;
-  mask: var(--rshb-authentication-restoring-access-back-icon-url) center / contain no-repeat;
-}
-
 .rshb-authentication-restoring-access__title,
 .rshb-authentication-restoring-access__description {
   margin: 0;
@@ -76,9 +56,12 @@
 
 .rshb-authentication-restoring-access__panel,
 .rshb-authentication-restoring-access__group,
-.rshb-authentication-restoring-access__actions,
-.rshb-authentication-restoring-access__switch-group {
+.rshb-authentication-restoring-access__actions {
   gap: var(--space-margins-inside-m);
+}
+
+.rshb-authentication-restoring-access__switch-group {
+  gap: 0;
 }
 
 .rshb-authentication-restoring-access__fields {
@@ -122,8 +105,17 @@
 }
 
 .rshb-authentication-restoring-access__tabs {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
+}
+
+.rshb-authentication-restoring-access__tabs .rshb-legacy-tabs__item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.rshb-authentication-restoring-access__tabs .rshb-legacy-tab {
+  width: 100%;
 }
 
 .rshb-authentication-restoring-access__description {
@@ -170,6 +162,13 @@
 }
 
 .rshb-authentication-restoring-access__action {
+  flex: 1 1 0;
+  width: 100%;
+}
+
+.rshb-authentication-restoring-access__action-row {
+  display: flex;
+  gap: var(--space-paddings-inside-xs);
   width: 100%;
 }
 
@@ -181,9 +180,9 @@
 
 .rshb-authentication-restoring-access[data-device='mobile'] {
   --rshb-authentication-restoring-access-surface-width: 361px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: var(--space-paddings-inside-2xl);
+  border-radius: var(--radius-2xl);
+  background: var(--color-background-default-primary);
 }
 
 .rshb-authentication-restoring-access[data-device='mobile'] .rshb-authentication-restoring-access__topbar {
@@ -193,12 +192,13 @@
 @media (max-width: 743px) {
   .rshb-authentication-restoring-access[data-device='auto'] {
     --rshb-authentication-restoring-access-surface-width: 361px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+    padding: var(--space-paddings-inside-2xl);
+    border-radius: var(--radius-2xl);
+    background: var(--color-background-default-primary);
   }
 
   .rshb-authentication-restoring-access[data-device='auto'] .rshb-authentication-restoring-access__topbar {
     min-height: 72px;
   }
+
 }

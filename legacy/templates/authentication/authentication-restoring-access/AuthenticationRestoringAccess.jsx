@@ -11,7 +11,6 @@ import InputPhone from '../../../components/input-phone/index.js';
 import SegmentedControl from '../../../components/segmented-control/index.js';
 import TextLink from '../../../components/text-link/index.js';
 import Tabs from '../../../components/tabs/index.js';
-import chevronLeftIcon from '../../../icons/chevron-left.js';
 import {
   getPhoneDigits,
   validateEmailValue,
@@ -67,7 +66,7 @@ function isPhoneValid(value) {
 function buildDefaultConsentLabel(onPersonalDataClick) {
   return (
     <>
-      Соглашаюсь на{' '}
+      Соглашаюсь на{'\u00A0'}
       <TextLink
         href={PERSONAL_DATA_POLICY_URL}
         onClick={onPersonalDataClick}
@@ -79,19 +78,6 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
       </TextLink>{' '}
       персональных данных.
     </>
-  );
-}
-
-function BackIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="rshb-authentication-restoring-access__back-icon"
-      style={{
-        '--rshb-authentication-restoring-access-back-icon-url':
-          'url("' + chevronLeftIcon + '")'
-      }}
-    />
   );
 }
 
@@ -342,23 +328,6 @@ function AuthenticationRestoringAccess(props) {
 
       <div className="rshb-authentication-restoring-access__content">
         <div className="rshb-authentication-restoring-access__heading">
-          <Button
-            {...backButtonProps}
-            aria-label={
-              (backButtonProps && backButtonProps['aria-label']) || 'Вернуться назад'
-            }
-            className={classNames(
-              'rshb-authentication-restoring-access__back',
-              backButtonProps && backButtonProps.className
-            )}
-            iconOnly
-            leadingIcon={<BackIcon />}
-            onClick={handleBackButtonClick}
-            size="s"
-            type="button"
-            variant="flat-primary"
-          />
-
           <h1 className="rshb-authentication-restoring-access__title">
             {title}
           </h1>
@@ -393,18 +362,35 @@ function AuthenticationRestoringAccess(props) {
               />
             </div>
 
-            <Button
-              {...submitButtonProps}
-              className={classNames(
-                'rshb-authentication-restoring-access__action',
-                submitButtonProps && submitButtonProps.className
-              )}
-              disabled={!canSubmitPassword || Boolean(submitButtonProps && submitButtonProps.disabled)}
-              type="submit"
-              variant="brand"
-            >
-              {passwordButtonLabel}
-            </Button>
+            <div className="rshb-authentication-restoring-access__action-row">
+              <Button
+                {...backButtonProps}
+                className={classNames(
+                  'rshb-authentication-restoring-access__action',
+                  backButtonProps && backButtonProps.className
+                )}
+                onClick={handleBackButtonClick}
+                size="m"
+                type="button"
+                variant="normal"
+              >
+                Назад
+              </Button>
+
+              <Button
+                {...submitButtonProps}
+                className={classNames(
+                  'rshb-authentication-restoring-access__action',
+                  submitButtonProps && submitButtonProps.className
+                )}
+                disabled={!canSubmitPassword || Boolean(submitButtonProps && submitButtonProps.disabled)}
+                size="m"
+                type="submit"
+                variant="brand"
+              >
+                {passwordButtonLabel}
+              </Button>
+            </div>
           </form>
         ) : (
           <form
@@ -418,11 +404,17 @@ function AuthenticationRestoringAccess(props) {
                 className="rshb-authentication-restoring-access__tabs"
                 onChange={function (nextValue) {
                   handleLoginMethodChange(nextValue);
-                }}
-                options={[
-                  { label: emailMethodLabel, value: METHODS.email },
-                  { label: phoneMethodLabel, value: METHODS.phone }
-                ]}
+            }}
+            options={[
+              {
+                label: usesMobileFlowLabels ? 'Почта' : emailMethodLabel,
+                value: METHODS.email
+              },
+              {
+                label: usesMobileFlowLabels ? 'Телефон' : phoneMethodLabel,
+                value: METHODS.phone
+              }
+            ]}
                 value={resolvedLoginMethod}
               />
             </div>
@@ -498,18 +490,35 @@ function AuthenticationRestoringAccess(props) {
                 size="s"
               />
 
-              <Button
-                {...submitButtonProps}
-                className={classNames(
-                  'rshb-authentication-restoring-access__action',
-                  submitButtonProps && submitButtonProps.className
-                )}
-                disabled={!canSubmitLogin || Boolean(submitButtonProps && submitButtonProps.disabled)}
-                type="submit"
-                variant="brand"
-              >
-                {loginButtonLabel}
-              </Button>
+              <div className="rshb-authentication-restoring-access__action-row">
+                <Button
+                  {...backButtonProps}
+                  className={classNames(
+                    'rshb-authentication-restoring-access__action',
+                    backButtonProps && backButtonProps.className
+                  )}
+                  onClick={handleBackButtonClick}
+                  size="m"
+                  type="button"
+                  variant="normal"
+                >
+                  Назад
+                </Button>
+
+                <Button
+                  {...submitButtonProps}
+                  className={classNames(
+                    'rshb-authentication-restoring-access__action',
+                    submitButtonProps && submitButtonProps.className
+                  )}
+                  disabled={!canSubmitLogin || Boolean(submitButtonProps && submitButtonProps.disabled)}
+                  size="m"
+                  type="submit"
+                  variant="brand"
+                >
+                  {loginButtonLabel}
+                </Button>
+              </div>
             </div>
           </form>
         )}
@@ -590,16 +599,16 @@ AuthenticationRestoringAccess.defaultProps = {
   emailMethodLabel: 'Электронная почта',
   innInputProps: undefined,
   innLabel: 'ИНН',
-  loginButtonLabel: 'Восстановить логин',
+  loginButtonLabel: 'Продолжить',
   loginEmailDescription:
-    'Введите ИНН и адрес электронной почты, которые были указаны при регистрации',
+    'Введите ИНН и адрес электронной почты, которые были указаны при\u00A0регистрации',
   loginFlowLabel: 'Восстанов. логина',
   loginFlowMobileLabel: 'Восстан. логина',
   loginInputProps: undefined,
   loginLabel: 'Логин',
   loginMethod: undefined,
   loginPhoneDescription:
-    'Введите ИНН и номер телефона, которые были указаны при регистрации',
+    'Введите ИНН и номер телефона, которые были указаны при\u00A0регистрации',
   onBack: undefined,
   onConsentChange: undefined,
   onLoginMethodChange: undefined,
@@ -607,8 +616,8 @@ AuthenticationRestoringAccess.defaultProps = {
   onPersonalDataClick: undefined,
   onRestoringFlowChange: undefined,
   onRestoringLoginSubmit: undefined,
-  passwordButtonLabel: 'Восстановить пароль',
-  passwordDescription: 'Введите логин, который был создан при регистрации',
+  passwordButtonLabel: 'Продолжить',
+  passwordDescription: 'Введите логин, который был создан при\u00A0регистрации',
   passwordFlowLabel: 'Восстанов. пароля',
   passwordFlowMobileLabel: 'Восстан. пароля',
   phoneInputProps: undefined,

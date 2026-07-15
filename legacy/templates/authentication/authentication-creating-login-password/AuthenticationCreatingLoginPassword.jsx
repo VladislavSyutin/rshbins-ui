@@ -26,7 +26,7 @@ const MODE_VALUES = [MODES.login, MODES.password, MODES.loginAndPassword];
 const PASSWORD_RULES = [
   {
     id: 'length-without-spaces',
-    label: 'минимум 15 символов без пробелов',
+    label: 'минимум 15 символов без\u00A0пробелов',
     isMet: function (value) {
       return value.length >= 15 && !/\s/.test(value);
     }
@@ -68,14 +68,14 @@ function getDefaultTitle(mode) {
 
 function getDefaultDescription(mode) {
   if (mode === MODES.password) {
-    return 'Создайте пароль, который будете использовать для входа в личный кабинет';
+    return 'Создайте пароль, который будете использовать для\u00A0входа в\u00A0личный кабинет';
   }
 
   if (mode === MODES.loginAndPassword) {
-    return 'Создайте логин и пароль, которые будете использовать при входе в личный кабинет';
+    return 'Создайте логин и пароль, которые будете использовать при\u00A0входе в\u00A0личный кабинет';
   }
 
-  return 'Создайте логин, который будете использовать для входа в личный кабинет';
+  return 'Создайте логин, который будете использовать для\u00A0входа в\u00A0личный кабинет';
 }
 
 function getDefaultSaveButtonLabel(mode) {
