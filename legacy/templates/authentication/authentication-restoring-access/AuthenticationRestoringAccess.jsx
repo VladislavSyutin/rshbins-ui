@@ -11,7 +11,6 @@ import InputPhone from '../../../components/input-phone/index.js';
 import SegmentedControl from '../../../components/segmented-control/index.js';
 import TextLink from '../../../components/text-link/index.js';
 import Tabs from '../../../components/tabs/index.js';
-import chevronLeftIcon from '../../../icons/chevron-left.js';
 import {
   getPhoneDigits,
   validateEmailValue,
@@ -79,19 +78,6 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
       </TextLink>{' '}
       персональных данных.
     </>
-  );
-}
-
-function BackIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="rshb-authentication-restoring-access__back-icon"
-      style={{
-        '--rshb-authentication-restoring-access-back-icon-url':
-          'url("' + chevronLeftIcon + '")'
-      }}
-    />
   );
 }
 
@@ -342,23 +328,6 @@ function AuthenticationRestoringAccess(props) {
 
       <div className="rshb-authentication-restoring-access__content">
         <div className="rshb-authentication-restoring-access__heading">
-          <Button
-            {...backButtonProps}
-            aria-label={
-              (backButtonProps && backButtonProps['aria-label']) || 'Вернуться назад'
-            }
-            className={classNames(
-              'rshb-authentication-restoring-access__back',
-              backButtonProps && backButtonProps.className
-            )}
-            iconOnly
-            leadingIcon={<BackIcon />}
-            onClick={handleBackButtonClick}
-            size="s"
-            type="button"
-            variant="flat-primary"
-          />
-
           <h1 className="rshb-authentication-restoring-access__title">
             {title}
           </h1>
@@ -393,18 +362,33 @@ function AuthenticationRestoringAccess(props) {
               />
             </div>
 
-            <Button
-              {...submitButtonProps}
-              className={classNames(
-                'rshb-authentication-restoring-access__action',
-                submitButtonProps && submitButtonProps.className
-              )}
-              disabled={!canSubmitPassword || Boolean(submitButtonProps && submitButtonProps.disabled)}
-              type="submit"
-              variant="brand"
-            >
-              {passwordButtonLabel}
-            </Button>
+            <div className="rshb-authentication-restoring-access__action-row">
+              <Button
+                {...backButtonProps}
+                className={classNames(
+                  'rshb-authentication-restoring-access__action',
+                  backButtonProps && backButtonProps.className
+                )}
+                onClick={handleBackButtonClick}
+                type="button"
+                variant="normal"
+              >
+                Назад
+              </Button>
+
+              <Button
+                {...submitButtonProps}
+                className={classNames(
+                  'rshb-authentication-restoring-access__action',
+                  submitButtonProps && submitButtonProps.className
+                )}
+                disabled={!canSubmitPassword || Boolean(submitButtonProps && submitButtonProps.disabled)}
+                type="submit"
+                variant="brand"
+              >
+                {passwordButtonLabel}
+              </Button>
+            </div>
           </form>
         ) : (
           <form
@@ -498,18 +482,33 @@ function AuthenticationRestoringAccess(props) {
                 size="s"
               />
 
-              <Button
-                {...submitButtonProps}
-                className={classNames(
-                  'rshb-authentication-restoring-access__action',
-                  submitButtonProps && submitButtonProps.className
-                )}
-                disabled={!canSubmitLogin || Boolean(submitButtonProps && submitButtonProps.disabled)}
-                type="submit"
-                variant="brand"
-              >
-                {loginButtonLabel}
-              </Button>
+              <div className="rshb-authentication-restoring-access__action-row">
+                <Button
+                  {...backButtonProps}
+                  className={classNames(
+                    'rshb-authentication-restoring-access__action',
+                    backButtonProps && backButtonProps.className
+                  )}
+                  onClick={handleBackButtonClick}
+                  type="button"
+                  variant="normal"
+                >
+                  Назад
+                </Button>
+
+                <Button
+                  {...submitButtonProps}
+                  className={classNames(
+                    'rshb-authentication-restoring-access__action',
+                    submitButtonProps && submitButtonProps.className
+                  )}
+                  disabled={!canSubmitLogin || Boolean(submitButtonProps && submitButtonProps.disabled)}
+                  type="submit"
+                  variant="brand"
+                >
+                  {loginButtonLabel}
+                </Button>
+              </div>
             </div>
           </form>
         )}

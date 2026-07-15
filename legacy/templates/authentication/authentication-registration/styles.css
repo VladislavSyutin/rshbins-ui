@@ -43,26 +43,6 @@
   gap: var(--space-margins-inside-xs);
 }
 
-.rshb-authentication-registration__back.rshb-button,
-.rshb-authentication-registration__back.rshb-legacy-button {
-  justify-self: start;
-}
-
-.rshb-authentication-registration__back .rshb-button__icon,
-.rshb-authentication-registration__back .rshb-legacy-button__icon {
-  width: 16px;
-  height: 16px;
-}
-
-.rshb-authentication-registration__back-icon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  background: currentColor;
-  -webkit-mask: var(--rshb-authentication-registration-back-icon-url) center / contain no-repeat;
-  mask: var(--rshb-authentication-registration-back-icon-url) center / contain no-repeat;
-}
-
 .rshb-authentication-registration__title,
 .rshb-authentication-registration__description {
   margin: 0;
@@ -128,6 +108,13 @@
 }
 
 .rshb-authentication-registration__action {
+  flex: 1 1 0;
+  width: 100%;
+}
+
+.rshb-authentication-registration__action-row {
+  display: flex;
+  gap: var(--space-paddings-inside-xs);
   width: 100%;
 }
 

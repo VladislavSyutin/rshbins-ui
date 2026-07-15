@@ -9,7 +9,6 @@ import InputInn from '../../../components/input-inn/index.js';
 import InputPhone from '../../../components/input-phone/index.js';
 import TextLink from '../../../components/text-link/index.js';
 import Tabs from '../../../components/tabs/index.js';
-import chevronLeftIcon from '../../../icons/chevron-left.js';
 import {
   getPhoneDigits,
   validateEmailValue,
@@ -62,19 +61,6 @@ function buildDefaultConsentLabel(onPersonalDataClick) {
       </TextLink>{' '}
       персональных данных.
     </>
-  );
-}
-
-function BackIcon() {
-  return (
-    <span
-      aria-hidden="true"
-      className="rshb-authentication-registration__back-icon"
-      style={{
-        '--rshb-authentication-registration-back-icon-url':
-          'url("' + chevronLeftIcon + '")'
-      }}
-    />
   );
 }
 
@@ -229,23 +215,6 @@ function AuthenticationRegistration(props) {
 
       <div className="rshb-authentication-registration__content">
         <div className="rshb-authentication-registration__heading">
-          <Button
-            {...backButtonProps}
-            aria-label={
-              (backButtonProps && backButtonProps['aria-label']) || 'Вернуться назад'
-            }
-            className={classNames(
-              'rshb-authentication-registration__back',
-              backButtonProps && backButtonProps.className
-            )}
-            iconOnly
-            leadingIcon={<BackIcon />}
-            onClick={handleBackButtonClick}
-            size="s"
-            type="button"
-            variant="flat-primary"
-          />
-
           <h1 className="rshb-authentication-registration__title">{title}</h1>
 
           <Tabs
@@ -321,18 +290,33 @@ function AuthenticationRegistration(props) {
               size="s"
             />
 
-            <Button
-              {...registerButtonProps}
-              className={classNames(
-                'rshb-authentication-registration__action',
-                registerButtonProps && registerButtonProps.className
-              )}
-              disabled={!canSubmit || Boolean(registerButtonProps && registerButtonProps.disabled)}
-              type="submit"
-              variant="brand"
-            >
-              {registerButtonLabel}
-            </Button>
+            <div className="rshb-authentication-registration__action-row">
+              <Button
+                {...backButtonProps}
+                className={classNames(
+                  'rshb-authentication-registration__action',
+                  backButtonProps && backButtonProps.className
+                )}
+                onClick={handleBackButtonClick}
+                type="button"
+                variant="normal"
+              >
+                Назад
+              </Button>
+
+              <Button
+                {...registerButtonProps}
+                className={classNames(
+                  'rshb-authentication-registration__action',
+                  registerButtonProps && registerButtonProps.className
+                )}
+                disabled={!canSubmit || Boolean(registerButtonProps && registerButtonProps.disabled)}
+                type="submit"
+                variant="brand"
+              >
+                {registerButtonLabel}
+              </Button>
+            </div>
           </div>
         </form>
       </div>
