@@ -177,6 +177,19 @@
   min-height: 72px;
 }
 
+.rshb-authentication-restoring-access[data-device='mobile'] .rshb-authentication-restoring-access__tabs {
+  width: 100%;
+}
+
+.rshb-authentication-restoring-access[data-device='mobile'] .rshb-authentication-restoring-access__tabs .rshb-legacy-tabs__item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.rshb-authentication-restoring-access[data-device='mobile'] .rshb-authentication-restoring-access__tabs .rshb-legacy-tab {
+  width: 100%;
+}
+
 @media (max-width: 743px) {
   .rshb-authentication-restoring-access[data-device='auto'] {
     --rshb-authentication-restoring-access-surface-width: 361px;
@@ -187,5 +200,18 @@
 
   .rshb-authentication-restoring-access[data-device='auto'] .rshb-authentication-restoring-access__topbar {
     min-height: 72px;
+  }
+
+  .rshb-authentication-restoring-access[data-device='auto'] .rshb-authentication-restoring-access__tabs {
+    width: 100%;
+  }
+
+  .rshb-authentication-restoring-access[data-device='auto'] .rshb-authentication-restoring-access__tabs .rshb-legacy-tabs__item {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .rshb-authentication-restoring-access[data-device='auto'] .rshb-authentication-restoring-access__tabs .rshb-legacy-tab {
+    width: 100%;
   }
 }

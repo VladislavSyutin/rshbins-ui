@@ -404,11 +404,17 @@ function AuthenticationRestoringAccess(props) {
                 className="rshb-authentication-restoring-access__tabs"
                 onChange={function (nextValue) {
                   handleLoginMethodChange(nextValue);
-                }}
-                options={[
-                  { label: emailMethodLabel, value: METHODS.email },
-                  { label: phoneMethodLabel, value: METHODS.phone }
-                ]}
+            }}
+            options={[
+              {
+                label: usesMobileFlowLabels ? 'Почта' : emailMethodLabel,
+                value: METHODS.email
+              },
+              {
+                label: usesMobileFlowLabels ? 'Телефон' : phoneMethodLabel,
+                value: METHODS.phone
+              }
+            ]}
                 value={resolvedLoginMethod}
               />
             </div>
