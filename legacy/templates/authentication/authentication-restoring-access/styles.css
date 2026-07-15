@@ -56,9 +56,12 @@
 
 .rshb-authentication-restoring-access__panel,
 .rshb-authentication-restoring-access__group,
-.rshb-authentication-restoring-access__actions,
-.rshb-authentication-restoring-access__switch-group {
+.rshb-authentication-restoring-access__actions {
   gap: var(--space-margins-inside-m);
+}
+
+.rshb-authentication-restoring-access__switch-group {
+  gap: 0;
 }
 
 .rshb-authentication-restoring-access__fields {
