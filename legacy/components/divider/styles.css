@@ -10,8 +10,9 @@
 .rshb-legacy-divider__line {
   display: block;
   flex: 1 0 0;
+  height: 1px;
   min-width: 1px;
-  border-bottom: 1px solid var(--color-border-default-default);
+  background: var(--color-border-default-default);
 }
 
 .rshb-legacy-divider__label {
