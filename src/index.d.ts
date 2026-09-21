@@ -25,12 +25,6 @@ export type {
   LegacyDividerView
 } from '../legacy/components/divider';
 
-export { default as Header } from '../legacy/components/header';
-export type {
-  LegacyHeaderProps,
-  LegacyHeaderSize
-} from '../legacy/components/header';
-
 export { default as Gender } from '../legacy/components/gender';
 export type {
   LegacyGenderComponent,
@@ -121,12 +115,6 @@ export type {
   LegacyLoaderBrandTextStep
 } from '../legacy/components/loader-brand';
 
-export { default as Logo } from '../legacy/components/logo';
-export type {
-  LegacyLogoProps,
-  LegacyLogoState
-} from '../legacy/components/logo';
-
 export { default as Spin } from '../legacy/components/spin';
 export type {
   LegacySpinComponent,
@@ -166,12 +154,6 @@ export type {
   LegacyTabsPreviewState,
   LegacyTabsProps
 } from '../legacy/components/tabs';
-
-export { default as Theme } from '../legacy/components/theme';
-export type {
-  LegacyThemeMode,
-  LegacyThemeProps
-} from '../legacy/components/theme';
 
 export { default as Toast } from '../legacy/components/toast';
 export type {

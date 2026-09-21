@@ -17,9 +17,7 @@ function Divider(props) {
   const { className, dataId, label, view, ...rest } = props;
 
   const resolvedLabel = label !== undefined ? label : 'или';
-  const resolvedView = DIVIDER_VIEW_VALUES.indexOf(view) === -1
-    ? DIVIDER_VIEWS.text
-    : view;
+  const resolvedView = view || DIVIDER_VIEWS.text;
   const dataIdValue = dataId || rest['data-id'];
   const showsLabel = resolvedView === DIVIDER_VIEWS.text;
 

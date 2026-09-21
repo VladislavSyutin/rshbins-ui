@@ -1,7 +1,6 @@
 export { default as Button } from '../legacy/components/button/index.js';
 export { default as Card } from '../legacy/components/card/index.js';
 export { default as Divider } from '../legacy/components/divider/index.js';
-export { default as Header } from '../legacy/components/header/index.js';
 export { default as Gender } from '../legacy/components/gender/index.js';
 export { default as Calendar, CalendarDayItem, CalendarPeriodItem } from '../legacy/components/calendar/index.js';
 export { default as Cookies } from '../legacy/components/cookies/index.js';
@@ -20,14 +19,12 @@ export { default as InputPhone } from '../legacy/components/input-phone/index.js
 export { default as InputSurname } from '../legacy/components/input-surname/index.js';
 export { default as InputText } from '../legacy/components/input-text/index.js';
 export { default as LoaderBrand } from '../legacy/components/loader-brand/index.js';
-export { default as Logo } from '../legacy/components/logo/index.js';
 export { default as Spin } from '../legacy/components/spin/index.js';
 export { default as Switch } from '../legacy/components/switch/index.js';
 export { default as RadioGroup } from '../legacy/components/radio-group/index.js';
 export { default as SegmentedControl } from '../legacy/components/segmented-control/index.js';
 export { default as Tabs } from '../legacy/components/tabs/index.js';
 export { default as Toast } from '../legacy/components/toast/index.js';
-export { default as Theme } from '../legacy/components/theme/index.js';
 export { default as DialogToast } from '../legacy/dialogs/toasts/dialog-toast/index.js';
 export { default as DialogModal } from '../legacy/dialogs/modals/dialog-modal/index.js';
 export { default as Modal } from '../legacy/components/modal/index.js';
