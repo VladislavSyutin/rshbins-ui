@@ -40,6 +40,10 @@ const FORM_SUBMIT_DELAY = 3000;
 const PREFILLED_POLICYHOLDER_PHONE = '79999999991';
 const PREFILLED_CHECK_PHONE = '79999999990';
 const PROOF_IDENTITY_PHONE = '79999999992';
+const CAPTCHA_PHONE = '79999999993';
+const GOSUSLUGI_LOGIN_EMAIL = 'info@rshbins.ru';
+const PROMO_CODE_VALUE = 'промо';
+const PROMO_DISCOUNT = 0.2;
 const PREFILLED_POLICYHOLDER = {
   birthDate: '02.06.2001',
   email: 'syutinvi@rshbins.ru',
@@ -420,6 +424,10 @@ function getPrice(tariff, term, sum) {
   return PRICE_TABLE[tariff][term][sum];
 }
 
+function getPromoPrice(price) {
+  return Math.round(price * (1 - PROMO_DISCOUNT));
+}
+
 function getPhoneDigits(value) {
   return String(value || '').replace(/\D/g, '');
 }
@@ -643,8 +651,10 @@ function Parameters(props) {
 }
 
 function Total(props) {
-  const { sum, tariff, term } = props;
+  const { promoApplied, sum, tariff, term } = props;
   const price = getPrice(tariff, term, sum);
+  const shownPrice = promoApplied ? getPromoPrice(price.price) : price.price;
+  const oldPrice = promoApplied ? price.price : price.oldPrice;
 
   return (
     <Card className="rshb-policy-issuance__total" dataId="policy-total">
@@ -655,9 +665,9 @@ function Total(props) {
       <div className="rshb-policy-issuance__summary-item">
         <p className="rshb-policy-issuance__summary-label">Страховая премия</p>
         <div className="rshb-policy-issuance__price-row">
-          <span className="rshb-policy-issuance__price"><Money value={price.price} /></span>
-          {price.oldPrice ? (
-            <span className="rshb-policy-issuance__old-price"><Money value={price.oldPrice} /></span>
+          <span className="rshb-policy-issuance__price"><Money value={shownPrice} /></span>
+          {oldPrice ? (
+            <span className="rshb-policy-issuance__old-price"><Money value={oldPrice} /></span>
           ) : null}
         </div>
       </div>
@@ -693,11 +703,11 @@ function Documents() {
 }
 
 function Information(props) {
-  const { sum, tariff, term } = props;
+  const { promoApplied, sum, tariff, term } = props;
 
   return (
     <aside className="rshb-policy-issuance__information">
-      <Total sum={sum} tariff={tariff} term={term} />
+      <Total promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
       <Documents />
     </aside>
   );
@@ -748,6 +758,33 @@ function PhoneConsent(props) {
           size="s"
         />
       ) : null}
+    </div>
+  );
+}
+
+function PromoCodeField(props) {
+  const { onApplyPromoCode, onPromoCodeChange, promoCode } = props;
+  const isApplyDisabled = promoCode.trim().length === 0;
+
+  return (
+    <div className="rshb-policy-issuance__promo">
+      <InputText
+        className="rshb-policy-issuance__field rshb-policy-issuance__promo-field"
+        dataId="policy-promo-code"
+        label="Промокод"
+        onValueChange={onPromoCodeChange}
+        value={promoCode}
+        width="100%"
+      />
+      <Button
+        buttonType="secondary"
+        className="rshb-policy-issuance__promo-button"
+        dataId="policy-apply-promo-code"
+        disabled={isApplyDisabled}
+        onClick={onApplyPromoCode}
+      >
+        Применить
+      </Button>
     </div>
   );
 }
@@ -1121,6 +1158,59 @@ function ProofIdentityModal(props) {
   );
 }
 
+function CaptchaModal(props) {
+  const {
+    captchaValue,
+    isLoading,
+    onCaptchaChange,
+    onClose,
+    onSubmit,
+    template
+  } = props;
+
+  const isTimeout = template === 'timeout';
+
+  return (
+    <DialogModal
+      captchaLabel="8К7МН4"
+      closeOnPrimaryAction={false}
+      dataId="policy-captcha-modal"
+      inputProps={
+        isTimeout
+          ? undefined
+          : {
+              dataId: 'policy-captcha-code',
+              onValueChange: onCaptchaChange,
+              value: captchaValue
+            }
+      }
+      onClose={onClose}
+      onPrimaryAction={isTimeout ? undefined : onSubmit}
+      onTertiaryAction={onClose}
+      placement="top-center"
+      primaryActionDisabled={isTimeout ? undefined : !captchaValue || isLoading}
+      primaryActionLoading={isTimeout ? undefined : isLoading}
+      template={template}
+      tertiaryActionDisabled={isLoading}
+    />
+  );
+}
+
+function LogInThroughTheGosuslugiModal(props) {
+  const { onClose, onCreateAccount } = props;
+
+  return (
+    <DialogModal
+      dataId="policy-log-in-through-gosuslugi-modal"
+      onClose={onClose}
+      onSecondaryAction={onCreateAccount}
+      onTertiaryAction={onClose}
+      placement="top-center"
+      template="log-in-through-the-gosuslugi"
+    />
+  );
+}
+
 function EnterInformationScreen(props) {
   const {
     consentChecked,
@@ -1133,6 +1223,7 @@ function EnterInformationScreen(props) {
     onSubmitDetails,
     passport,
     policyholder,
+    promoApplied,
     sum,
     tariff,
     term
@@ -1163,7 +1254,7 @@ function EnterInformationScreen(props) {
             onSubmit={onSubmitDetails}
           />
         </Card>
-        <Information sum={sum} tariff={tariff} term={term} />
+        <Information promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
       </div>
     </section>
   );
@@ -1342,6 +1433,7 @@ function CheckDataScreen(props) {
     paymentMethod,
     phone,
     policyholder,
+    promoApplied,
     sum,
     tariff,
     term
@@ -1367,7 +1459,7 @@ function CheckDataScreen(props) {
           />
           <CheckActions onEdit={onEdit} />
         </Card>
-        <Information sum={sum} tariff={tariff} term={term} />
+        <Information promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
       </div>
     </section>
   );
@@ -1428,7 +1520,9 @@ function CustomizeScreen(props) {
     onChangePhone,
     onCodeChange,
     onConsentChange,
+    onApplyPromoCode,
     onPhoneChange,
+    onPromoCodeChange,
     onRecipientChange,
     onResendCode,
     onSubmitCode,
@@ -1437,6 +1531,8 @@ function CustomizeScreen(props) {
     onTariffChange,
     onTermChange,
     phone,
+    promoApplied,
+    promoCode,
     recipient,
     resendSeconds,
     sum,
@@ -1496,29 +1592,43 @@ function CustomizeScreen(props) {
           </ParametersSection>
           <PolicyholderSection afterDivider={!isGift} isGift={isGift}>
             {isCodeStep ? (
-              <CodeForm
-                code={code}
-                isSubmittingCode={isSubmittingCode}
-                onBack={onBackToSelection}
-                onChangePhone={onChangePhone}
-                onCodeChange={onCodeChange}
-                onResendCode={onResendCode}
-                onSubmitCode={onSubmitCode}
-                phone={phone}
-                resendSeconds={resendSeconds}
-              />
+              <div className="rshb-policy-issuance__phone-stack">
+                <PromoCodeField
+                  onApplyPromoCode={onApplyPromoCode}
+                  onPromoCodeChange={onPromoCodeChange}
+                  promoCode={promoCode}
+                />
+                <CodeForm
+                  code={code}
+                  isSubmittingCode={isSubmittingCode}
+                  onBack={onBackToSelection}
+                  onChangePhone={onChangePhone}
+                  onCodeChange={onCodeChange}
+                  onResendCode={onResendCode}
+                  onSubmitCode={onSubmitCode}
+                  phone={phone}
+                  resendSeconds={resendSeconds}
+                />
+              </div>
             ) : (
               <>
-                <PhoneConsent
-                  checkboxDataId="policy-personal-data"
-                  consentChecked={consentChecked}
-                  disabledPhone={false}
-                  onConsentChange={onConsentChange}
-                  onPhoneChange={onPhoneChange}
-                  phone={phone}
-                  policyText="персональных данных."
-                  showConsent
-                />
+                <div className="rshb-policy-issuance__phone-stack">
+                  <PromoCodeField
+                    onApplyPromoCode={onApplyPromoCode}
+                    onPromoCodeChange={onPromoCodeChange}
+                    promoCode={promoCode}
+                  />
+                  <PhoneConsent
+                    checkboxDataId="policy-personal-data"
+                    consentChecked={consentChecked}
+                    disabledPhone={false}
+                    onConsentChange={onConsentChange}
+                    onPhoneChange={onPhoneChange}
+                    phone={phone}
+                    policyText="персональных данных."
+                    showConsent
+                  />
+                </div>
                 <ButtonsRow
                   canContinue={canSubmitPhone}
                   isLoading={isSubmittingPhone}
@@ -1529,7 +1639,7 @@ function CustomizeScreen(props) {
             )}
           </PolicyholderSection>
         </Card>
-        <Information sum={sum} tariff={tariff} term={term} />
+        <Information promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
       </div>
     </section>
   );
@@ -1546,6 +1656,8 @@ function PolicyIssuancePrototype(props) {
   const [term, setTerm] = useState('2');
   const [sum, setSum] = useState('250000');
   const [phone, setPhone] = useState('');
+  const [promoCode, setPromoCode] = useState('');
+  const [isPromoApplied, setIsPromoApplied] = useState(false);
   const [code, setCode] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('yandex-pay');
@@ -1578,34 +1690,55 @@ function PolicyIssuancePrototype(props) {
   const [isSubmittingDetails, setIsSubmittingDetails] = useState(false);
   const [resendSeconds, setResendSeconds] = useState(RESEND_TIMER_SECONDS);
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('Новый код отправлен');
+  const [toastVariant, setToastVariant] = useState('success');
   const [toastKey, setToastKey] = useState(0);
   const [isProofIdentityOpen, setIsProofIdentityOpen] = useState(false);
   const [proofIdentitySurname, setProofIdentitySurname] = useState('');
   const [isSubmittingProofIdentity, setIsSubmittingProofIdentity] = useState(false);
+  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState('');
+  const [captchaTemplate, setCaptchaTemplate] = useState('captcha');
+  const [isSubmittingCaptcha, setIsSubmittingCaptcha] = useState(false);
+  const [isLogInThroughGosuslugiOpen, setIsLogInThroughGosuslugiOpen] = useState(false);
   const phoneTimerRef = useRef(null);
   const codeTimerRef = useRef(null);
   const detailsTimerRef = useRef(null);
   const proofIdentityTimerRef = useRef(null);
+  const captchaTimerRef = useRef(null);
   const cards = CATEGORY_CARDS[category] || CATEGORY_CARDS.property;
   const dataIdValue = dataId || rest['data-id'];
 
   useEffect(function () {
     return function () {
-      if (phoneTimerRef.current !== null) {
-        window.clearTimeout(phoneTimerRef.current);
-      }
-      if (codeTimerRef.current !== null) {
-        window.clearTimeout(codeTimerRef.current);
-      }
-      if (detailsTimerRef.current !== null) {
-        window.clearTimeout(detailsTimerRef.current);
-      }
-
-      if (proofIdentityTimerRef.current !== null) {
-        window.clearTimeout(proofIdentityTimerRef.current);
-      }
+      clearSubmitTimers();
     };
   }, []);
+
+  function clearSubmitTimers() {
+    if (phoneTimerRef.current !== null) {
+      window.clearTimeout(phoneTimerRef.current);
+      phoneTimerRef.current = null;
+    }
+    if (codeTimerRef.current !== null) {
+      window.clearTimeout(codeTimerRef.current);
+      codeTimerRef.current = null;
+    }
+    if (detailsTimerRef.current !== null) {
+      window.clearTimeout(detailsTimerRef.current);
+      detailsTimerRef.current = null;
+    }
+
+    if (proofIdentityTimerRef.current !== null) {
+      window.clearTimeout(proofIdentityTimerRef.current);
+      proofIdentityTimerRef.current = null;
+    }
+
+    if (captchaTimerRef.current !== null) {
+      window.clearTimeout(captchaTimerRef.current);
+      captchaTimerRef.current = null;
+    }
+  }
 
   useEffect(function () {
     if (screen !== 'customization' || step !== 'code' || resendSeconds <= 0) {
@@ -1631,6 +1764,21 @@ function PolicyIssuancePrototype(props) {
     setScreen('customization');
     setStep('phone');
     setRecipient('myself');
+  }
+
+  function handleBackToStart() {
+    clearSubmitTimers();
+    setScreen('selection');
+    setStep('phone');
+    setCode('');
+    setIsSubmittingPhone(false);
+    setIsSubmittingCode(false);
+    setIsSubmittingDetails(false);
+    setIsSubmittingProofIdentity(false);
+    setIsSubmittingCaptcha(false);
+    setIsProofIdentityOpen(false);
+    setIsCaptchaOpen(false);
+    setIsLogInThroughGosuslugiOpen(false);
   }
 
   function handleCardsAction(event) {
@@ -1688,6 +1836,13 @@ function PolicyIssuancePrototype(props) {
       if (isPhoneMatch(getPhoneDigits(phone), PROOF_IDENTITY_PHONE)) {
         setProofIdentitySurname(policyholder.lastName || '');
         setIsProofIdentityOpen(true);
+        return;
+      }
+
+      if (isPhoneMatch(getPhoneDigits(phone), CAPTCHA_PHONE)) {
+        setCaptchaValue('');
+        setCaptchaTemplate('captcha');
+        setIsCaptchaOpen(true);
         return;
       }
 
@@ -1752,6 +1907,52 @@ function PolicyIssuancePrototype(props) {
     }, FORM_SUBMIT_DELAY);
   }
 
+  function handleCloseCaptcha() {
+    if (captchaTimerRef.current !== null) {
+      window.clearTimeout(captchaTimerRef.current);
+      captchaTimerRef.current = null;
+    }
+
+    setIsCaptchaOpen(false);
+    setIsSubmittingCaptcha(false);
+  }
+
+  function handleCaptchaChange(value) {
+    setCaptchaValue(value);
+  }
+
+  function handleSubmitCaptcha() {
+    if (captchaTemplate === 'timeout' || !captchaValue || isSubmittingCaptcha) {
+      return;
+    }
+
+    setIsSubmittingCaptcha(true);
+
+    captchaTimerRef.current = window.setTimeout(function () {
+      captchaTimerRef.current = null;
+      setIsSubmittingCaptcha(false);
+
+      if (captchaValue === 'timeout') {
+        setCaptchaTemplate('timeout');
+        return;
+      }
+
+      setIsCaptchaOpen(false);
+      setStep('code');
+      setCode('');
+      setResendSeconds(RESEND_TIMER_SECONDS);
+    }, FORM_SUBMIT_DELAY);
+  }
+
+  function handleCloseLogInThroughGosuslugi() {
+    setIsLogInThroughGosuslugiOpen(false);
+  }
+
+  function handleCreateAccountFromGosuslugiModal() {
+    setIsLogInThroughGosuslugiOpen(false);
+    setScreen('check-data');
+  }
+
   function handleSubmitCode() {
     if (code.length !== 4 || isSubmittingCode) {
       return;
@@ -1775,6 +1976,12 @@ function PolicyIssuancePrototype(props) {
     detailsTimerRef.current = window.setTimeout(function () {
       detailsTimerRef.current = null;
       setIsSubmittingDetails(false);
+
+      if (policyholder.email.toLowerCase() === GOSUSLUGI_LOGIN_EMAIL) {
+        setIsLogInThroughGosuslugiOpen(true);
+        return;
+      }
+
       setScreen('check-data');
     }, FORM_SUBMIT_DELAY);
   }
@@ -1800,11 +2007,33 @@ function PolicyIssuancePrototype(props) {
   }
 
   function handleResendCode() {
+    setToastMessage('Новый код отправлен');
+    setToastVariant('success');
     setToastKey(function (currentValue) {
       return currentValue + 1;
     });
     setShowToast(true);
     setResendSeconds(RESEND_TIMER_SECONDS);
+  }
+
+  function handlePromoCodeChange(value) {
+    setPromoCode(value);
+
+    if (isPromoApplied && value.trim().toLowerCase() !== PROMO_CODE_VALUE) {
+      setIsPromoApplied(false);
+    }
+  }
+
+  function handleApplyPromoCode() {
+    const isValidPromoCode = promoCode.trim().toLowerCase() === PROMO_CODE_VALUE;
+
+    setIsPromoApplied(isValidPromoCode);
+    setToastMessage(isValidPromoCode ? 'Промокод успешно применён' : 'Промокод не найден');
+    setToastVariant(isValidPromoCode ? 'success' : 'danger');
+    setToastKey(function (currentValue) {
+      return currentValue + 1;
+    });
+    setShowToast(true);
   }
 
   function handleRecipientChange(nextRecipient) {
@@ -1824,7 +2053,20 @@ function PolicyIssuancePrototype(props) {
       className={classNames('rshb-policy-issuance', 'theme-light', className)}
       data-id={dataIdValue}
     >
-      <Header className="rshb-policy-issuance__header" size="l" />
+      <Header
+        brandButtonProps={{ onClick: handleBackToStart }}
+        className="rshb-policy-issuance__header"
+        size="l"
+      />
+      <Button
+        buttonType="secondary"
+        className="rshb-policy-issuance__account-button"
+        dataId="policy-account"
+        leadingIcon={<PersonIcon />}
+        size="s"
+      >
+        Личный кабинет
+      </Button>
       <main className="rshb-policy-issuance__main">
         {screen === 'customization' ? (
           <CustomizeScreen
@@ -1833,12 +2075,14 @@ function PolicyIssuancePrototype(props) {
             consentChecked={consentChecked}
             isSubmittingCode={isSubmittingCode}
             isSubmittingPhone={isSubmittingPhone}
+            onApplyPromoCode={handleApplyPromoCode}
             onBackToSelection={handleBackToSelection}
             onBeneficiaryChange={setBeneficiary}
             onChangePhone={handleChangePhone}
             onCodeChange={setCode}
             onConsentChange={setConsentChecked}
             onPhoneChange={setPhone}
+            onPromoCodeChange={handlePromoCodeChange}
             onRecipientChange={handleRecipientChange}
             onResendCode={handleResendCode}
             onSubmitCode={handleSubmitCode}
@@ -1847,6 +2091,8 @@ function PolicyIssuancePrototype(props) {
             onTariffChange={setTariff}
             onTermChange={setTerm}
             phone={phone}
+            promoApplied={isPromoApplied}
+            promoCode={promoCode}
             recipient={recipient}
             resendSeconds={resendSeconds}
             step={step}
@@ -1866,6 +2112,7 @@ function PolicyIssuancePrototype(props) {
             onSubmitDetails={handleSubmitDetails}
             passport={passport}
             policyholder={policyholder}
+            promoApplied={isPromoApplied}
             sum={sum}
             tariff={tariff}
             term={term}
@@ -1881,6 +2128,7 @@ function PolicyIssuancePrototype(props) {
             paymentMethod={paymentMethod}
             phone={phone}
             policyholder={policyholder}
+            promoApplied={isPromoApplied}
             sum={sum}
             tariff={tariff}
             term={term}
@@ -1928,6 +2176,24 @@ function PolicyIssuancePrototype(props) {
           />
         ) : null}
 
+        {isCaptchaOpen ? (
+          <CaptchaModal
+            captchaValue={captchaValue}
+            isLoading={isSubmittingCaptcha}
+            onCaptchaChange={handleCaptchaChange}
+            onClose={handleCloseCaptcha}
+            onSubmit={handleSubmitCaptcha}
+            template={captchaTemplate}
+          />
+        ) : null}
+
+        {isLogInThroughGosuslugiOpen ? (
+          <LogInThroughTheGosuslugiModal
+            onClose={handleCloseLogInThroughGosuslugi}
+            onCreateAccount={handleCreateAccountFromGosuslugiModal}
+          />
+        ) : null}
+
         {showToast ? (
           <Toast
             autoCloseDuration={2500}
@@ -1936,9 +2202,9 @@ function PolicyIssuancePrototype(props) {
               setShowToast(false);
             }}
             placement="top-center"
-            variant="success"
+            variant={toastVariant}
           >
-            Новый код отправлен
+            {toastMessage}
           </Toast>
         ) : null}
       </main>
@@ -1988,6 +2254,7 @@ SummaryItem.propTypes = {
 };
 
 Total.propTypes = {
+  promoApplied: PropTypes.bool.isRequired,
   sum: PropTypes.string.isRequired,
   tariff: PropTypes.string.isRequired,
   term: PropTypes.string.isRequired
@@ -2004,6 +2271,12 @@ PhoneConsent.propTypes = {
   phone: PropTypes.string.isRequired,
   policyText: PropTypes.string.isRequired,
   showConsent: PropTypes.bool
+};
+
+PromoCodeField.propTypes = {
+  onApplyPromoCode: PropTypes.func.isRequired,
+  onPromoCodeChange: PropTypes.func.isRequired,
+  promoCode: PropTypes.string.isRequired
 };
 
 GiftForm.propTypes = {
@@ -2055,6 +2328,20 @@ ProofIdentityModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onSurnameChange: PropTypes.func.isRequired,
   surname: PropTypes.string.isRequired
+};
+
+CaptchaModal.propTypes = {
+  captchaValue: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onCaptchaChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  template: PropTypes.oneOf(['captcha', 'timeout']).isRequired
+};
+
+LogInThroughTheGosuslugiModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onCreateAccount: PropTypes.func.isRequired
 };
 
 CheckDataRow.propTypes = {
@@ -2135,12 +2422,14 @@ CustomizeScreen.propTypes = {
   consentChecked: PropTypes.bool.isRequired,
   isSubmittingCode: PropTypes.bool.isRequired,
   isSubmittingPhone: PropTypes.bool.isRequired,
+  onApplyPromoCode: PropTypes.func.isRequired,
   onBackToSelection: PropTypes.func.isRequired,
   onBeneficiaryChange: PropTypes.func.isRequired,
   onChangePhone: PropTypes.func.isRequired,
   onCodeChange: PropTypes.func.isRequired,
   onConsentChange: PropTypes.func.isRequired,
   onPhoneChange: PropTypes.func.isRequired,
+  onPromoCodeChange: PropTypes.func.isRequired,
   onRecipientChange: PropTypes.func.isRequired,
   onResendCode: PropTypes.func.isRequired,
   onSubmitCode: PropTypes.func.isRequired,
@@ -2149,6 +2438,8 @@ CustomizeScreen.propTypes = {
   onTariffChange: PropTypes.func.isRequired,
   onTermChange: PropTypes.func.isRequired,
   phone: PropTypes.string.isRequired,
+  promoApplied: PropTypes.bool.isRequired,
+  promoCode: PropTypes.string.isRequired,
   recipient: PropTypes.oneOf(['myself', 'gift']).isRequired,
   resendSeconds: PropTypes.number.isRequired,
   step: PropTypes.oneOf(['phone', 'code']).isRequired,
@@ -2168,6 +2459,7 @@ EnterInformationScreen.propTypes = {
   onSubmitDetails: PropTypes.func.isRequired,
   passport: PassportForm.propTypes.passport,
   policyholder: PolicyholderDetailsForm.propTypes.policyholder,
+  promoApplied: PropTypes.bool.isRequired,
   sum: PropTypes.string.isRequired,
   tariff: PropTypes.string.isRequired,
   term: PropTypes.string.isRequired
@@ -2183,6 +2475,7 @@ CheckDataScreen.propTypes = {
   paymentMethod: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
   policyholder: PolicyholderDetailsForm.propTypes.policyholder,
+  promoApplied: PropTypes.bool.isRequired,
   sum: PropTypes.string.isRequired,
   tariff: PropTypes.string.isRequired,
   term: PropTypes.string.isRequired

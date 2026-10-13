@@ -27,6 +27,14 @@
   background: var(--color-background-default-primary);
 }
 
+.rshb-policy-issuance__account-button {
+  position: fixed;
+  top: 36px;
+  right: 112px;
+  z-index: 11;
+  transform: translateY(-50%);
+}
+
 .rshb-policy-issuance__main {
   display: flex;
   align-items: flex-start;
@@ -497,6 +505,22 @@
   gap: var(--space-margins-inside-xs);
 }
 
+.rshb-policy-issuance__promo {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-policy-issuance__promo-field {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.rshb-policy-issuance__promo-button {
+  flex: 0 0 auto;
+  min-width: 132px;
+}
+
 .rshb-policy-issuance__section {
   gap: var(--space-margins-inside-m);
 }
@@ -772,6 +796,8 @@
 }
 
 .rshb-policy-issuance__information {
+  position: sticky;
+  top: -16px;
   display: flex;
   width: 212px;
   flex: 0 0 212px;
