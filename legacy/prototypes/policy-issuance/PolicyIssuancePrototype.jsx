@@ -485,16 +485,6 @@ function isPhoneMatch(phoneDigits, fullPhoneDigits) {
   return phoneDigits === fullPhoneDigits || phoneDigits === fullPhoneDigits.slice(1);
 }
 
-function resolvePolicyholderForPhone(phone, policyholder) {
-  const phoneDigits = getPhoneDigits(phone);
-
-  if (isPhoneMatch(phoneDigits, PREFILLED_POLICYHOLDER_PHONE)) {
-    return Object.assign({}, policyholder, PREFILLED_POLICYHOLDER);
-  }
-
-  return policyholder;
-}
-
 function PolicyCard(props) {
   const { card, index, onCalculate } = props;
 
@@ -1334,8 +1324,7 @@ function PaymentMethods(props) {
 }
 
 function CheckPolicyholderData(props) {
-  const { phone, policyholder } = props;
-  const resolvedPolicyholder = resolvePolicyholderForPhone(phone, policyholder);
+  const { policyholder: resolvedPolicyholder } = props;
 
   return (
     <div className="rshb-policy-issuance__check-section">
@@ -1356,12 +1345,11 @@ function CheckPolicyholderData(props) {
 
 function CheckContactData(props) {
   const { phone, policyholder } = props;
-  const resolvedPolicyholder = resolvePolicyholderForPhone(phone, policyholder);
 
   return (
     <CheckDataGroup title="Контактные данные">
       <CheckDataRow label="Номер телефона" text={formatPhone(phone)} />
-      <CheckDataRow label="Адрес электронной почты" text={resolvedPolicyholder.email} />
+      <CheckDataRow label="Адрес электронной почты" text={policyholder.email} />
     </CheckDataGroup>
   );
 }
@@ -1868,7 +1856,10 @@ function PolicyIssuancePrototype(props) {
     }
 
     if (isPhoneMatch(phoneDigits, PREFILLED_POLICYHOLDER_PHONE)) {
-      setScreen('passport-details');
+      setPolicyholder(function (currentValue) {
+        return fillEmptyFields(currentValue, PREFILLED_POLICYHOLDER);
+      });
+      setScreen('policyholder-passport-details');
       setDetailsConsentChecked(false);
       return;
     }
