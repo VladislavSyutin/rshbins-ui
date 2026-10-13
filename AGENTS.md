@@ -33,6 +33,11 @@ legacy/components/component-name/
 - Prefer universal components over local native controls in composed components.
 - Keep components reusable and scenario-neutral.
 
+## Dialog And Toast Lookup
+
+- When working with modals, dialogs, popups, notifications, or toast-like UI, check the legacy dialogs area first, then fall back to `legacy/components/` only if no suitable dialog/toast source exists.
+- This lookup order applies only to modal, dialog, popup, notification, and toast UI. For all other reusable components, use the normal component lookup and implementation rules.
+
 ## What To Avoid
 
 - Legacy runtime components must not import from `src/`.
