@@ -60,10 +60,11 @@ const DIALOG_MODAL_TEMPLATE_CONFIG = {
     variant: Modal.variants.textInput
   },
   [DIALOG_MODAL_TEMPLATES.logInThroughTheGosuslugi]: {
-    description: 'Пользователь с такими данными уже зарегистрирован. Пожалуйста, подтвердите личность через Госуслуги',
+    description: 'Пользователь с такими данными уже зарегистрирован. Пожалуйста, подтвердите личность через Госуслуги или создайте новый аккаунт',
     heading: 'Войдите через Госуслуги',
     primaryActionIcon: <DialogModalIcon src={gosuslugiIcon} />,
     primaryActionLabel: 'Войти через Госуслуги',
+    secondaryActionLabel: 'Создать новый аккаунт',
     tertiaryActionLabel: 'Закрыть',
     variant: Modal.variants.default
   }
