@@ -17,7 +17,8 @@ function Demo(args: LegacyDocumentsModalProps) {
 }
 
 const meta = {
-  title: 'Legacy/Components/Documents Modal',
+  id: 'legacy-components-documents-modal',
+  title: 'Legacy/Components/DocumentsModal',
   component: DocumentsModal,
   parameters: { layout: 'fullscreen', viewport: { options: INITIAL_VIEWPORTS } },
   args: { documents, dataId: 'documents-modal', onClose: () => undefined },

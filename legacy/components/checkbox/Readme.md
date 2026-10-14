@@ -17,6 +17,7 @@ React 17-compatible delivery of the checkbox component for FOS integration.
 - `invalid` and `size` mirror the modern checkbox behavior.
 - `dataId` is mapped to `data-id` on the root `<label>` element.
 - Controlled usage: pass `checked` + `onChange`. Uncontrolled usage: pass `defaultChecked`.
+- `disabled` blocks the native input. The label uses `--color-text-default-tertiary`; only the checkbox control is dimmed, including its checked state. Hover and focus styles do not activate when disabled.
 
 ### Example
 

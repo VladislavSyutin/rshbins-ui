@@ -87,6 +87,14 @@ export const Playground: Story = {
   ),
 };
 
+export const Disabled: Story = {
+  args: { disabled: true, label: 'Ознакомился (-ась) с документами', size: 's' },
+};
+
+export const DisabledChecked: Story = {
+  args: { disabled: true, checked: true, label: 'Ознакомился (-ась) с документами', size: 's' },
+};
+
 export const Overview: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
