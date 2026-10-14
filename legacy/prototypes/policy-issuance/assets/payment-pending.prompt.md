@@ -1,5 +1,7 @@
 # Payment pending illustration
 
+Background removal edit via built-in ImageGen (`transparent_background: true`): Remove the off-white background around and between the hourglass and card. Preserve the objects, colors, details, square canvas and original margins. Output a transparent PNG; do not crop or add elements.
+
 Generated with the built-in ImageGen tool. Style references: `property-card.png` and `health-family.png` in this folder.
 
 Use case: illustration-story. Create one standalone square illustration for an insurance website's payment confirmation waiting page. Reference images are STYLE REFERENCES ONLY: match their flat geometric editorial drawing, large sharply bounded solid color shapes, spare black outlines, forest/leaf/lime greens, warm yellow, pale sky blue and small muted red accents. New subject: a large upright hourglass with yellow sand still flowing and a bank card beside it, indicating payment processing, no success checkmark. Calm centered compact composition with generous quiet margins, simple pale off-white background matching the references. Only the hourglass and bank card, with restrained geometric color planes. Entire objects fully visible. Crisp flat 2D, no gradients, no shadows, no photorealism, no 3D, no texture, no typography, no numerals, no logos, no watermark. This is an illustration asset only, not a screen mockup.

@@ -65,7 +65,7 @@
 }
 .rshb-policy-issuance__payment-image {
   display: block;
-  width: min(320px, 40svh, 100%);
+  width: min(416px, 52svh, 100%);
   height: auto;
 }
 .rshb-policy-issuance__payment-pending .rshb-policy-issuance__title {

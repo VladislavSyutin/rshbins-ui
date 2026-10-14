@@ -1635,7 +1635,7 @@ function PolicyIssuancePrototype(props) {
           />
         ) : screen === 'payment-pending' ? (
           <section className="rshb-policy-issuance__payment-pending" aria-labelledby="policy-payment-pending-title" data-id="policy-payment-pending">
-            <img className="rshb-policy-issuance__payment-image" src={paymentPendingImage} alt="" width="320" height="320" />
+            <img className="rshb-policy-issuance__payment-image" src={paymentPendingImage} alt="" width="416" height="416" />
             <h1 className="rshb-policy-issuance__title" id="policy-payment-pending-title" ref={paymentHeadingRef} tabIndex={-1}>
               Ожидаем подтверждения оплаты
             </h1>
