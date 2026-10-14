@@ -1,0 +1,9 @@
+.rshb-legacy-input-passport-division-code {
+  max-width: 100%;
+}
+.rshb-legacy-input-passport-division-code__mask-filled {
+  color: var(--color-text-default-primary);
+}
+.rshb-legacy-input-passport-division-code__mask-placeholder {
+  color: var(--color-text-default-disabled);
+}

@@ -7,18 +7,14 @@ import Checkbox from '../../components/checkbox/index.js';
 import Gender from '../../components/gender/index.js';
 import Header from '../../components/header/index.js';
 import InputBirthDate from '../../components/input-birth-date/index.js';
-import InputCode from '../../components/input-code/index.js';
 import InputMiddleName from '../../components/input-middle-name/index.js';
 import DialogModal from '../../dialogs/modals/dialog-modal/index.js';
 import InputName from '../../components/input-name/index.js';
 import InputPhone from '../../components/input-phone/index.js';
 import InputSurname from '../../components/input-surname/index.js';
-import InputText from '../../components/input-text/index.js';
 import SegmentedControl from '../../components/segmented-control/index.js';
 import Tabs from '../../components/tabs/index.js';
-import TextLink from '../../components/text-link/index.js';
 import Toast from '../../components/toast/index.js';
-import calendarIcon from '../../icons/calendar.js';
 import propertyMortgageImage from './assets/property-mortgage.png';
 import propertyHomeImage from './assets/property-home.png';
 import propertyCardImage from './assets/property-card.png';
@@ -32,6 +28,15 @@ import travelRussiaImage from './assets/travel-russia.png';
 import animalsPetImage from './assets/animals-pet.png';
 import animalsFarmImage from './assets/animals-farm.png';
 import kidsProtectionImage from './assets/kids-protection.png';
+import DataRow from '../../components/data-row/index.js';
+import DocumentLink from '../../components/document-link/index.js';
+import Select from '../../components/select/index.js';
+import InputPromoCode from '../../components/input-promo-code/index.js';
+import PassportForm from '../../components/passport-form/index.js';
+import PolicyholderForm from '../../components/policyholder-form/index.js';
+import PolicySummary from '../../components/policy-summary/index.js';
+import ProductCard from '../../components/product-card/index.js';
+import PhoneCodeForm from '../../components/phone-code-form/index.js';
 import './styles.css';
 
 const FAMILY_ACCIDENT_TITLE = 'Страхование от несчастных случаев для всей семьи';
@@ -42,7 +47,7 @@ const PREFILLED_CHECK_PHONE = '79999999990';
 const PROOF_IDENTITY_PHONE = '79999999992';
 const CAPTCHA_PHONE = '79999999993';
 const GOSUSLUGI_LOGIN_EMAIL = 'info@rshbins.ru';
-const PROMO_CODE_VALUE = 'промо';
+const PROMO_CODE_VALUE = 'PROMO';
 const PROMO_DISCOUNT = 0.2;
 const PREFILLED_POLICYHOLDER = {
   birthDate: '02.06.2001',
@@ -76,11 +81,6 @@ function fillEmptyFields(currentValue, prefilledValue) {
 
   return nextValue;
 }
-const PAYMENT_OPTIONS = [
-  { value: 'yandex-pay', label: 'Яндекс Пэй' },
-  { value: 'bank-card', label: 'Банковская карта' }
-];
-
 const CATEGORY_OPTIONS = [
   { value: 'property', label: 'Имущество и финансы' },
   { value: 'health', label: 'Здоровье' },
@@ -293,93 +293,6 @@ function GiftIcon() {
   );
 }
 
-function ChevronDownIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 18 18" width="18">
-      <path
-        d="M4.5 6.75L9 11.25L13.5 6.75"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
-
-function DocumentIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 18 18" width="18">
-      <path
-        d="M5.25 1.75H10.3L14.25 5.7V15.5C14.25 15.9142 13.9142 16.25 13.5 16.25H5.25C4.42157 16.25 3.75 15.5784 3.75 14.75V3.25C3.75 2.42157 4.42157 1.75 5.25 1.75Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path d="M10.25 1.75V5.75H14.25" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.5" />
-      <path d="M6.5 9.5H11.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-      <path d="M6.5 12.25H10" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function PhonePaymentIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 18 18" width="18">
-      <path
-        d="M6.25 2.25H11.75C12.5784 2.25 13.25 2.92157 13.25 3.75V14.25C13.25 15.0784 12.5784 15.75 11.75 15.75H6.25C5.42157 15.75 4.75 15.0784 4.75 14.25V3.75C4.75 2.92157 5.42157 2.25 6.25 2.25Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path d="M8 12.75H10" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function CardPaymentIcon() {
-  return (
-    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 18 18" width="18">
-      <path
-        d="M2.75 5.25C2.75 4.42157 3.42157 3.75 4.25 3.75H13.75C14.5784 3.75 15.25 4.42157 15.25 5.25V12.75C15.25 13.5784 14.5784 14.25 13.75 14.25H4.25C3.42157 14.25 2.75 13.5784 2.75 12.75V5.25Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path d="M3 7H15" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M5.5 11.25H8.25" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function CalendarAdornment() {
-  return (
-    <span className="rshb-policy-issuance__input-adornment">
-      <span
-        aria-hidden="true"
-        className="rshb-policy-issuance__input-icon"
-        style={{ '--rshb-policy-issuance-input-icon': 'url("' + calendarIcon + '")' }}
-      />
-    </span>
-  );
-}
-
-function formatMoneyNumber(value) {
-  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-}
-
-function Money(props) {
-  const { value } = props;
-
-  return (
-    <>
-      {formatMoneyNumber(value)}
-      {' '}
-      <span className="rshb-policy-issuance__currency">₽</span>
-    </>
-  );
-}
-
 function padDateSegment(value) {
   return String(value).padStart(2, '0');
 }
@@ -432,10 +345,6 @@ function getPhoneDigits(value) {
   return String(value || '').replace(/\D/g, '');
 }
 
-function updateObjectField(currentValue, fieldName, value) {
-  return Object.assign({}, currentValue, { [fieldName]: value });
-}
-
 function formatFullName(person) {
   const parts = [
     person.lastName,
@@ -477,137 +386,21 @@ function formatPhone(value) {
   );
 }
 
-function resolveDataValue(value) {
-  return value || 'Не указано';
-}
-
 function isPhoneMatch(phoneDigits, fullPhoneDigits) {
   return phoneDigits === fullPhoneDigits || phoneDigits === fullPhoneDigits.slice(1);
 }
 
-function PolicyCard(props) {
-  const { card, index, onCalculate } = props;
-
-  function handleCalculate() {
-    onCalculate(card);
-  }
-
-  return (
-    <Card className="rshb-policy-issuance__card" dataId={'policy-card-' + (index + 1)}>
-      <div className="rshb-policy-issuance__card-content">
-        <div className="rshb-policy-issuance__card-copy">
-          <h2 className="rshb-policy-issuance__card-title">{card.title}</h2>
-          <p className="rshb-policy-issuance__card-accent">{card.accent}</p>
-          {card.bullets ? (
-            <ul className="rshb-policy-issuance__card-list">
-              {card.bullets.map(function (item) {
-                return <li key={item}>{item}</li>;
-              })}
-            </ul>
-          ) : (
-            <p className="rshb-policy-issuance__card-text">{card.text}</p>
-          )}
-        </div>
-        <div className="rshb-policy-issuance__actions">
-          <Button
-            className="rshb-policy-issuance__button"
-            dataId={'policy-card-' + (index + 1) + '-calculate'}
-            onClick={handleCalculate}
-            onMouseDown={handleCalculate}
-          >
-            Рассчитать стоимость
-          </Button>
-          <Button
-            buttonType="secondary"
-            className="rshb-policy-issuance__button"
-            dataId={'policy-card-' + (index + 1) + '-details'}
-          >
-            Подробнее
-          </Button>
-        </div>
-      </div>
-      <div className="rshb-policy-issuance__image-wrap">
-        <img alt="" className="rshb-policy-issuance__image" src={card.image} />
-      </div>
-    </Card>
-  );
-}
-
-function PolicySelect(props) {
-  const { dataId, label, onChange, options, value } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const rootRef = useRef(null);
-  const selectedLabel = getOptionLabel(options, value);
-
-  useEffect(function () {
-    if (!isOpen) {
-      return undefined;
-    }
-
-    function handlePointerDown(event) {
-      if (rootRef.current && !rootRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handlePointerDown);
-
-    return function () {
-      document.removeEventListener('mousedown', handlePointerDown);
-    };
-  }, [isOpen]);
-
-  function handleSelect(nextValue) {
-    onChange(nextValue);
-    setIsOpen(false);
-  }
-
-  return (
-    <div className="rshb-policy-issuance__select" data-open={isOpen ? 'true' : 'false'} ref={rootRef}>
-      <button
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-        className="rshb-policy-issuance__select-control"
-        data-filled={selectedLabel ? 'true' : 'false'}
-        data-id={dataId}
-        onClick={function () {
-          setIsOpen(!isOpen);
-        }}
-        type="button"
-      >
-        <span className="rshb-policy-issuance__select-content">
-          <span className="rshb-policy-issuance__select-label">{label}</span>
-          <span className="rshb-policy-issuance__select-value">{selectedLabel}</span>
-        </span>
-        <span aria-hidden="true" className="rshb-policy-issuance__select-arrow">
-          <ChevronDownIcon />
-        </span>
-      </button>
-      {isOpen ? (
-        <div className="rshb-policy-issuance__dropdown" role="listbox">
-          {options.map(function (option) {
-            const isSelected = option.value === value;
-
-            return (
-              <button
-                aria-selected={isSelected}
-                className="rshb-policy-issuance__dropdown-item"
-                data-selected={isSelected ? 'true' : 'false'}
-                key={option.value}
-                onClick={function () {
-                  handleSelect(option.value);
-                }}
-                role="option"
-                type="button"
-              >
-                <span className="rshb-policy-issuance__dropdown-text">{option.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      ) : null}
-    </div>
-  );
+function PolicyCard({ card, index, onCalculate, onDetails }) {
+  return <ProductCard
+    title={card.title}
+    accent={card.accent}
+    text={card.text}
+    bullets={card.bullets}
+    imageSrc={card.image}
+    dataId={'policy-card-' + (index + 1)}
+    onCalculate={function () { onCalculate(card); }}
+    onDetails={onDetails ? function () { onDetails(card); } : undefined}
+  />;
 }
 
 function Parameters(props) {
@@ -615,21 +408,21 @@ function Parameters(props) {
 
   return (
     <div className="rshb-policy-issuance__params">
-      <PolicySelect
+      <Select
         dataId="policy-tariff-select"
         label="Тариф"
         onChange={onTariffChange}
         options={TARIFF_OPTIONS}
         value={tariff}
       />
-      <PolicySelect
+      <Select
         dataId="policy-term-select"
         label="Срок страхования"
         onChange={onTermChange}
         options={TERM_OPTIONS}
         value={term}
       />
-      <PolicySelect
+      <Select
         dataId="policy-sum-select"
         label="Страховая сумма"
         onChange={onSumChange}
@@ -643,53 +436,15 @@ function Parameters(props) {
 function Total(props) {
   const { promoApplied, sum, tariff, term } = props;
   const price = getPrice(tariff, term, sum);
-  const shownPrice = promoApplied ? getPromoPrice(price.price) : price.price;
-  const oldPrice = promoApplied ? price.price : price.oldPrice;
-
-  return (
-    <Card className="rshb-policy-issuance__total" dataId="policy-total">
-      <SummaryItem label="Название полиса" value={FAMILY_ACCIDENT_TITLE} />
-      <SummaryItem label="Тариф" value={getOptionLabel(TARIFF_OPTIONS, tariff)} />
-      <SummaryItem label="Срок страхования" value={getTermPeriod(term)} />
-      <SummaryItem label="Страховая сумма" value={getOptionLabel(SUM_OPTIONS, sum)} />
-      <div className="rshb-policy-issuance__summary-item">
-        <p className="rshb-policy-issuance__summary-label">Страховая премия</p>
-        <div className="rshb-policy-issuance__price-row">
-          <span className="rshb-policy-issuance__price"><Money value={shownPrice} /></span>
-          {oldPrice ? (
-            <span className="rshb-policy-issuance__old-price"><Money value={oldPrice} /></span>
-          ) : null}
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-function SummaryItem(props) {
-  const { label, value } = props;
-
-  return (
-    <div className="rshb-policy-issuance__summary-item">
-      <p className="rshb-policy-issuance__summary-label">{label}</p>
-      <p className="rshb-policy-issuance__summary-value">{value}</p>
-    </div>
-  );
-}
-
-function Documents() {
-  return (
-    <div className="rshb-policy-issuance__documents">
-      <button className="rshb-policy-issuance__document" data-id="policy-rules-document" type="button">
-        <span className="rshb-policy-issuance__document-icon">
-          <DocumentIcon />
-        </span>
-        <span className="rshb-policy-issuance__document-copy">
-          <span className="rshb-policy-issuance__document-title">Правила страхования</span>
-          <span className="rshb-policy-issuance__document-meta">10 МБ</span>
-        </span>
-      </button>
-    </div>
-  );
+  return <PolicySummary
+    dataId="policy-total"
+    title={FAMILY_ACCIDENT_TITLE}
+    tariff={getOptionLabel(TARIFF_OPTIONS, tariff)}
+    term={getTermPeriod(term)}
+    sum={getOptionLabel(SUM_OPTIONS, sum)}
+    premium={promoApplied ? getPromoPrice(price.price) : price.price}
+    oldPremium={promoApplied ? price.price : price.oldPrice}
+  />;
 }
 
 function Information(props) {
@@ -698,7 +453,12 @@ function Information(props) {
   return (
     <aside className="rshb-policy-issuance__information">
       <Total promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
-      <Documents />
+      <DocumentLink
+        dataId="policy-rules-document"
+        title="Правила страхования"
+        fileSize="551 КБ"
+        href="https://rshbins.ru/upload/iblock/612/gva4yeqp8pue2b1qc4r56m68na4oz86k/03_17102017.pdf"
+      />
     </aside>
   );
 }
@@ -758,7 +518,7 @@ function PromoCodeField(props) {
 
   return (
     <div className="rshb-policy-issuance__promo">
-      <InputText
+      <InputPromoCode
         className="rshb-policy-issuance__field rshb-policy-issuance__promo-field"
         dataId="policy-promo-code"
         label="Промокод"
@@ -775,67 +535,6 @@ function PromoCodeField(props) {
       >
         Применить
       </Button>
-    </div>
-  );
-}
-
-function CodeForm(props) {
-  const {
-    code,
-    isSubmittingCode,
-    onBack,
-    onChangePhone,
-    onCodeChange,
-    onSubmitCode,
-    onResendCode,
-    phone,
-    resendSeconds
-  } = props;
-  const canSubmit = code.length === 4 && !isSubmittingCode;
-
-  return (
-    <div className="rshb-policy-issuance__code-stack">
-      <InputPhone
-        className="rshb-policy-issuance__field"
-        dataId="policy-phone-confirmed"
-        disabled
-        value={phone}
-        width="100%"
-      />
-      <p className="rshb-policy-issuance__field-hint">
-        По этому номеру телефона мы узнаем, регистрировались ли вы ранее.
-      </p>
-      <InputCode
-        className="rshb-policy-issuance__field"
-        dataId="policy-code"
-        onValueChange={onCodeChange}
-        value={code}
-        width="100%"
-      />
-      <div className="rshb-policy-issuance__timer">
-        {resendSeconds > 0 ? (
-          <span>Получить новый код через {resendSeconds} сек</span>
-        ) : (
-          <TextLink as="button" dataId="policy-resend-code" onClick={onResendCode} size="s">
-            Получить новый код
-          </TextLink>
-        )}
-      </div>
-      <TextLink
-        as="button"
-        className="rshb-policy-issuance__change-phone"
-        dataId="policy-change-phone"
-        onClick={onChangePhone}
-        size="s"
-      >
-        Изменить номер телефона
-      </TextLink>
-      <ButtonsRow
-        canContinue={canSubmit}
-        isLoading={isSubmittingCode}
-        onBack={onBack}
-        onContinue={onSubmitCode}
-      />
     </div>
   );
 }
@@ -933,153 +632,6 @@ function GiftForm(props) {
             value={beneficiary.gender}
           />
         </div>
-      </div>
-    </div>
-  );
-}
-
-function PassportForm(props) {
-  const { passport, onPassportChange } = props;
-
-  function setPassportField(fieldName, value) {
-    onPassportChange(updateObjectField(passport, fieldName, value));
-  }
-
-  return (
-    <div className="rshb-policy-issuance__details-section">
-      <div className="rshb-policy-issuance__section-copy">
-        <p className="rshb-policy-issuance__details-heading">Паспортные данные</p>
-        <p className="rshb-policy-issuance__section-description">Нужны для заключения договора.</p>
-      </div>
-      <div className="rshb-policy-issuance__fields">
-        <InputText
-          className="rshb-policy-issuance__field"
-          dataId="policy-passport-number"
-          label="Серия и номер"
-          onValueChange={function (value) {
-            setPassportField('number', value);
-          }}
-          value={passport.number}
-          width="100%"
-        />
-        <div className="rshb-policy-issuance__two-fields">
-          <InputText
-            className="rshb-policy-issuance__field"
-            dataId="policy-passport-code"
-            label="Код подразделения"
-            onValueChange={function (value) {
-              setPassportField('divisionCode', value);
-            }}
-            value={passport.divisionCode}
-            width="100%"
-          />
-          <InputText
-            className="rshb-policy-issuance__field"
-            dataId="policy-passport-date"
-            endAdornment={<CalendarAdornment />}
-            label="Дата выдачи"
-            onValueChange={function (value) {
-              setPassportField('issueDate', value);
-            }}
-            value={passport.issueDate}
-            width="100%"
-          />
-        </div>
-        <InputText
-          className="rshb-policy-issuance__field"
-          dataId="policy-passport-issued-by"
-          label="Кем выдан"
-          onValueChange={function (value) {
-            setPassportField('issuedBy', value);
-          }}
-          value={passport.issuedBy}
-          width="100%"
-        />
-      </div>
-    </div>
-  );
-}
-
-function PolicyholderDetailsForm(props) {
-  const { policyholder, onPolicyholderChange } = props;
-
-  function setPolicyholderField(fieldName, value) {
-    onPolicyholderChange(updateObjectField(policyholder, fieldName, value));
-  }
-
-  return (
-    <div className="rshb-policy-issuance__details-section">
-      <div className="rshb-policy-issuance__section-copy">
-        <p className="rshb-policy-issuance__details-heading">Данные страхователя</p>
-        <p className="rshb-policy-issuance__section-description">
-          Страхователь — тот, кто оформляет полис.
-        </p>
-      </div>
-      <div className="rshb-policy-issuance__fields">
-        <InputSurname
-          className="rshb-policy-issuance__field"
-          dataId="policyholder-last-name"
-          onValueChange={function (value) {
-            setPolicyholderField('lastName', value);
-          }}
-          value={policyholder.lastName}
-          width="100%"
-        />
-        <InputName
-          className="rshb-policy-issuance__field"
-          dataId="policyholder-first-name"
-          onValueChange={function (value) {
-            setPolicyholderField('firstName', value);
-          }}
-          value={policyholder.firstName}
-          width="100%"
-        />
-        <InputMiddleName
-          className="rshb-policy-issuance__field"
-          dataId="policyholder-middle-name"
-          onSwitchChange={function (checked) {
-            setPolicyholderField('noMiddleName', checked);
-          }}
-          onValueChange={function (value) {
-            setPolicyholderField('middleName', value);
-          }}
-          switchChecked={policyholder.noMiddleName}
-          value={policyholder.middleName}
-          width="100%"
-        />
-        <div className="rshb-policy-issuance__date-gender">
-          <InputBirthDate
-            className="rshb-policy-issuance__field"
-            dataId="policyholder-birth-date"
-            label="Дата рождения"
-            onValueChange={function (value) {
-              setPolicyholderField('birthDate', value);
-            }}
-            value={policyholder.birthDate}
-            width="100%"
-          />
-          <Gender
-            className="rshb-policy-issuance__gender"
-            dataId="policyholder-gender"
-            onChange={function (value) {
-              setPolicyholderField('gender', value);
-            }}
-            value={policyholder.gender}
-          />
-        </div>
-        <InputText
-          className="rshb-policy-issuance__field"
-          dataId="policyholder-email"
-          label="Адрес электронной почты"
-          onValueChange={function (value) {
-            setPolicyholderField('email', value);
-          }}
-          value={policyholder.email}
-          width="100%"
-        />
-        <p className="rshb-policy-issuance__field-hint">
-          По этому адресу мы отправим вам документы.
-        </p>
       </div>
     </div>
   );
@@ -1230,12 +782,13 @@ function EnterInformationScreen(props) {
       <div className="rshb-policy-issuance__custom-grid">
         <Card className="rshb-policy-issuance__details-card" dataId="policy-enter-details-card">
           {includePolicyholder ? (
-            <PolicyholderDetailsForm
-              onPolicyholderChange={onPolicyholderChange}
-              policyholder={policyholder}
+            <PolicyholderForm
+              dataId="policyholder"
+              onChange={onPolicyholderChange}
+              value={policyholder}
             />
           ) : null}
-          <PassportForm onPassportChange={onPassportChange} passport={passport} />
+          <PassportForm dataId="policy-passport" onChange={onPassportChange} value={passport} />
           <DetailsActions
             consentChecked={consentChecked}
             isLoading={isSubmittingDetails}
@@ -1250,17 +803,6 @@ function EnterInformationScreen(props) {
   );
 }
 
-function CheckDataRow(props) {
-  const { label, text } = props;
-
-  return (
-    <div className="rshb-policy-issuance__check-row">
-      <p className="rshb-policy-issuance__check-label">{label}</p>
-      <p className="rshb-policy-issuance__check-value">{resolveDataValue(text)}</p>
-    </div>
-  );
-}
-
 function CheckDataGroup(props) {
   const { children, title } = props;
 
@@ -1269,55 +811,6 @@ function CheckDataGroup(props) {
       {title ? <p className="rshb-policy-issuance__check-subheading">{title}</p> : null}
       <div className="rshb-policy-issuance__check-rows">
         {children}
-      </div>
-    </div>
-  );
-}
-
-function PaymentMethod(props) {
-  const { checked, label, onChange, value } = props;
-
-  return (
-    <label className="rshb-policy-issuance__payment-method" data-checked={checked ? 'true' : 'false'}>
-      <input
-        checked={checked}
-        className="rshb-policy-issuance__payment-input"
-        name="policy-payment-method"
-        onChange={function () {
-          onChange(value);
-        }}
-        type="radio"
-        value={value}
-      />
-      <span aria-hidden="true" className="rshb-policy-issuance__payment-icon">
-        {value === 'yandex-pay' ? <PhonePaymentIcon /> : <CardPaymentIcon />}
-      </span>
-      <span className="rshb-policy-issuance__payment-label">{label}</span>
-      <span aria-hidden="true" className="rshb-policy-issuance__payment-radio">
-        <span className="rshb-policy-issuance__payment-radio-dot" />
-      </span>
-    </label>
-  );
-}
-
-function PaymentMethods(props) {
-  const { onPaymentMethodChange, paymentMethod } = props;
-
-  return (
-    <div className="rshb-policy-issuance__payment">
-      <p className="rshb-policy-issuance__check-heading">Выберите способ оплаты</p>
-      <div className="rshb-policy-issuance__payment-list" role="radiogroup" aria-label="Способ оплаты">
-        {PAYMENT_OPTIONS.map(function (option) {
-          return (
-            <PaymentMethod
-              checked={option.value === paymentMethod}
-              key={option.value}
-              label={option.label}
-              onChange={onPaymentMethodChange}
-              value={option.value}
-            />
-          );
-        })}
       </div>
     </div>
   );
@@ -1335,9 +828,9 @@ function CheckPolicyholderData(props) {
         </p>
       </div>
       <CheckDataGroup title="Персональные данные">
-        <CheckDataRow label="ФИО" text={formatFullName(resolvedPolicyholder)} />
-        <CheckDataRow label="Дата рождения" text={resolvedPolicyholder.birthDate} />
-        <CheckDataRow label="Пол" text={formatGender(resolvedPolicyholder.gender)} />
+        <DataRow label="ФИО" value={formatFullName(resolvedPolicyholder)} />
+        <DataRow label="Дата рождения" value={resolvedPolicyholder.birthDate} />
+        <DataRow label="Пол" value={formatGender(resolvedPolicyholder.gender)} />
       </CheckDataGroup>
     </div>
   );
@@ -1348,8 +841,8 @@ function CheckContactData(props) {
 
   return (
     <CheckDataGroup title="Контактные данные">
-      <CheckDataRow label="Номер телефона" text={formatPhone(phone)} />
-      <CheckDataRow label="Адрес электронной почты" text={policyholder.email} />
+      <DataRow label="Номер телефона" value={formatPhone(phone)} />
+      <DataRow label="Адрес электронной почты" value={policyholder.email} />
     </CheckDataGroup>
   );
 }
@@ -1359,10 +852,10 @@ function CheckPassportData(props) {
 
   return (
     <CheckDataGroup title="Паспортные данные">
-      <CheckDataRow label="Серия и номер" text={passport.number} />
-      <CheckDataRow label="Код подразделения" text={passport.divisionCode} />
-      <CheckDataRow label="Дата выдачи" text={passport.issueDate} />
-      <CheckDataRow label="Кем выдан" text={passport.issuedBy} />
+      <DataRow label="Серия и номер" value={passport.number} />
+      <DataRow label="Код подразделения" value={passport.divisionCode} />
+      <DataRow label="Дата выдачи" value={passport.issueDate} />
+      <DataRow label="Кем выдан" value={passport.issuedBy} />
     </CheckDataGroup>
   );
 }
@@ -1379,9 +872,9 @@ function CheckBeneficiaryData(props) {
         </p>
       </div>
       <CheckDataGroup>
-        <CheckDataRow label="ФИО" text={formatFullName(beneficiary)} />
-        <CheckDataRow label="Дата рождения" text={beneficiary.birthDate} />
-        <CheckDataRow label="Пол" text={formatGender(beneficiary.gender)} />
+        <DataRow label="ФИО" value={formatFullName(beneficiary)} />
+        <DataRow label="Дата рождения" value={beneficiary.birthDate} />
+        <DataRow label="Пол" value={formatGender(beneficiary.gender)} />
       </CheckDataGroup>
     </div>
   );
@@ -1404,7 +897,7 @@ function CheckActions(props) {
         className="rshb-policy-issuance__check-button"
         dataId="policy-check-pay"
       >
-        Перейти к оплате
+        Подтвердить
       </Button>
     </div>
   );
@@ -1416,9 +909,7 @@ function CheckDataScreen(props) {
     includeBeneficiary,
     includePassport,
     onEdit,
-    onPaymentMethodChange,
     passport,
-    paymentMethod,
     phone,
     policyholder,
     promoApplied,
@@ -1441,10 +932,6 @@ function CheckDataScreen(props) {
           {includePassport ? <CheckPassportData passport={passport} /> : null}
           <CheckContactData phone={phone} policyholder={policyholder} />
           {includeBeneficiary ? <CheckBeneficiaryData beneficiary={beneficiary} /> : null}
-          <PaymentMethods
-            onPaymentMethodChange={onPaymentMethodChange}
-            paymentMethod={paymentMethod}
-          />
           <CheckActions onEdit={onEdit} />
         </Card>
         <Information promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
@@ -1586,7 +1073,8 @@ function CustomizeScreen(props) {
                   onPromoCodeChange={onPromoCodeChange}
                   promoCode={promoCode}
                 />
-                <CodeForm
+                <PhoneCodeForm
+                  dataId="policy"
                   code={code}
                   isSubmittingCode={isSubmittingCode}
                   onBack={onBackToSelection}
@@ -1634,7 +1122,7 @@ function CustomizeScreen(props) {
 }
 
 function PolicyIssuancePrototype(props) {
-  const { className, dataId, defaultCategory, ...rest } = props;
+  const { className, dataId, defaultCategory, onProductDetails, ...rest } = props;
   const [category, setCategory] = useState(defaultCategory || 'property');
   const [screen, setScreen] = useState('selection');
   const [checkSourceScreen, setCheckSourceScreen] = useState('customization');
@@ -1648,7 +1136,6 @@ function PolicyIssuancePrototype(props) {
   const [isPromoApplied, setIsPromoApplied] = useState(false);
   const [code, setCode] = useState('');
   const [consentChecked, setConsentChecked] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('yandex-pay');
   const [beneficiary, setBeneficiary] = useState({
     birthDate: '',
     firstName: '',
@@ -1767,24 +1254,6 @@ function PolicyIssuancePrototype(props) {
     setIsProofIdentityOpen(false);
     setIsCaptchaOpen(false);
     setIsLogInThroughGosuslugiOpen(false);
-  }
-
-  function handleCardsAction(event) {
-    const target = event.target;
-    const button = target && target.closest ? target.closest('[data-id$="-calculate"]') : null;
-
-    if (!button) {
-      return;
-    }
-
-    const dataIdAttr = button.getAttribute('data-id') || '';
-    const match = dataIdAttr.match(/^policy-card-(\d+)-calculate$/);
-    const cardIndex = match ? Number(match[1]) - 1 : -1;
-    const card = cards[cardIndex];
-
-    if (card) {
-      handleCalculate(card);
-    }
   }
 
   function handleBackToSelection() {
@@ -2010,13 +1479,13 @@ function PolicyIssuancePrototype(props) {
   function handlePromoCodeChange(value) {
     setPromoCode(value);
 
-    if (isPromoApplied && value.trim().toLowerCase() !== PROMO_CODE_VALUE) {
+    if (isPromoApplied && value.trim().toUpperCase() !== PROMO_CODE_VALUE) {
       setIsPromoApplied(false);
     }
   }
 
   function handleApplyPromoCode() {
-    const isValidPromoCode = promoCode.trim().toLowerCase() === PROMO_CODE_VALUE;
+    const isValidPromoCode = promoCode.trim().toUpperCase() === PROMO_CODE_VALUE;
 
     setIsPromoApplied(isValidPromoCode);
     setToastMessage(isValidPromoCode ? 'Промокод успешно применён' : 'Промокод не найден');
@@ -2041,13 +1510,14 @@ function PolicyIssuancePrototype(props) {
   return (
     <div
       {...rest}
-      className={classNames('rshb-policy-issuance', 'theme-light', className)}
+      className={classNames('rshb-policy-issuance', className)}
       data-id={dataIdValue}
     >
       <Header
         brandButtonProps={{ onClick: handleBackToStart }}
         className="rshb-policy-issuance__header"
         size="l"
+        themeProps={{ applyToDocument: true }}
       />
       <Button
         buttonType="secondary"
@@ -2114,9 +1584,7 @@ function PolicyIssuancePrototype(props) {
             includeBeneficiary={recipient === 'gift'}
             includePassport
             onEdit={handleEditCheckData}
-            onPaymentMethodChange={setPaymentMethod}
             passport={passport}
-            paymentMethod={paymentMethod}
             phone={phone}
             policyholder={policyholder}
             promoApplied={isPromoApplied}
@@ -2141,8 +1609,6 @@ function PolicyIssuancePrototype(props) {
             </div>
             <div
               className="rshb-policy-issuance__cards"
-              onClickCapture={handleCardsAction}
-              onMouseDownCapture={handleCardsAction}
             >
               {cards.map(function (card, index) {
                 return (
@@ -2151,6 +1617,7 @@ function PolicyIssuancePrototype(props) {
                     index={index}
                     key={card.title}
                     onCalculate={handleCalculate}
+                    onDetails={onProductDetails}
                   />
                 );
               })}
@@ -2204,6 +1671,7 @@ function PolicyIssuancePrototype(props) {
 }
 
 PolicyCard.propTypes = {
+  onDetails: PropTypes.func,
   card: PropTypes.shape({
     accent: PropTypes.string.isRequired,
     bullets: PropTypes.arrayOf(PropTypes.string),
@@ -2215,20 +1683,6 @@ PolicyCard.propTypes = {
   onCalculate: PropTypes.func.isRequired
 };
 
-Money.propTypes = {
-  value: PropTypes.number.isRequired
-};
-
-PolicySelect.propTypes = {
-  dataId: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
-  })).isRequired,
-  value: PropTypes.string.isRequired
-};
 
 Parameters.propTypes = {
   onSumChange: PropTypes.func.isRequired,
@@ -2239,10 +1693,6 @@ Parameters.propTypes = {
   term: PropTypes.string.isRequired
 };
 
-SummaryItem.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
-};
 
 Total.propTypes = {
   promoApplied: PropTypes.bool.isRequired,
@@ -2282,29 +1732,6 @@ GiftForm.propTypes = {
   onBeneficiaryChange: PropTypes.func.isRequired
 };
 
-PassportForm.propTypes = {
-  onPassportChange: PropTypes.func.isRequired,
-  passport: PropTypes.shape({
-    divisionCode: PropTypes.string.isRequired,
-    issueDate: PropTypes.string.isRequired,
-    issuedBy: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired
-  }).isRequired
-};
-
-PolicyholderDetailsForm.propTypes = {
-  onPolicyholderChange: PropTypes.func.isRequired,
-  policyholder: PropTypes.shape({
-    birthDate: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    firstName: PropTypes.string.isRequired,
-    gender: PropTypes.oneOf(['male', 'female']),
-    lastName: PropTypes.string.isRequired,
-    middleName: PropTypes.string.isRequired,
-    noMiddleName: PropTypes.bool.isRequired
-  }).isRequired
-};
-
 DetailsActions.propTypes = {
   consentChecked: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
@@ -2335,37 +1762,20 @@ LogInThroughTheGosuslugiModal.propTypes = {
   onCreateAccount: PropTypes.func.isRequired
 };
 
-CheckDataRow.propTypes = {
-  label: PropTypes.string.isRequired,
-  text: PropTypes.string
-};
-
 CheckDataGroup.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string
 };
 
-PaymentMethod.propTypes = {
-  checked: PropTypes.bool.isRequired,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
-};
-
-PaymentMethods.propTypes = {
-  onPaymentMethodChange: PropTypes.func.isRequired,
-  paymentMethod: PropTypes.string.isRequired
-};
-
 CheckPolicyholderData.propTypes = {
   phone: PropTypes.string.isRequired,
-  policyholder: PolicyholderDetailsForm.propTypes.policyholder
+  policyholder: PolicyholderForm.propTypes.value
 };
 
 CheckContactData.propTypes = CheckPolicyholderData.propTypes;
 
 CheckPassportData.propTypes = {
-  passport: PassportForm.propTypes.passport
+  passport: PassportForm.propTypes.value
 };
 
 CheckBeneficiaryData.propTypes = {
@@ -2374,18 +1784,6 @@ CheckBeneficiaryData.propTypes = {
 
 CheckActions.propTypes = {
   onEdit: PropTypes.func.isRequired
-};
-
-CodeForm.propTypes = {
-  code: PropTypes.string.isRequired,
-  isSubmittingCode: PropTypes.bool.isRequired,
-  onChangePhone: PropTypes.func.isRequired,
-  onBack: PropTypes.func,
-  onCodeChange: PropTypes.func.isRequired,
-  onResendCode: PropTypes.func.isRequired,
-  onSubmitCode: PropTypes.func.isRequired,
-  phone: PropTypes.string.isRequired,
-  resendSeconds: PropTypes.number.isRequired
 };
 
 ButtonsRow.propTypes = {
@@ -2448,8 +1846,8 @@ EnterInformationScreen.propTypes = {
   onPassportChange: PropTypes.func.isRequired,
   onPolicyholderChange: PropTypes.func.isRequired,
   onSubmitDetails: PropTypes.func.isRequired,
-  passport: PassportForm.propTypes.passport,
-  policyholder: PolicyholderDetailsForm.propTypes.policyholder,
+  passport: PassportForm.propTypes.value,
+  policyholder: PolicyholderForm.propTypes.value,
   promoApplied: PropTypes.bool.isRequired,
   sum: PropTypes.string.isRequired,
   tariff: PropTypes.string.isRequired,
@@ -2461,11 +1859,9 @@ CheckDataScreen.propTypes = {
   includeBeneficiary: PropTypes.bool.isRequired,
   includePassport: PropTypes.bool.isRequired,
   onEdit: PropTypes.func.isRequired,
-  onPaymentMethodChange: PropTypes.func.isRequired,
-  passport: PassportForm.propTypes.passport,
-  paymentMethod: PropTypes.string.isRequired,
+  passport: PassportForm.propTypes.value,
   phone: PropTypes.string.isRequired,
-  policyholder: PolicyholderDetailsForm.propTypes.policyholder,
+  policyholder: PolicyholderForm.propTypes.value,
   promoApplied: PropTypes.bool.isRequired,
   sum: PropTypes.string.isRequired,
   tariff: PropTypes.string.isRequired,
@@ -2475,6 +1871,7 @@ CheckDataScreen.propTypes = {
 PolicyIssuancePrototype.displayName = 'PolicyIssuancePrototype';
 
 PolicyIssuancePrototype.propTypes = {
+  onProductDetails: PropTypes.func,
   className: PropTypes.string,
   dataId: PropTypes.string,
   defaultCategory: PropTypes.oneOf(CATEGORY_OPTIONS.map(function (option) { return option.value; }))

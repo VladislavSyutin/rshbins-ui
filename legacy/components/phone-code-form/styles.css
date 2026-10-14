@@ -1,0 +1,64 @@
+.rshb-legacy-phone-code-form__field-hint {
+  margin: 0;
+}
+
+.rshb-legacy-phone-code-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.rshb-legacy-phone-code-form {
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-legacy-phone-code-form__field {
+  width: 100%;
+}
+
+.rshb-legacy-phone-code-form__field-hint,
+.rshb-legacy-phone-code-form__timer {
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-footnote-regular-fontFamily);
+  font-size: var(--typography-footnote-regular-fontSize);
+  font-weight: var(--typography-footnote-regular-fontWeight);
+  line-height: var(--typography-footnote-regular-lineHeight);
+}
+
+.rshb-legacy-phone-code-form__form-buttons {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-legacy-phone-code-form__form-button {
+  width: 100%;
+}
+
+.rshb-legacy-phone-code-form__change-phone {
+  align-self: flex-start;
+  display: inline-flex;
+  text-align: left;
+}
+
+.rshb-legacy-phone-code-form
+  .rshb-legacy-input-phone[data-state='disabled-entered']
+  .rshb-legacy-input-text__field {
+  background: var(--color-background-default-disabled);
+}
+
+.rshb-legacy-phone-code-form
+  .rshb-legacy-input-phone[data-state='disabled-entered']
+  .rshb-legacy-input-text__label,
+.rshb-legacy-phone-code-form
+  .rshb-legacy-input-phone[data-state='disabled-entered']
+  .rshb-legacy-input-text__prefix,
+.rshb-legacy-phone-code-form
+  .rshb-legacy-input-phone[data-state='disabled-entered']
+  .rshb-legacy-input-phone__mask-filled,
+.rshb-legacy-phone-code-form
+  .rshb-legacy-input-phone[data-state='disabled-entered']
+  .rshb-legacy-input-phone__mask-placeholder {
+  color: var(--color-text-default-disabled);
+}

@@ -36,3 +36,31 @@ export { default as AuthenticationRegistration } from '../legacy/templates/authe
 export { default as AuthenticationRegistrationData } from '../legacy/templates/authentication/authentication-registration-data/index.js';
 export { default as AuthenticationRestoringAccess } from '../legacy/templates/authentication/authentication-restoring-access/index.js';
 export { default as AuthenticationPrototype } from '../legacy/prototypes/authentication/index.js';
+
+export { default as DataRow } from '../legacy/components/data-row/index.js';
+
+export { default as DocumentLink } from '../legacy/components/document-link/index.js';
+
+export { default as Select } from '../legacy/components/select/index.js';
+
+export { default as InputPromoCode } from '../legacy/components/input-promo-code/index.js';
+
+export { default as PassportForm } from '../legacy/components/passport-form/index.js';
+
+export { default as PolicyholderForm } from '../legacy/components/policyholder-form/index.js';
+
+export { default as PolicySummary } from '../legacy/components/policy-summary/index.js';
+
+export { default as ProductCard } from '../legacy/components/product-card/index.js';
+
+export { default as PhoneCodeForm } from '../legacy/components/phone-code-form/index.js';
+
+export { default as InputDate } from '../legacy/components/input-date/index.js';
+
+export { default as InputPassportNumber } from '../legacy/components/input-passport-number/index.js';
+
+export { default as InputPassportDivisionCode } from '../legacy/components/input-passport-division-code/index.js';
+
+export { default as Theme } from '../legacy/components/theme/index.js';
+
+export { default as Header } from '../legacy/components/header/index.js';

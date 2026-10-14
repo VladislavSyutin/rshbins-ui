@@ -4,6 +4,8 @@ React 17-compatible birth-date input for FOS integration.
 
 `InputBirthDate` composes the shared legacy `InputText` and owns date-of-birth formatting, validation, and calendar behavior.
 
+Formatting and calendar mechanics are now shared through `InputDate`. `InputBirthDate` remains the age-specific wrapper with the same public props, root class alias, and imperative ref.
+
 ### Integration Notes
 
 - Runtime dependencies stay the same as `InputText`: `prop-types` and `classnames`.

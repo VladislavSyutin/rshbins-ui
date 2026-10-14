@@ -48,6 +48,34 @@ export function isInputTextKey(event, allowedPattern) {
   );
 }
 
+export function deleteMaskSeparator(event, context, separator) {
+  const input = event.target;
+  const position = input.selectionStart;
+  if (
+    input.disabled || input.readOnly || event.ctrlKey || event.metaKey || event.altKey ||
+    position === null || position !== input.selectionEnd
+  ) {
+    return;
+  }
+
+  const backwards = event.key === 'Backspace' && position > 0 && context.value[position - 1] === separator;
+  const forwards = event.key === 'Delete' && context.value[position] === separator;
+  if (!backwards && !forwards) return;
+
+  event.preventDefault();
+  const nextPosition = backwards ? Math.max(0, position - 2) : position;
+  const nextValue = backwards
+    ? context.value.slice(0, nextPosition) + context.value.slice(position)
+    : context.value.slice(0, position) + context.value.slice(position + 2);
+  context.commitValue(nextValue);
+  const restoreCaret = function () { input.setSelectionRange(nextPosition, nextPosition); };
+  if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+    window.requestAnimationFrame(restoreCaret);
+  } else {
+    restoreCaret();
+  }
+}
+
 function buildMaskParts(mask, value) {
   const stringValue = String(value != null ? value : '');
 

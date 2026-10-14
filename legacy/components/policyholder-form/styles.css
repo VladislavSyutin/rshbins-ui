@@ -1,0 +1,79 @@
+.rshb-legacy-policyholder-form__details-heading,
+.rshb-legacy-policyholder-form__section-description,
+.rshb-legacy-policyholder-form__field-hint {
+  margin: 0;
+}
+
+.rshb-legacy-policyholder-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.rshb-legacy-policyholder-form {
+  gap: var(--space-margins-inside-m);
+}
+
+.rshb-legacy-policyholder-form__details-heading {
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-subheading-1-regular-fontFamily);
+  font-size: var(--typography-subheading-1-regular-fontSize);
+  font-weight: var(--typography-subheading-1-regular-fontWeight);
+  line-height: var(--typography-subheading-1-regular-lineHeight);
+}
+
+.rshb-legacy-policyholder-form__fields,
+.rshb-legacy-policyholder-form__section-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.rshb-legacy-policyholder-form__fields {
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-legacy-policyholder-form__section-copy {
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-legacy-policyholder-form__section-description {
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+}
+
+.rshb-legacy-policyholder-form__field {
+  width: 100%;
+}
+
+.rshb-legacy-policyholder-form__field-hint {
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-footnote-regular-fontFamily);
+  font-size: var(--typography-footnote-regular-fontSize);
+  font-weight: var(--typography-footnote-regular-fontWeight);
+  line-height: var(--typography-footnote-regular-lineHeight);
+}
+
+.rshb-legacy-policyholder-form__date-gender {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-margins-inside-xs);
+  align-items: start;
+}
+
+.rshb-legacy-policyholder-form__gender {
+  min-height: 58px;
+}
+
+.rshb-legacy-policyholder-form {
+  width: 100%;
+  min-width: 0;
+}
+
+.rshb-legacy-policyholder-form,
+.rshb-legacy-policyholder-form * {
+  box-sizing: border-box;
+}

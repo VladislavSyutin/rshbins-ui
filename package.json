@@ -17,6 +17,7 @@
     "storybook": "storybook dev -p 6008",
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
+    "check:policy-components": "node scripts/check-policy-components.mjs",
     "build:icons": "node scripts/generate-legacy-icons.mjs"
   },
   "dependencies": {

@@ -1,0 +1,55 @@
+.rshb-legacy-input-date {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 361px;
+  max-width: 100%;
+}
+
+.rshb-legacy-input-date__input {
+  width: 100%;
+}
+
+.rshb-legacy-input-date__calendar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rshb-legacy-input-date__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: var(--rshb-legacy-input-date-icon) center / contain no-repeat;
+  mask: var(--rshb-legacy-input-date-icon) center / contain no-repeat;
+}
+
+.rshb-legacy-input-date__mask-filled {
+  color: var(--color-text-default-primary);
+}
+
+.rshb-legacy-input-date__mask-placeholder {
+  color: var(--color-text-default-disabled);
+}
+
+.rshb-legacy-input-date__calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+}
+
+.rshb-legacy-input-date__input
+  input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.rshb-legacy-input-date__input input[type='date']::-webkit-clear-button,
+.rshb-legacy-input-date__input input[type='date']::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
+}

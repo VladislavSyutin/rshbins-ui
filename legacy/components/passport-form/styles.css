@@ -1,0 +1,66 @@
+.rshb-legacy-passport-form__details-heading,
+.rshb-legacy-passport-form__section-description {
+  margin: 0;
+}
+
+.rshb-legacy-passport-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.rshb-legacy-passport-form {
+  gap: var(--space-margins-inside-m);
+}
+
+.rshb-legacy-passport-form__details-heading {
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-subheading-1-regular-fontFamily);
+  font-size: var(--typography-subheading-1-regular-fontSize);
+  font-weight: var(--typography-subheading-1-regular-fontWeight);
+  line-height: var(--typography-subheading-1-regular-lineHeight);
+}
+
+.rshb-legacy-passport-form__fields,
+.rshb-legacy-passport-form__section-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.rshb-legacy-passport-form__fields {
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-legacy-passport-form__section-copy {
+  gap: var(--space-margins-inside-xs);
+}
+
+.rshb-legacy-passport-form__section-description {
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+}
+
+.rshb-legacy-passport-form__field {
+  width: 100%;
+}
+
+.rshb-legacy-passport-form__two-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-margins-inside-xs);
+  align-items: start;
+}
+
+.rshb-legacy-passport-form {
+  width: 100%;
+  min-width: 0;
+}
+
+.rshb-legacy-passport-form,
+.rshb-legacy-passport-form * {
+  box-sizing: border-box;
+}

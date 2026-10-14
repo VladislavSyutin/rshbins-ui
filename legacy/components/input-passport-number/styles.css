@@ -1,0 +1,9 @@
+.rshb-legacy-input-passport-number {
+  max-width: 100%;
+}
+.rshb-legacy-input-passport-number__mask-filled {
+  color: var(--color-text-default-primary);
+}
+.rshb-legacy-input-passport-number__mask-placeholder {
+  color: var(--color-text-default-disabled);
+}

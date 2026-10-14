@@ -1,0 +1,33 @@
+.rshb-legacy-data-row__label,
+.rshb-legacy-data-row__value {
+  margin: 0;
+}
+
+.rshb-legacy-data-row {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 6px;
+  border-block-end: 1px solid var(--color-border-default-default);
+}
+
+.rshb-legacy-data-row__label {
+  overflow: hidden;
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-footnote-regular-fontFamily);
+  font-size: var(--typography-footnote-regular-fontSize);
+  font-weight: var(--typography-footnote-regular-fontWeight);
+  line-height: var(--typography-footnote-regular-lineHeight);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rshb-legacy-data-row__value {
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+  overflow-wrap: anywhere;
+}

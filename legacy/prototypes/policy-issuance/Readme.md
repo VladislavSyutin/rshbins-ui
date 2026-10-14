@@ -1,5 +1,27 @@
 # PolicyIssuancePrototype
 
-Prototype-only policy issuance selection screen for checking the product idea in Storybook.
+Storybook-прототип оформления полиса на React 17. Использует публичные компоненты из `legacy/components/`: DataRow, InputDate, InputBirthDate, InputPassportNumber, InputPassportDivisionCode, InputPromoCode, Select, DocumentLink, PolicyholderForm, PassportForm, PolicySummary, ProductCard и PhoneCodeForm.
 
-The prototype composes existing legacy UI kit pieces (`Header`, `Tabs`, `Button`, `Card`) and hardcodes product content/images from the Figma L/Light selection frames. It is intentionally not a reusable component contract yet.
+Данные, тарифы, расчёт цены, навигация, таймеры SMS и демонстрационные сценарии остаются в прототипе. Группы форм управляются объектом данных и callback. Публичные компоненты не импортируют код или стили прототипа.
+
+## Сценарии телефона
+
+- `79999999990`: SMS, затем проверка заполненных данных.
+- `79999999991`: SMS, затем полная форма страхователя; персональные данные и email предзаполнены, паспорт пустой.
+- `79999999992`: подтверждение личности по фамилии, затем проверка данных.
+- `79999999993`: капча.
+- Остальные корректные номера: SMS, затем полная форма ввода данных.
+
+Рабочий демонстрационный промокод — `PROMO` (проверка без учёта регистра, скидка 20%). Поле допускает только ASCII-латиницу и цифры и показывает заглавные буквы.
+
+Выбор темы применяется к документу, включая диалоги и toast, и сохраняется существующим Theme в localStorage (`rshbins-ui-theme`). Статический класс theme-light удалён с корня прототипа.
+
+Плитка правил открывает [PDF правил](https://rshbins.ru/upload/iblock/612/gva4yeqp8pue2b1qc4r56m68na4oz86k/03_17102017.pdf) в новой вкладке. По Content-Length файл занимает 564601 байт, отображаемый размер — 551 КБ.
+
+На проверке данных выбор оплаты удалён, основная кнопка называется «Подтвердить».
+
+ProductCard получает действия через props. Расчёт работает через onCalculate; для «Подробнее» родитель может передать onProductDetails(card). Без обработчика кнопка остаётся активной и ничего не делает. Таймер PhoneCodeForm остаётся у родительского экрана.
+
+Визуальный обзор пользователь выполняет вручную. Проверки без browser UI: typecheck, сборка Storybook и серверный рендер публичных компонентов.
+
+Команды: `npm run typecheck`, `npm run check:policy-components`, `npm run build-storybook`. Проверка контрактов охватывает форматирование, диапазоны дат, удаление на границе маски, публичные exports и первоначальное чтение сохранённой темы; она не заменяет визуальный обзор или проверку в FOS.

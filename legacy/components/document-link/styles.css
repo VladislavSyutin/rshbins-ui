@@ -1,0 +1,85 @@
+.rshb-legacy-document-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-margins-inside-xs);
+  width: 100%;
+  height: 56px;
+  margin: 0;
+  padding: 7px 16px;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: var(--color-background-default-on-secondary);
+  color: var(--color-text-default-primary);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color var(--motion-hover-duration) var(--motion-hover-curve),
+    box-shadow var(--motion-hover-duration) var(--motion-hover-curve),
+    color var(--motion-hover-duration) var(--motion-hover-curve);
+}
+
+.rshb-legacy-document-link:hover {
+  background: var(--color-background-default-simple-hover);
+}
+
+.rshb-legacy-document-link:active {
+  background: var(--color-background-default-simple-focus);
+  transition-duration: var(--motion-pressed-duration);
+  transition-timing-function: var(--motion-pressed-curve);
+}
+
+.rshb-legacy-document-link:focus {
+  outline: none;
+}
+
+.rshb-legacy-document-link:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--color-border-default-default-focus);
+}
+
+.rshb-legacy-document-link__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.rshb-legacy-document-link__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rshb-legacy-document-link__title,
+.rshb-legacy-document-link__meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rshb-legacy-document-link__title {
+  color: var(--color-text-default-primary);
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  font-weight: var(--typography-body-regular-fontWeight);
+  line-height: var(--typography-body-regular-lineHeight);
+}
+
+.rshb-legacy-document-link__meta {
+  color: var(--color-text-default-tertiary);
+  font-family: var(--typography-caption-regular-fontFamily);
+  font-size: var(--typography-caption-regular-fontSize);
+  font-weight: var(--typography-caption-regular-fontWeight);
+  line-height: var(--typography-caption-regular-lineHeight);
+}
+
+.rshb-legacy-document-link {
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.rshb-legacy-document-link__copy {
+  flex: 1 1 auto;
+}
