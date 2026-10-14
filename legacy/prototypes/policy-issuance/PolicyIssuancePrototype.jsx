@@ -1652,7 +1652,7 @@ function PolicyIssuancePrototype(props) {
               {screen === 'payment-success' ? 'Полис доступен в личном кабинете' : 'Это может занять несколько минут'}
             </p>
             {screen === 'payment-success' ? (
-              <Button dataId="policy-payment-success-policies" size="m">Перейти в мои полисы</Button>
+              <Button className="rshb-policy-issuance__payment-action" dataId="policy-payment-success-policies" size="m">Перейти в мои полисы</Button>
             ) : null}
           </section>
         ) : (

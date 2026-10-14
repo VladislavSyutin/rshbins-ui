@@ -77,6 +77,9 @@
   font-size: var(--font-size-body-default);
   line-height: var(--font-line-height-body-default);
 }
+.rshb-policy-issuance__payment-action {
+  margin-top: var(--space-margins-inside-l);
+}
 .rshb-policy-issuance__title-block {
   display: flex;
   flex-direction: column;
