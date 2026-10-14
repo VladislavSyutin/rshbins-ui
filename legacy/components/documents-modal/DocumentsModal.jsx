@@ -142,8 +142,8 @@ function DocumentsModal(props) {
               size="s"
             />
             <div className="rshb-legacy-documents-modal__actions">
-              <Button buttonType="secondary" dataId={dataId ? dataId + '-close' : undefined} onClick={context.requestClose}>Закрыть</Button>
-              <Button dataId={dataId ? dataId + '-confirm' : undefined} disabled={!canConfirm}
+              <Button buttonType="secondary" size="s" dataId={dataId ? dataId + '-close' : undefined} onClick={context.requestClose}>Закрыть</Button>
+              <Button size="s" dataId={dataId ? dataId + '-confirm' : undefined} disabled={!canConfirm}
                 onClick={function () {
                   if (!canConfirm || confirmedRef.current) return;
                   confirmedRef.current = true;
@@ -179,7 +179,7 @@ function DocumentsModal(props) {
           </div>
         ) : null}
         {allLoaded && progress >= 0.05 && !reachedEnd ? (
-          <Button aria-label="Прокрутить документы до конца" buttonType="primary"
+          <Button aria-label="Прокрутить документы до конца" buttonType="secondary" size="s"
             className="rshb-legacy-documents-modal__scroll-to-end" iconOnly
             dataId={dataId ? dataId + '-scroll-to-end' : undefined}
             leadingIcon={<span aria-hidden="true" className="rshb-legacy-documents-modal__arrow" style={{ '--documents-arrow': 'url("' + chevronDownIcon + '")' }} />}

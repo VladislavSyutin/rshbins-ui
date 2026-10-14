@@ -57,7 +57,7 @@
 }
 
 .rshb-legacy-documents-modal__text-layer { fill: transparent; font-family: Arial, sans-serif; user-select: text; }
-.rshb-legacy-documents-modal__text-layer text::selection { fill: transparent; background: #67a75766; }
+.rshb-legacy-documents-modal__text-layer text::selection { fill: transparent; background: var(--color-background-brand-selection); }
 
 .rshb-legacy-documents-modal__status {
   position: absolute;
@@ -82,12 +82,12 @@
   inset-inline-end: var(--space-paddings-inside-xl);
   inset-block-end: var(--space-paddings-inside-xl);
   border-radius: 50%;
-  box-shadow: var(--shadow-flyout);
+  box-shadow: var(--button-ring), var(--shadow-flyout);
 }
 .rshb-legacy-documents-modal__arrow {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 100%;
+  height: 100%;
   background: currentColor;
   -webkit-mask: var(--documents-arrow) center / contain no-repeat;
   mask: var(--documents-arrow) center / contain no-repeat;
