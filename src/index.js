@@ -64,3 +64,5 @@ export { default as InputPassportDivisionCode } from '../legacy/components/input
 export { default as Theme } from '../legacy/components/theme/index.js';
 
 export { default as Header } from '../legacy/components/header/index.js';
+
+export { default as DocumentsModal } from '../legacy/components/documents-modal/index.js';

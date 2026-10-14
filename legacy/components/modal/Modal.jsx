@@ -328,7 +328,10 @@ function Modal(props) {
 
   if (resolvedPlacement === MODAL_PLACEMENTS.topCenter) {
     return (
-      <div className="rshb-legacy-modal-layer" data-preview-state={activePreviewState}>
+      <div className="rshb-legacy-modal-layer" data-preview-state={activePreviewState}
+        onClick={function (event) {
+          if (event.target === event.currentTarget) requestClose();
+        }}>
         {modalContent}
       </div>
     );

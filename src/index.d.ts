@@ -288,3 +288,6 @@ export type { LegacyInputPassportDivisionCodeProps } from '../legacy/components/
 export type { LegacyPassportValue } from '../legacy/components/passport-form/index.js';
 export type { LegacyPolicyholderValue } from '../legacy/components/policyholder-form/index.js';
 export type { LegacySelectOption } from '../legacy/components/select/index.js';
+
+export { default as DocumentsModal } from '../legacy/components/documents-modal/index.js';
+export type { LegacyDocumentsModalProps, LegacyModalDocument, LegacyDocumentPage, LegacyDocumentText } from '../legacy/components/documents-modal/index.js';

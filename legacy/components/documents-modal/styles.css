@@ -1,0 +1,116 @@
+.rshb-legacy-documents-modal {
+  width: 960px;
+  max-width: calc(100vw - var(--space-margins-inside-xl) * 2);
+  height: 90vh;
+  height: 90dvh;
+  max-height: calc(100vh - var(--space-margins-inside-2xl) * 2);
+  max-height: calc(100dvh - var(--space-margins-inside-2xl) * 2);
+  padding: var(--space-paddings-inside-xl);
+  gap: var(--space-margins-inside-m);
+}
+
+.rshb-legacy-documents-modal > .rshb-legacy-modal__copy,
+.rshb-legacy-documents-modal__footer { flex-shrink: 0; }
+
+.rshb-legacy-documents-modal__viewer {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default-default);
+  border-radius: var(--radius-xs);
+  background: var(--color-background-default-secondary);
+}
+
+.rshb-legacy-documents-modal__scroll {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding: var(--space-paddings-inside-m);
+}
+
+.rshb-legacy-documents-modal__scroll:focus-visible {
+  outline: 2px solid var(--color-border-brand-default);
+  outline-offset: -2px;
+}
+
+.rshb-legacy-documents-modal__page {
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  background: #fff; /* Preserve the original PDF paper in either UI theme. */
+}
+
+.rshb-legacy-documents-modal__page + .rshb-legacy-documents-modal__page { margin-top: var(--space-margins-inside-m); }
+
+.rshb-legacy-documents-modal__page-image,
+.rshb-legacy-documents-modal__text-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rshb-legacy-documents-modal__text-layer { fill: transparent; font-family: Arial, sans-serif; user-select: text; }
+.rshb-legacy-documents-modal__text-layer text::selection { fill: transparent; background: #67a75766; }
+
+.rshb-legacy-documents-modal__status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-margins-inside-m);
+  padding: var(--space-paddings-inside-xl);
+  background: var(--color-background-default-on-secondary);
+  color: var(--color-text-default-primary);
+  text-align: center;
+  font-family: var(--typography-body-regular-fontFamily);
+  font-size: var(--typography-body-regular-fontSize);
+  line-height: var(--typography-body-regular-lineHeight);
+}
+.rshb-legacy-documents-modal__status p { margin: 0; }
+
+.rshb-legacy-documents-modal__scroll-to-end {
+  position: absolute;
+  inset-inline-end: var(--space-paddings-inside-xl);
+  inset-block-end: var(--space-paddings-inside-xl);
+  border-radius: 50%;
+  box-shadow: var(--shadow-flyout);
+}
+.rshb-legacy-documents-modal__arrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: currentColor;
+  -webkit-mask: var(--documents-arrow) center / contain no-repeat;
+  mask: var(--documents-arrow) center / contain no-repeat;
+}
+
+.rshb-legacy-documents-modal__footer { display: flex; flex-direction: column; gap: var(--space-margins-inside-m); }
+.rshb-legacy-documents-modal__actions { display: flex; justify-content: flex-end; gap: var(--space-margins-inside-xs); }
+.rshb-legacy-documents-modal__actions > button { min-width: 160px; }
+
+@media (max-width: 743px) {
+  .rshb-legacy-documents-modal,
+  .rshb-legacy-documents-modal[data-placement='top-center'] {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding: var(--space-paddings-inside-m);
+    padding-bottom: max(var(--space-paddings-inside-m), env(safe-area-inset-bottom));
+    border-radius: 0;
+  }
+  .rshb-legacy-documents-modal__scroll { padding: var(--space-paddings-inside-2xs); }
+  .rshb-legacy-documents-modal__actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .rshb-legacy-documents-modal__actions > button { min-width: 0; width: 100%; }
+}

@@ -9,6 +9,8 @@ import Header from '../../components/header/index.js';
 import InputBirthDate from '../../components/input-birth-date/index.js';
 import InputMiddleName from '../../components/input-middle-name/index.js';
 import DialogModal from '../../dialogs/modals/dialog-modal/index.js';
+import DocumentsModal from '../../components/documents-modal/index.js';
+import policyDocuments from './assets/documents/index.js';
 import InputName from '../../components/input-name/index.js';
 import InputPhone from '../../components/input-phone/index.js';
 import InputSurname from '../../components/input-surname/index.js';
@@ -881,7 +883,7 @@ function CheckBeneficiaryData(props) {
 }
 
 function CheckActions(props) {
-  const { onEdit } = props;
+  const { onEdit, onConfirm } = props;
 
   return (
     <div className="rshb-policy-issuance__check-actions">
@@ -896,6 +898,7 @@ function CheckActions(props) {
       <Button
         className="rshb-policy-issuance__check-button"
         dataId="policy-check-pay"
+        onClick={onConfirm}
       >
         Подтвердить
       </Button>
@@ -909,6 +912,7 @@ function CheckDataScreen(props) {
     includeBeneficiary,
     includePassport,
     onEdit,
+    onConfirm,
     passport,
     phone,
     policyholder,
@@ -932,7 +936,7 @@ function CheckDataScreen(props) {
           {includePassport ? <CheckPassportData passport={passport} /> : null}
           <CheckContactData phone={phone} policyholder={policyholder} />
           {includeBeneficiary ? <CheckBeneficiaryData beneficiary={beneficiary} /> : null}
-          <CheckActions onEdit={onEdit} />
+          <CheckActions onEdit={onEdit} onConfirm={onConfirm} />
         </Card>
         <Information promoApplied={promoApplied} sum={sum} tariff={tariff} term={term} />
       </div>
@@ -1176,6 +1180,8 @@ function PolicyIssuancePrototype(props) {
   const [captchaTemplate, setCaptchaTemplate] = useState('captcha');
   const [isSubmittingCaptcha, setIsSubmittingCaptcha] = useState(false);
   const [isLogInThroughGosuslugiOpen, setIsLogInThroughGosuslugiOpen] = useState(false);
+  const [isDocumentsOpen, setIsDocumentsOpen] = useState(false);
+  const [documentsAcknowledged, setDocumentsAcknowledged] = useState(false);
   const phoneTimerRef = useRef(null);
   const codeTimerRef = useRef(null);
   const detailsTimerRef = useRef(null);
@@ -1237,6 +1243,7 @@ function PolicyIssuancePrototype(props) {
     }
 
     setScreen('customization');
+    setDocumentsAcknowledged(false);
     setStep('phone');
     setRecipient('myself');
   }
@@ -1254,6 +1261,8 @@ function PolicyIssuancePrototype(props) {
     setIsProofIdentityOpen(false);
     setIsCaptchaOpen(false);
     setIsLogInThroughGosuslugiOpen(false);
+    setIsDocumentsOpen(false);
+    setDocumentsAcknowledged(false);
   }
 
   function handleBackToSelection() {
@@ -1584,6 +1593,9 @@ function PolicyIssuancePrototype(props) {
             includeBeneficiary={recipient === 'gift'}
             includePassport
             onEdit={handleEditCheckData}
+            onConfirm={function () {
+              if (!documentsAcknowledged) setIsDocumentsOpen(true);
+            }}
             passport={passport}
             phone={phone}
             policyholder={policyholder}
@@ -1624,6 +1636,15 @@ function PolicyIssuancePrototype(props) {
             </div>
           </section>
         )}
+        {isDocumentsOpen ? (
+          <DocumentsModal
+            dataId="policy-documents-modal"
+            documents={policyDocuments}
+            onClose={function () { setIsDocumentsOpen(false); }}
+            onConfirm={function () { setDocumentsAcknowledged(true); }}
+          />
+        ) : null}
+
         {isProofIdentityOpen ? (
           <ProofIdentityModal
             isLoading={isSubmittingProofIdentity}
@@ -1783,6 +1804,7 @@ CheckBeneficiaryData.propTypes = {
 };
 
 CheckActions.propTypes = {
+  onConfirm: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired
 };
 
@@ -1855,6 +1877,7 @@ EnterInformationScreen.propTypes = {
 };
 
 CheckDataScreen.propTypes = {
+  onConfirm: PropTypes.func.isRequired,
   beneficiary: GiftForm.propTypes.beneficiary,
   includeBeneficiary: PropTypes.bool.isRequired,
   includePassport: PropTypes.bool.isRequired,
