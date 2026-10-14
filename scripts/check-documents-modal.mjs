@@ -157,8 +157,21 @@ try {
   assert.equal(paymentScreen.findByType('p').children.join(''), 'Это может занять несколько минут');
   assert.equal(paymentScreen.findAllByType('img').length, 1);
   assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-account' }).length, 1, 'Account button remains in the header');
-  act(() => advanceTime(60000));
-  assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-pending' }).length, 1, 'Waiting is the final screen');
+  act(() => advanceTime(4999));
+  assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-pending' }).length, 1, 'Waiting lasts five seconds');
+  assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-success' }).length, 0);
+  act(() => advanceTime(1));
+  assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-pending' }).length, 0);
+  const successScreen = renderer.root.findByProps({ 'data-id': 'policy-payment-success' });
+  assert.equal(successScreen.findByType('h1').children.join(''), 'Оплата прошла успешно');
+  assert.equal(successScreen.findByType('p').children.join(''), 'Полис доступен в личном кабинете');
+  assert.equal(successScreen.findAllByType('img').length, 1);
+  assert.equal(successScreen.findAllByType('button').length, 1);
+  const policiesButton = successScreen.findByType('button');
+  assert.equal(policiesButton.props['data-id'], 'policy-payment-success-policies');
+  assert.equal(policiesButton.findAll(node => typeof node.type === 'string' && node.children.includes('Перейти в мои полисы')).length > 0, true);
+  act(() => { if (policiesButton.props.onClick) policiesButton.props.onClick({ preventDefault() {} }); advanceTime(60000); });
+  assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-success' }).length, 1, 'Formal button does not navigate');
   const Header = (await server.ssrLoadModule('/legacy/components/header/index.js')).default;
   act(() => renderer.root.findByType(Header).props.brandButtonProps.onClick());
   startPolicy();
@@ -178,8 +191,29 @@ try {
   act(() => renderer.root.findByProps({ 'data-id': 'policy-documents-modal-confirm' }).props.onClick());
   act(() => renderer.unmount());
   assert.equal(timers.size, 0, 'Unmounting cancels pending confirmation');
+  function reachWaiting() {
+    act(() => { renderer = TestRenderer.create(React.createElement(Prototype, { defaultCategory: 'health' }), {
+      createNodeMock(element) { return element.props.role === 'region' ? viewport : null; }
+    }); });
+    startPolicy();
+    act(() => screen('CheckActions').props.onConfirm());
+    load(); scroll(9000);
+    act(() => checkbox().props.onChange({ target: { checked: true } }));
+    act(() => renderer.root.findByProps({ 'data-id': 'policy-documents-modal-confirm' }).props.onClick());
+    act(() => advanceTime(3000));
+    assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-pending' }).length, 1);
+  }
+  reachWaiting();
+  act(() => renderer.root.findByType(Header).props.brandButtonProps.onClick());
+  assert.equal(timers.size, 0, 'Returning to start cancels payment timer');
+  act(() => advanceTime(5000));
+  assert.equal(renderer.root.findAllByProps({ 'data-id': 'policy-payment-success' }).length, 0);
+  act(() => renderer.unmount());
+  reachWaiting();
+  act(() => renderer.unmount());
+  assert.equal(timers.size, 0, 'Unmounting cancels payment timer');
   console.log('DocumentsModal: loading, 5%, manual/arrow end, checkbox, retry, close and reopen checks passed.');
-  console.log('Policy flow: pending modal, 2999/3000 ms transition, final payment screen, repeat clicks, reset and unmount cancellation passed.');
+  console.log('Policy flow: 3-second document confirmation, 5-second payment wait, success content, formal button and timer cancellation passed.');
 } finally {
   if (renderer) act(() => renderer.unmount());
   await server.close();

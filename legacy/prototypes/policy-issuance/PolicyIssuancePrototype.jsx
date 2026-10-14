@@ -31,6 +31,7 @@ import animalsPetImage from './assets/animals-pet.png';
 import animalsFarmImage from './assets/animals-farm.png';
 import kidsProtectionImage from './assets/kids-protection.png';
 import paymentPendingImage from './assets/payment-pending.png';
+import paymentSuccessImage from './assets/payment-success.png';
 import DataRow from '../../components/data-row/index.js';
 import DocumentLink from '../../components/document-link/index.js';
 import Select from '../../components/select/index.js';
@@ -45,6 +46,7 @@ import './styles.css';
 const FAMILY_ACCIDENT_TITLE = 'Страхование от несчастных случаев для всей семьи';
 const RESEND_TIMER_SECONDS = 59;
 const FORM_SUBMIT_DELAY = 3000;
+const PAYMENT_CONFIRMATION_DELAY = 5000;
 const PREFILLED_POLICYHOLDER_PHONE = '79999999991';
 const PREFILLED_CHECK_PHONE = '79999999990';
 const PROOF_IDENTITY_PHONE = '79999999992';
@@ -1287,9 +1289,16 @@ function PolicyIssuancePrototype(props) {
   }
 
   useEffect(function () {
-    if (screen === 'payment-pending' && paymentHeadingRef.current) {
+    if ((screen === 'payment-pending' || screen === 'payment-success') && paymentHeadingRef.current) {
       paymentHeadingRef.current.focus();
     }
+    if (screen !== 'payment-pending') return undefined;
+    const timerId = window.setTimeout(function () {
+      setScreen('payment-success');
+    }, PAYMENT_CONFIRMATION_DELAY);
+    return function () {
+      window.clearTimeout(timerId);
+    };
   }, [screen]);
 
   function handleBackToSelection() {
@@ -1565,7 +1574,7 @@ function PolicyIssuancePrototype(props) {
         Личный кабинет
       </Button>
       <main className={classNames('rshb-policy-issuance__main', {
-        'rshb-policy-issuance__main--payment-pending': screen === 'payment-pending'
+        'rshb-policy-issuance__main--payment-pending': screen === 'payment-pending' || screen === 'payment-success'
       })}>
         {screen === 'customization' ? (
           <CustomizeScreen
@@ -1633,13 +1642,18 @@ function PolicyIssuancePrototype(props) {
             tariff={tariff}
             term={term}
           />
-        ) : screen === 'payment-pending' ? (
-          <section className="rshb-policy-issuance__payment-pending" aria-labelledby="policy-payment-pending-title" data-id="policy-payment-pending">
-            <img className="rshb-policy-issuance__payment-image" src={paymentPendingImage} alt="" width="416" height="416" />
-            <h1 className="rshb-policy-issuance__title" id="policy-payment-pending-title" ref={paymentHeadingRef} tabIndex={-1}>
-              Ожидаем подтверждения оплаты
+        ) : screen === 'payment-pending' || screen === 'payment-success' ? (
+          <section className="rshb-policy-issuance__payment-pending" aria-labelledby={'policy-' + screen + '-title'} data-id={'policy-' + screen}>
+            <img className="rshb-policy-issuance__payment-image" src={screen === 'payment-success' ? paymentSuccessImage : paymentPendingImage} alt="" width="416" height="416" />
+            <h1 className="rshb-policy-issuance__title" id={'policy-' + screen + '-title'} ref={paymentHeadingRef} tabIndex={-1}>
+              {screen === 'payment-success' ? 'Оплата прошла успешно' : 'Ожидаем подтверждения оплаты'}
             </h1>
-            <p className="rshb-policy-issuance__payment-description">Это может занять несколько минут</p>
+            <p className="rshb-policy-issuance__payment-description">
+              {screen === 'payment-success' ? 'Полис доступен в личном кабинете' : 'Это может занять несколько минут'}
+            </p>
+            {screen === 'payment-success' ? (
+              <Button dataId="policy-payment-success-policies" size="m">Перейти в мои полисы</Button>
+            ) : null}
           </section>
         ) : (
           <section className="rshb-policy-issuance__selection" aria-labelledby="policy-issuance-title">
