@@ -22,11 +22,11 @@ let confirms = 0;
 let closes = 0;
 try {
   const { default: DocumentsModal } = await server.ssrLoadModule('/legacy/components/documents-modal/index.js');
-  function mount(data = documents) {
+  function mount(data = documents, extra = {}) {
     viewport.scrollTop = 0;
-    act(() => { renderer = TestRenderer.create(React.createElement(DocumentsModal, {
+    act(() => { renderer = TestRenderer.create(React.createElement(DocumentsModal, Object.assign({
       documents: data, dataId: 'review', onConfirm() { confirms++; }, onClose() { closes++; }
-    }), { createNodeMock(element) { return element.props.role === 'region' ? viewport : null; } }); });
+    }, extra)), { createNodeMock(element) { return element.props.role === 'region' ? viewport : null; } }); });
   }
   const checkbox = () => renderer.root.findByType('input');
   const button = suffix => renderer.root.findByProps({ 'data-id': 'review-' + suffix });
@@ -88,6 +88,23 @@ try {
   assert.equal(timers.size, 0, 'Clicking modal content does not close it');
   act(() => { layer.props.onClick({ target, currentTarget: target }); flushTimers(); });
   assert.equal(closes, 2, 'Backdrop uses the shared Modal close path');
+  act(() => renderer.unmount());
+  mount(documents, { closeOnConfirm: false });
+  load(); scroll(9000);
+  act(() => checkbox().props.onChange({ target: { checked: true } }));
+  act(() => { button('confirm').props.onClick(); button('confirm').props.onClick(); });
+  assert.equal(confirms, 2, 'Controlled confirmation still fires only once');
+  assert.equal(timers.size, 0, 'Controlled confirmation keeps the modal open');
+  const pendingProps = Object.assign({}, renderer.root.findByType(DocumentsModal).props, { confirmLoading: true });
+  act(() => renderer.update(React.createElement(DocumentsModal, pendingProps)));
+  assert.equal(button('confirm').props['aria-busy'], true);
+  assert.equal(button('confirm').props.disabled, true);
+  assert.equal(button('close').props.disabled, true);
+  assert.equal(checkbox().props.disabled, true);
+  const pendingLayer = renderer.root.findByProps({ className: 'rshb-legacy-modal-layer' });
+  act(() => pendingLayer.props.onClick({ target, currentTarget: target }));
+  assert.equal(timers.size, 0, 'Backdrop cannot dismiss a pending confirmation');
+  assert.equal(closes, 2);
   act(() => renderer.unmount());
   // Exercise the existing policy flow through its composed screen callbacks, without browser UI.
   window.localStorage = { getItem() { return 'light'; }, setItem() {} };

@@ -38,7 +38,7 @@ const DocumentPage = React.memo(function DocumentPage(props) {
 
 function DocumentsModal(props) {
   const {
-    className, dataId, documents, heading = 'Ознакомьтесь с документами',
+    className, closeOnConfirm = true, confirmLoading = false, dataId, documents, heading = 'Ознакомьтесь с документами',
     onClose, onConfirm, placement = 'top-center', ...rest
   } = props;
   const scrollRef = useRef(null);
@@ -136,19 +136,19 @@ function DocumentsModal(props) {
             <Checkbox
               checked={checked}
               dataId={dataId ? dataId + '-checkbox' : undefined}
-              disabled={!allLoaded || !reachedEnd}
+              disabled={!allLoaded || !reachedEnd || confirmLoading}
               label="Ознакомился (-ась) с документами"
               onChange={function (event) { setChecked(event.target.checked); }}
               size="s"
             />
             <div className="rshb-legacy-documents-modal__actions">
-              <Button buttonType="secondary" size="s" dataId={dataId ? dataId + '-close' : undefined} onClick={context.requestClose}>Закрыть</Button>
-              <Button size="s" dataId={dataId ? dataId + '-confirm' : undefined} disabled={!canConfirm}
+              <Button buttonType="secondary" size="s" dataId={dataId ? dataId + '-close' : undefined} disabled={confirmLoading} onClick={context.requestClose}>Закрыть</Button>
+              <Button size="s" dataId={dataId ? dataId + '-confirm' : undefined} disabled={!canConfirm || confirmLoading} loading={confirmLoading}
                 onClick={function () {
-                  if (!canConfirm || confirmedRef.current) return;
+                  if (!canConfirm || confirmLoading || confirmedRef.current) return;
                   confirmedRef.current = true;
                   if (onConfirm) onConfirm();
-                  context.requestClose();
+                  if (closeOnConfirm) context.requestClose();
                 }}>Ознакомился (-ась)</Button>
             </div>
           </div>
@@ -158,7 +158,7 @@ function DocumentsModal(props) {
       dataId={dataId || rest['data-id']}
       description={null}
       heading={heading}
-      onClose={onClose}
+      onClose={confirmLoading ? undefined : onClose}
       onKeyDown={handleKeyDown}
       placement={placement}
     >
@@ -199,6 +199,8 @@ function DocumentsModal(props) {
 DocumentsModal.displayName = 'DocumentsModal';
 DocumentsModal.propTypes = {
   className: PropTypes.string,
+  closeOnConfirm: PropTypes.bool,
+  confirmLoading: PropTypes.bool,
   dataId: PropTypes.string,
   documents: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,

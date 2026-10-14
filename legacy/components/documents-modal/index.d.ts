@@ -19,6 +19,8 @@ export interface LegacyModalDocument {
 }
 export interface LegacyDocumentsModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   dataId?: string;
+  closeOnConfirm?: boolean;
+  confirmLoading?: boolean;
   documents: LegacyModalDocument[];
   heading?: ReactNode;
   placement?: 'inline' | 'top-center';

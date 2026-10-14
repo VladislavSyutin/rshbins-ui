@@ -28,6 +28,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
+export const ConfirmLoading: Story = { args: { closeOnConfirm: false, confirmLoading: true } };
 export const Mobile: Story = { globals: { viewport: { value: 'mobile1', isRotated: false } } };
 export const LoadError: Story = {
   args: { documents: [{ id: 'unavailable', title: 'Документ', pages: [{ src: '/unavailable-document-page.webp', width: 595, height: 842 }] }] }
