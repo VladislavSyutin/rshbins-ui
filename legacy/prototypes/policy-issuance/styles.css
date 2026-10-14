@@ -49,6 +49,34 @@
   align-items: stretch;
   gap: var(--space-margins-inside-2xl);
 }
+.rshb-policy-issuance__main--payment-pending {
+  align-items: center;
+  padding: 40px 24px;
+}
+.rshb-policy-issuance__payment-pending {
+  display: flex;
+  width: 100%;
+  max-width: 640px;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-margins-inside-l);
+  margin-block: auto;
+  text-align: center;
+}
+.rshb-policy-issuance__payment-image {
+  display: block;
+  width: min(320px, 40svh, 100%);
+  height: auto;
+}
+.rshb-policy-issuance__payment-pending .rshb-policy-issuance__title {
+  margin: 0;
+}
+.rshb-policy-issuance__payment-description {
+  margin: 0;
+  color: var(--color-text-default-secondary);
+  font-size: var(--font-size-body-default);
+  line-height: var(--font-line-height-body-default);
+}
 .rshb-policy-issuance__title-block {
   display: flex;
   flex-direction: column;

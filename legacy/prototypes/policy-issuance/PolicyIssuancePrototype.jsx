@@ -30,6 +30,7 @@ import travelRussiaImage from './assets/travel-russia.png';
 import animalsPetImage from './assets/animals-pet.png';
 import animalsFarmImage from './assets/animals-farm.png';
 import kidsProtectionImage from './assets/kids-protection.png';
+import paymentPendingImage from './assets/payment-pending.png';
 import DataRow from '../../components/data-row/index.js';
 import DocumentLink from '../../components/document-link/index.js';
 import Select from '../../components/select/index.js';
@@ -1182,6 +1183,9 @@ function PolicyIssuancePrototype(props) {
   const [isLogInThroughGosuslugiOpen, setIsLogInThroughGosuslugiOpen] = useState(false);
   const [isDocumentsOpen, setIsDocumentsOpen] = useState(false);
   const [documentsAcknowledged, setDocumentsAcknowledged] = useState(false);
+  const [isConfirmingDocuments, setIsConfirmingDocuments] = useState(false);
+  const documentsTimerRef = useRef(null);
+  const paymentHeadingRef = useRef(null);
   const phoneTimerRef = useRef(null);
   const codeTimerRef = useRef(null);
   const detailsTimerRef = useRef(null);
@@ -1197,6 +1201,10 @@ function PolicyIssuancePrototype(props) {
   }, []);
 
   function clearSubmitTimers() {
+    if (documentsTimerRef.current !== null) {
+      window.clearTimeout(documentsTimerRef.current);
+      documentsTimerRef.current = null;
+    }
     if (phoneTimerRef.current !== null) {
       window.clearTimeout(phoneTimerRef.current);
       phoneTimerRef.current = null;
@@ -1263,7 +1271,26 @@ function PolicyIssuancePrototype(props) {
     setIsLogInThroughGosuslugiOpen(false);
     setIsDocumentsOpen(false);
     setDocumentsAcknowledged(false);
+    setIsConfirmingDocuments(false);
   }
+
+  function handleConfirmDocuments() {
+    if (documentsTimerRef.current !== null || documentsAcknowledged) return;
+    setIsConfirmingDocuments(true);
+    documentsTimerRef.current = window.setTimeout(function () {
+      documentsTimerRef.current = null;
+      setIsConfirmingDocuments(false);
+      setDocumentsAcknowledged(true);
+      setIsDocumentsOpen(false);
+      setScreen('payment-pending');
+    }, FORM_SUBMIT_DELAY);
+  }
+
+  useEffect(function () {
+    if (screen === 'payment-pending' && paymentHeadingRef.current) {
+      paymentHeadingRef.current.focus();
+    }
+  }, [screen]);
 
   function handleBackToSelection() {
     if (phoneTimerRef.current !== null) {
@@ -1537,7 +1564,9 @@ function PolicyIssuancePrototype(props) {
       >
         Личный кабинет
       </Button>
-      <main className="rshb-policy-issuance__main">
+      <main className={classNames('rshb-policy-issuance__main', {
+        'rshb-policy-issuance__main--payment-pending': screen === 'payment-pending'
+      })}>
         {screen === 'customization' ? (
           <CustomizeScreen
             beneficiary={beneficiary}
@@ -1604,6 +1633,14 @@ function PolicyIssuancePrototype(props) {
             tariff={tariff}
             term={term}
           />
+        ) : screen === 'payment-pending' ? (
+          <section className="rshb-policy-issuance__payment-pending" aria-labelledby="policy-payment-pending-title" data-id="policy-payment-pending">
+            <img className="rshb-policy-issuance__payment-image" src={paymentPendingImage} alt="" width="320" height="320" />
+            <h1 className="rshb-policy-issuance__title" id="policy-payment-pending-title" ref={paymentHeadingRef} tabIndex={-1}>
+              Ожидаем подтверждения оплаты
+            </h1>
+            <p className="rshb-policy-issuance__payment-description">Это может занять несколько минут</p>
+          </section>
         ) : (
           <section className="rshb-policy-issuance__selection" aria-labelledby="policy-issuance-title">
             <div className="rshb-policy-issuance__title-block">
@@ -1638,10 +1675,12 @@ function PolicyIssuancePrototype(props) {
         )}
         {isDocumentsOpen ? (
           <DocumentsModal
+            closeOnConfirm={false}
+            confirmLoading={isConfirmingDocuments}
             dataId="policy-documents-modal"
             documents={policyDocuments}
             onClose={function () { setIsDocumentsOpen(false); }}
-            onConfirm={function () { setDocumentsAcknowledged(true); }}
+            onConfirm={handleConfirmDocuments}
           />
         ) : null}
 
