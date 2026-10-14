@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import PolicyIssuancePrototype from './index.js';
 
 const meta = {
-  title: 'Legacy/Prototypes/Policy Issuance/Selection',
+  id: 'legacy-prototypes-policy-issuance-selection',
+  title: 'Legacy/Prototypes/Registration/Selection',
   component: PolicyIssuancePrototype,
   parameters: {
     fullscreenPrototype: true,
