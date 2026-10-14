@@ -149,7 +149,7 @@ function DocumentsModal(props) {
                   confirmedRef.current = true;
                   if (onConfirm) onConfirm();
                   context.requestClose();
-                }}>Ознакомлен</Button>
+                }}>Ознакомился (-ась)</Button>
             </div>
           </div>
         );
@@ -179,7 +179,7 @@ function DocumentsModal(props) {
           </div>
         ) : null}
         {allLoaded && progress >= 0.05 && !reachedEnd ? (
-          <Button aria-label="Прокрутить документы до конца" buttonType="secondary" size="s"
+          <Button aria-label="Прокрутить документы до конца" buttonType="primary" size="s"
             className="rshb-legacy-documents-modal__scroll-to-end" iconOnly
             dataId={dataId ? dataId + '-scroll-to-end' : undefined}
             leadingIcon={<span aria-hidden="true" className="rshb-legacy-documents-modal__arrow" style={{ '--documents-arrow': 'url("' + chevronDownIcon + '")' }} />}
