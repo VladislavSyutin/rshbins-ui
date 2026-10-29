@@ -1,0 +1,14 @@
+{
+  "name": "rshbins-motion",
+  "version": "1.0.0",
+  "description": "Запись motion-ролика сценария регистрации ФЛ из Storybook",
+  "scripts": {
+    "record": "node record.mjs"
+  },
+  "type": "module",
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "playwright": "^1.64.1"
+  },
+  "private": true
+}
